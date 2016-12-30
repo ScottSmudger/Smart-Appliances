@@ -9,3 +9,5 @@ Team includes:
 - Jamie Davies: S14000296
 - Scott Smith: S15001442
 - Jazmine Hughes: S15001137
+
+This software is held under by the [MIT License](https://github.com/ScottSmudger/GPIO-Door/blob/master/LICENSE).

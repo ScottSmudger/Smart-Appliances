@@ -1,8 +1,8 @@
 <?php
 /*
 
-File: Initialisation file
-Description: Does any initial data processing and requires() any files
+File: Index file
+Description: The index file for the interface
 Author: Jamie Davies for Group 11, php provided by ScottSmudger
 URL: https://github.com/ScottSmudger/GPIO-Door
 

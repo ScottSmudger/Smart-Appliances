@@ -1,3 +1,6 @@
+-- By Jazmine Hughes
+-- Group Project Design/Implemention (Group 11)
+
 -- CREATE USER TABLE 
 CREATE TABLE USERS
 (USER_ID CHAR(7) PRIMARY KEY, 

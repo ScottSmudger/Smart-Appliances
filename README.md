@@ -1,7 +1,7 @@
 # GPIO-Door
 A simple python-based program that monitors a Raspberry-PI GPIO pin connected to a magnetic door switch. A MySQL database is updated with the new state.
 
-A [web-interface](http://uni.scottsmudger.website/prototype) built in PHP/HTML/CSS will display the usage statistics of the door and any user information.
+A [web-interface](http://uni.scottsmudger.website) built in PHP/HTML/CSS will display the usage statistics of the door and any user information.
 
 This project is for the Group Project Design and Implementation modules of my Computer Networking and Security BSc at [Glyndwr University](https://www.glyndwr.ac.uk/).
 

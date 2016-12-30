@@ -1,0 +1,92 @@
+body {
+	font-family:Verdana;
+	color:black;
+}
+header{
+	background-color:#004A7C;
+	color:white;
+}
+#logo {
+	background-color: white;
+	margin-top: 2%;
+	margin-bottom: 2%; 
+	margin-left: 40%;
+	margin-right: 40%;
+	height: 15%;
+	width: 15%;
+	border: white solid 5px;
+}
+.row {
+	background-color: #CDCDCD;
+	height:100%;
+}
+#topleft{
+	border-right: 5px solid #004A7C;
+	border-bottom: 5px solid #004A7C;
+}
+#bottomleft{
+	border-right: 5px solid #004A7C;
+}
+#enter{
+	border: none;
+	height: 7%;
+	width: 20%;
+	background-color:#005691;
+	text-align:center;
+	color:white;
+	margin-top:1%;
+	margin-bottom:1%;
+}
+select {
+	width: 50%;
+	font-family: Verdana;
+}
+footer{
+	background-color: #CDCDCD;
+	border:none;
+	height:100%;
+}
+.container-fluid-sm-4 {
+	height:100%;
+	width:100%;
+}
+h5{
+	font-family : Verdana;
+	color: #005291;
+	margin-left:1%;
+}
+table{
+	border: 1px black solid;
+	margin-left: 10%;
+	margin-top: 3%;
+	height: 40%;
+	width: 60%;
+	text-align: center;
+	
+}
+.theadings{
+	background-color: #004A7C;
+	color: #CDCDCD;
+	text-align: center;
+	
+}
+.set1{
+	background-color: white;
+}
+th, td{
+	padding: 10px;
+	text-align: center;
+	border-left: 1px black solid;
+	border-right: 1px black solid;
+}
+h2{
+	margin-left: 10%;
+	font-family: Verdana;
+}
+#chart {
+	height: 30%;
+	width: 30%;
+	margin-left: 10%;
+	margin-top: 5%;
+	padding-bottom: 5%;
+}

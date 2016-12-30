@@ -1,4 +1,12 @@
 <?php
+/*
+
+File: Config file
+Description: Provides all the config options
+Author: ScottSmudger for Group 11
+URL: https://github.com/ScottSmudger/GPIO-Door
+
+*/
 
 // Database details
 $CONFIG["db_host"] = "localhost";

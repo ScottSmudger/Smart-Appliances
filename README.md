@@ -1,5 +1,5 @@
 # GPIO-Door
-A simple python-based program that monitors a Raspberry-PI GPIO pin connected to a magnetic door switch. A MySQL database is updated with the new state.
+A simple python-based program that monitors a Raspberry-Pi's General Purpose Input Output (GPIO) pins connected to a magnetic door switch. A MySQL database is updated with the new state.
 
 A [web-interface](http://uni.scottsmudger.website) built in PHP/HTML/CSS will display the usage statistics of the door and any user information.
 

@@ -44,6 +44,3 @@ class Camera(object):
             self.camera.stop_recording()
         self.camera.close()
     
-
-
-

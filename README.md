@@ -3,7 +3,7 @@ A simple python-based program that monitors a Raspberry-Pi's General Purpose Inp
 
 A [web-interface](http://uni.scottsmudger.website) built in PHP/HTML/CSS will display the usage statistics of the door and any user information.
 
-This project is for the Group Project Design and Implementation modules of my Computer Networking and Security BSc at [Glyndwr University](https://www.glyndwr.ac.uk/).
+This project is for the Group Project Design and Implementation modules of my Computer Networking and Security BSc Degree at [Glyndwr University](https://www.glyndwr.ac.uk/).
 
 Team includes: 
 - Jamie Davies: S14000296

@@ -57,7 +57,7 @@ class Main(object):
         screen.setLevel(logging.DEBUG)
         screen.setFormatter(format)
         self.log.addHandler(screen)
-        # Check if media folders exist
+        # Check if media folder exists
         dir = os.path.expanduser("~/media/%s/%s") % (month, day)
         if not os.path.exists(dir):
             os.makedirs(dir)
@@ -67,7 +67,7 @@ class Main(object):
     def updateDoorState(self, state):
         return self.database.updateState(state)
     
-    # Initiates the main loop that tests the GPIO pin
+    # Initiates the main loop that tests the GPIO pins
     def start(self):
         prev_state = None
         try:

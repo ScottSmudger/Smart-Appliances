@@ -52,4 +52,3 @@ class Database(object):
         self.log.debug("Cleaning up Database")
         self.db_connect.close()
     
-

@@ -89,8 +89,8 @@ class Main(object):
                     while GPIO.input(self.fridge_door):
                         time.sleep(1)
                     time_end = time.time()
-                    vid_length = round(time_end - time_start)
-                    self.log.debug("Door was open for %s seconds" % (vid_length))
+                    open_length = round(time_end - time_start)
+                    self.log.debug("Door was open for %s seconds" % (open_length))
                 else:
                     # Door is closed
                     if prev_state:

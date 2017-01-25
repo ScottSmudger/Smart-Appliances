@@ -47,26 +47,32 @@ class Main(object):
         self.log = logging.getLogger()
         self.log.setLevel(logging.DEBUG)
         format = logging.Formatter(fmt = "%(asctime)s - %(module)s - %(levelname)s: %(message)s", datefmt = "%d-%m-%Y %H:%M")
-        # For file logging
-        logfile = logging.FileHandler("logs/door-%s.log" % (date))
-        logfile.setLevel(logging.WARNING)
-        logfile.setFormatter(format)
-        self.log.addHandler(logfile)
         # For screen logging
         screen = logging.StreamHandler()
         screen.setLevel(logging.DEBUG)
         screen.setFormatter(format)
         self.log.addHandler(screen)
-        # Check if media folder exists
-        dir = os.path.expanduser("~/media/%s/%s") % (month, day)
-        if not os.path.exists(dir):
-            os.makedirs(dir)
-            self.log.debug("Making log dir: %s" % (dir))
+        # Check if log folder exists, create it if not
+        log_dir = os.getcwd() + "/logs"
+        if not os.path.exists(log_dir):
+            os.makedirs(log_dir)
+            self.log.debug("Creating log dir: %s" % (log_dir))
+        # For file logging
+        logfile = logging.FileHandler("logs/door-%s.log" % (date))
+        logfile.setLevel(logging.WARNING)
+        logfile.setFormatter(format)
+        self.log.addHandler(logfile)
     
     # Updates the door status
     def updateDoorState(self, state):
         return self.database.updateState(state)
     
+    def getHumanState(self, state):
+        if state:
+            return "Open"
+        else:
+            return "Closed"
+
     # Initiates the main loop that tests the GPIO pins
     def start(self):
         prev_state = None
@@ -84,7 +90,7 @@ class Main(object):
                         time.sleep(1)
                     time_end = time.time()
                     vid_length = round(time_end - time_start)
-                    self.log.debug("Recorded for %s seconds" % (vid_length))
+                    self.log.debug("Door was open for %s seconds" % (vid_length))
                 else:
                     # Door is closed
                     if prev_state:
@@ -94,7 +100,7 @@ class Main(object):
                 if state != prev_state:
                     prev_state = state
                     self.updateDoorState(state)
-                    self.log.info("prev_state updated to: %s" % (prev_state))
+                    self.log.info("prev_state updated to: %s %s" % (self.getHumanState(prev_state), prev_state))
                     
         except KeyboardInterrupt:
             self.log.info("Program interrupted")
@@ -105,6 +111,6 @@ class Main(object):
         GPIO.cleanup()
     
 
-
 # Start it
-Main().start()
+if __name__ == "__main__":
+    Main().start()

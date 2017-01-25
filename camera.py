@@ -10,10 +10,18 @@ class Camera(object):
         Camera class that manages the recording and photos
     """
     def __init__(self):
+        date = datetime.now().strftime("%d_%m_%y")
+        month = datetime.now().strftime("%m")
+        day = datetime.now().strftime("%d")
         self.log = logging.getLogger(type(self).__name__)
         self.log.debug("Initialising Camera")
         self.camera = PiCamera()
         self.camera.start_preview()
+        # Check if media folder exists, create it if not
+        media_dir = os.path.expanduser("~/media/%s/%s" % (month, day))
+        if not os.path.exists(media_dir):
+            os.makedirs(media_dir)
+            self.log.debug("Making media dir: %s" % (media_dir))
     
     def startRecording(self):
         month = datetime.now().strftime("%m")
@@ -21,7 +29,7 @@ class Camera(object):
         time = datetime.now().strftime("%H-%M-%S")
         if not self.camera.recording:
             self.log.info("Started recording")
-            self.video = os.path.expanduser("~/media/%s/%s/video_%s.h264" % (month, day, time))
+            self.video = os.path.expanduser("media/%s/%s/video_%s.h264" % (month, day, time))
             self.camera.start_recording(self.video)
     
     def stopRecording(self):

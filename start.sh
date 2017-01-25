@@ -1,3 +1,3 @@
-screen -dr fridge -X quit
-screen -dmS fridge ./fridge.py
-screen -r fridge
+screen -dr smart -X quit
+screen -dmS smart ./main.py
+screen -r smart

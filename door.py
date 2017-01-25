@@ -1,13 +1,12 @@
 #!/usr/bin/env python
 # Local modules
-
+import database
+import camera
 # Python modules
-from random import randint
-#import RPi.GPIO as GPIO
+import RPi.GPIO as GPIO
 import time
 from datetime import datetime
 import os
-import argparse
 import logging
 """
 Level               Numeric value
@@ -24,23 +23,20 @@ class Main(object):
     """
         Main class that manages the state of the door and initiates any libraries/classes
     """
-    
     running = True
     
     def __init__(self):
         # Set constants
-        self.fridge = 18
+        self.fridge_door = 18
         # Logging
         self.initLogger()
         self.log.debug("Initialising door")
         # Setup GPIO
-        #GPIO.setmode(GPIO.BCM)
-        #GPIO.setup(self.fridge, GPIO.IN, GPIO.PUD_UP)
+        GPIO.setmode(GPIO.BCM)
+        GPIO.setup(self.fridge_door, GPIO.IN, GPIO.PUD_UP)
         # Initialise module classes
         #self.camera = camera.Camera()
-        #self.database = database.Database()
-        # Decide on logging
-        self.logging = True
+        self.database = database.Database()
     
     # Configures and initiates the Logging library
     def initLogger(self):
@@ -61,9 +57,13 @@ class Main(object):
         screen.setLevel(logging.DEBUG)
         screen.setFormatter(format)
         self.log.addHandler(screen)
+        # Check if media folders exist
+        dir = os.path.expanduser("~/media/%s/%s") % (month, day)
+        if not os.path.exists(dir):
+            os.makedirs(dir)
+            self.log.debug("Making log dir: %s" % (dir))
     
     # Updates the door status
-    # Will be used in final version
     def updateDoorState(self, state):
         return self.database.updateState(state)
     
@@ -72,39 +72,39 @@ class Main(object):
         prev_state = None
         try:
             while self.running:
-                state = randint(0,1) # GPIO.input(self.fridge)
-                if state: # Real version: if state:
+                state = GPIO.input(self.fridge_door)
+                
+                if state:
                     # Door is open
                     self.log.debug("Door is open!: %s" % (state))
                     # While door is open start recording and wait
+                    #self.camera.startRecording()
                     time_start = time.time()
-                    # while state: #GPIO.input(self.fridge):
-                        # time.sleep(1)
+                    while GPIO.input(self.fridge_door):
+                        time.sleep(1)
                     time_end = time.time()
                     vid_length = round(time_end - time_start)
+                    self.log.debug("Recorded for %s seconds" % (vid_length))
                 else:
                     # Door is closed
                     if prev_state:
                         self.log.debug("Door is closed!: %s" % (state))
+                    #self.camera.stopRecording()
                 
                 if state != prev_state:
                     prev_state = state
-                    #self.updateDoorState(state)
+                    self.updateDoorState(state)
                     self.log.info("prev_state updated to: %s" % (prev_state))
-                time.sleep(1)
-                
+                    
         except KeyboardInterrupt:
             self.log.info("Program interrupted")
     
     # Cleans up GPIO when the script closes down
     def __del__(self):
         self.log.debug("Cleaning up door")
-        #GPIO.cleanup()
+        GPIO.cleanup()
     
 
 
 # Start it
 Main().start()
-
-
-

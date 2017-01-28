@@ -1,5 +1,6 @@
 # Custom
 logs
+www/application/config/database.php
 
 # Code igniter
 .DS_Store

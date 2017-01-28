@@ -15,6 +15,7 @@ class Sa extends CI_Controller
 		$this->benchmark->mark('starting_point');
 
 		$this->load->helper("url");
+		$this->load->library("encryption");
 
 		// To stop PHP from moaning
 		date_default_timezone_set("UTC");
@@ -22,8 +23,18 @@ class Sa extends CI_Controller
 	
 	public function view($page = "dash")
 	{
-		$this->load->view("header");
-        $this->load->view("pages/".$page);
-		$this->load->view("footer");
+		// Require login
+		if($this->session->logged_in)
+		{      
+			$this->load->view("header");
+			$this->load->view("pages/".$page);
+			$this->load->view("footer");
+		}
+		else
+		{
+			$this->load->view("header");
+			$this->load->view("pages/login");
+			$this->load->view("footer");
+		}
 	}
 }

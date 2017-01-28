@@ -1,5 +1,5 @@
 # Smart-Appliances
-*THIS IS HTE PROTOTYPE BRANCH - NOT USED ANYMORE*
+*THIS IS THE PROTOTYPE BRANCH - NOT USED ANYMORE*
 
 A simple python-based program that monitors a Raspberry-Pi's General Purpose Input Output (GPIO) pins connected to a magnetic door switch (as of now). A MySQL database is updated with the new appliances state.
 

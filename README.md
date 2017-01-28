@@ -1,4 +1,6 @@
 # Smart-Appliances
+*THIS IS HTE PROTOTYPE BRANCH - NOT USED ANYMORE*
+
 A simple python-based program that monitors a Raspberry-Pi's General Purpose Input Output (GPIO) pins connected to a magnetic door switch (as of now). A MySQL database is updated with the new appliances state.
 
 A [web-interface](http://uni.scottsmudger.website) built using PHP/HTML/CSS with some elements of JavaScript and jQuery, is used to display the usage statistics of the appliances and any relevant user information.

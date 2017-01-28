@@ -10,5 +10,10 @@ Team includes:
 - Scott Smith: S15001442
 - Jazmine Hughes: S15001137
 
+## Requirements
+- Web server with a minimum PHP version of 5.6
+- Database server - MySQL was used
+- Raspberry Pi
+- Python with the MySQL-python module
 
 This software makes use of the [MIT License](https://github.com/ScottSmudger/GPIO-Door/blob/master/LICENSE).

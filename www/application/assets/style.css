@@ -20,12 +20,16 @@ header{
 	background-color: #CDCDCD;
 	height:100%;
 }
-#topleft{
+#topleft {
 	border-right: 5px solid #004A7C;
 	border-bottom: 5px solid #004A7C;
 }
+#title {
+	border-bottom: 2px solid #004A7C;
+}
 #bottomleft{
 	border-right: 5px solid #004A7C;
+	color: #004A7C;
 }
 #enter{
 	border: none;

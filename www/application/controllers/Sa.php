@@ -12,13 +12,12 @@ class Sa extends CI_Controller
 		parent::__construct();
 		
 		$this->output->enable_profiler(TRUE);
-		$this->benchmark->mark('starting_point');
-
-		$this->load->helper("url");
-		$this->load->library("encryption");
+		$this->benchmark->mark("starting_point");
 
 		// To stop PHP from moaning
 		date_default_timezone_set("UTC");
+
+		$this->client = $this->user->newUser();
 	}
 	
 	public function view($page = "dash")
@@ -32,9 +31,7 @@ class Sa extends CI_Controller
 		}
 		else
 		{
-			$this->load->view("header");
-			$this->load->view("pages/login");
-			$this->load->view("footer");
+			redirect("login");
 		}
 	}
 }

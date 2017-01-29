@@ -10,10 +10,6 @@ www/application/config/database.php
 !*/cache/index.html
 !*/cache/.htaccess
 
-user_guide_src/build/*
-user_guide_src/cilexer/build/*
-user_guide_src/cilexer/dist/*
-user_guide_src/cilexer/pycilexer.egg-info/*
 
 # IDE Files
 #-------------------------

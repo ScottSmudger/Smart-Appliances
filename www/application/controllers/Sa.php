@@ -7,6 +7,8 @@ class Sa extends CI_Controller
 {
 	protected $data = array();
 
+	protected $client;
+
 	public function __construct()
 	{
 		parent::__construct();
@@ -26,7 +28,7 @@ class Sa extends CI_Controller
 		if($this->session->logged_in)
 		{      
 			$this->load->view("header");
-			$this->load->view("pages/".$page);
+			$this->load->view("pages/".$page, array("user" => $this->client));
 			$this->load->view("footer");
 		}
 		else

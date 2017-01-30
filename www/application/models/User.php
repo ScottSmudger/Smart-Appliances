@@ -20,11 +20,11 @@ class User extends CI_Model
         $this->db->where("password", $password);
         $this->db->limit(1);
 
-        $query = $this->db->get();
+        $result = $this->db->get();
 
-        if($query->num_rows() == 1)
+        if($result->num_rows() == 1)
         {
-            return $query->result();
+            return $result->result();
         }
         else
         {
@@ -37,22 +37,22 @@ class User extends CI_Model
         self::$instance = $this;
         $this->id = $this->session->user_details["id"];
 
-        $this->devices = $this->getDevices();
-
+        $this->getDetails();
+        $this->getAddress();
 
         return self::$instance;
     }
 
     protected function getDetails()
     {
-        $this->db->select("first_name, last_name, house_no_name, street, town_city, postcode");
+        $this->db->select("CONCAT(first_name, ' ', last_name) as name, age");
         $this->db->from("USERS");
         $this->db->where("id", $this->id);
-        $query = $this->db->get();
+        $result = $this->db->get();
 
-        if($query)
+        if($result)
         {
-            $this->details = $query->result_array();
+            $this->details = $result->row_array();
         }
         else
         {
@@ -62,16 +62,52 @@ class User extends CI_Model
 
     protected function getAddress()
     {
+        $this->db->select("house_no_name as house, street, town_city, postcode");
+        $this->db->from("USERS");
+        $this->db->where("id", $this->id);
+        $result = $this->db->get();
 
-    }
-
-    protected function getDevices()
-    {
-
+        if($result)
+        {
+            $this->address = $result->row_array();
+        }
+        else
+        {
+            show_error($this->db->error()["message"], 500, "SQL Error: ".$this->db->error()["code"]);
+        }
     }
 
     protected function getGuardian()
     {
+        $this->db->select("user_id, first_name, last_name, email, phone");
+        $this->db->from("USERS");
+        $this->db->where("user_id", $this->id);
+        $result = $this->db->get();
 
+        if($result)
+        {
+            $this->guardian = $result->result_array();
+        }
+        else
+        {
+            show_error($this->db->error()["message"], 500, "SQL Error: ".$this->db->error()["code"]);
+        }
+    }
+
+    protected function getDevices()
+    {
+        $this->db->select("user_id, state, date_time, appliance");
+        $this->db->from("DEVICES");
+        $this->db->where("user_id", $this->id);
+        $result = $this->db->get();
+
+        if($result)
+        {
+            $this->devices = $result->result_array();
+        }
+        else
+        {
+            show_error($this->db->error()["message"], 500, "SQL Error: ".$this->db->error()["code"]);
+        }
     }
 }

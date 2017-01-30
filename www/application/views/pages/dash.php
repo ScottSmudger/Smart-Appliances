@@ -4,9 +4,9 @@
 		  <div class="col-sm-4">
 			<div id="topleft">
 				<div id="title"><h3>User Details</h3></div>
-				<h4>Name</h4><p><?="Name"?></p>
-				<h4>Age</h4><p><?="Age"?></p>
-				<h4>Address</h4><p><?="Address"?></p>
+				<h4>Name</h4><p><?=ucwords(strtolower($user->details["name"]))?></p>
+				<h4>Age</h4><p><?=$user->details["age"]?></p>
+				<h4>Address</h4><p><?=$user->address["house"] . " " . ucwords(strtolower($user->address["street"])) . ",<br/>" . ucfirst(strtolower($user->address["town_city"])) . ",<br/>" . $user->address["postcode"]?></p>
 			</div>
 			<div id="bottomleft">
 				<div id="title"><h3>View Activity</h3></div><br/>

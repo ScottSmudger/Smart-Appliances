@@ -43,7 +43,8 @@ class Authenticate extends CI_Controller
 			{
 				$user_details = array(
 					"id" => $row->id,
-					"username" => $row->username
+					"username" => $row->username,
+					"logged_in_time" => time()
 				);
 				$this->session->user_details = $user_details;
 				$this->session->logged_in = TRUE;
@@ -66,11 +67,9 @@ class Authenticate extends CI_Controller
 
 	public function logout()
 	{
-	    $user_data = $this->session->all_userdata();
-	        foreach ($user_data as $key => $value)
-	        {
-                $this->session->unset_userdata($key);
-	        }
+	    // Remove session data
+        $this->session->unset_userdata($this->session->all_userdata());
+        // Destroy session
 	    $this->session->sess_destroy();
 	    redirect("login");
 	}

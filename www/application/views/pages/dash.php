@@ -1,3 +1,6 @@
+<?php
+//var_dump($user->devices);
+?>
 <main>
 	<div class="container-fluid">
 		<div class="row">
@@ -31,16 +34,16 @@
 						<th>Appliance</th>
 					</tr>
 				</thead>
-				</tbody><?php /*
-					foreach($database->getAllDevicesState() as $device)
+				</tbody><?php
+					foreach($user->devices as $device)
 					{
-						echo"<tr>";
-							echo"<td>".$device["device_id"]."</td>";
-							echo"<td>".$device["state"]."</td>";
-							echo"<td>".$device["date_time"]."</td>";
-							echo"<td>".$device["appliance"]."</td>";
-						echo"</tr>";
-					} */?>
+						echo "<tr>";
+							echo "<td>".$device->id."</td>";
+							echo "<td>".$device->state."</td>";
+							echo "<td>".$device->date_time."</td>";
+							echo "<td>".$device->appliance."</td>";
+						echo "</tr>";
+					} ?>
 				</tbody>
 			</table>
 			<img id="chart" src="/application/assets/images/chart.png">

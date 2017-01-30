@@ -12,6 +12,13 @@ class User extends CI_Model
     public $guardian;
     protected static $instance;
 
+    public function __construct()
+    {
+        parent::__construct();
+
+        $this->load->model("device");
+    }
+
     public function checkLogin($username, $password)
     {
         $this->db->select("id, username, password");
@@ -35,10 +42,13 @@ class User extends CI_Model
     public function newUser()
     {
         self::$instance = $this;
+
         $this->id = $this->session->user_details["id"];
 
         $this->getDetails();
         $this->getAddress();
+        //$this->getGuardian();
+        $this->getDevices();
 
         return self::$instance;
     }
@@ -79,9 +89,9 @@ class User extends CI_Model
 
     protected function getGuardian()
     {
-        $this->db->select("user_id, first_name, last_name, email, phone");
+        $this->db->select("id, first_name, last_name, email, phone");
         $this->db->from("USERS");
-        $this->db->where("user_id", $this->id);
+        $this->db->where("id", $this->id);
         $result = $this->db->get();
 
         if($result)
@@ -96,14 +106,17 @@ class User extends CI_Model
 
     protected function getDevices()
     {
-        $this->db->select("user_id, state, date_time, appliance");
+        $this->db->select("id, state, date_time, appliance");
         $this->db->from("DEVICES");
         $this->db->where("user_id", $this->id);
         $result = $this->db->get();
 
         if($result)
         {
-            $this->devices = $result->result_array();
+            foreach($result->result_array() as $row)
+            {
+                $this->devices[] = $this->device->newDevice($row);
+            }
         }
         else
         {

@@ -1,6 +1,3 @@
-<?php
-//var_dump($user->devices);
-?>
 <main>
 	<div class="container-fluid">
 		<div class="row">

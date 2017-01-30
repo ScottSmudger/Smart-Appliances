@@ -47,7 +47,7 @@ class User extends CI_Model
 
         $this->getDetails();
         $this->getAddress();
-        //$this->getGuardian();
+        $this->getGuardian();
         $this->getDevices();
 
         return self::$instance;
@@ -89,9 +89,9 @@ class User extends CI_Model
 
     protected function getGuardian()
     {
-        $this->db->select("id, first_name, last_name, email, phone");
-        $this->db->from("USERS");
-        $this->db->where("id", $this->id);
+        $this->db->select("user_id, first_name, last_name, email, phone");
+        $this->db->from("GUARDIAN_CONTACT_DETAILS");
+        $this->db->where("user_id", $this->id);
         $result = $this->db->get();
 
         if($result)

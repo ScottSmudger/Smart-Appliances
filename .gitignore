@@ -1,4 +1,6 @@
 # Custom
+logs
+www/application/logs
 */database.php
 
 # Code igniter

@@ -10,6 +10,9 @@ class Authenticate extends CI_Controller
 		parent::__construct();
 
 		$this->load->library("form_validation");
+
+		$this->output->enable_profiler(TRUE);
+		$this->benchmark->mark("starting_point");
 	}
 
 	public function index()

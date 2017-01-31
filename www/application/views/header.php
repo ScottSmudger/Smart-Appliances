@@ -28,5 +28,11 @@
 	</head>
 <body>
 <header>
-	<img id="logo" src="<?=base_url("application/assets")?>/images/logo.png">
+	<div class="logowrap">
+		<img id="logo" src="<?=base_url("application/assets")?>/images/logo.png"><?php
+ 		if($this->session->logged_in)
+		{ ?>
+			<a href="/logout"><button id="logout" type="button">Log Out</button></a></div><?php
+		} ?>
+	</div>	
 </header>

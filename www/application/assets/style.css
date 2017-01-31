@@ -8,13 +8,11 @@ header{
 }
 #logo {
 	background-color: white;
-	margin-top: 2%;
-	margin-bottom: 2%; 
-	margin-left: 40%;
-	margin-right: 40%;
-	height: 15%;
-	width: 15%;
+	height: 50%;
+	width: 80%;
 	border: white solid 5px;
+	display:inline-block;
+	margin-left:10%;
 }
 .row {
 	background-color: #CDCDCD;
@@ -145,4 +143,35 @@ input[type=submit]{
 	font-weight:bold;
 	margin-left:40%;
 	margin-right:40%;
+}
+#logout{
+	background-color: #005691; 
+    border: none;
+    color: white;
+    padding: 10px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 18px;
+	margin-left:86%;
+	font-weight:bold;
+}
+#logout:hover{
+	background-color: #CDCDCD; 
+    border: none;
+    color: #005691;
+    padding: 10px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 18px;
+	margin-left:86%;
+	font-weight:bold;
+}
+.logowrap{
+	background-color:white;
+	margin-left:auto;
+	margin-right:auto;
+	width:50%;
+	overflow: auto;
 }

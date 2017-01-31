@@ -5,6 +5,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 class User extends CI_Model
 {
+    // User stuff
     protected $id;
     public $details;
     public $devices = array();

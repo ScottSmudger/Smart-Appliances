@@ -15,5 +15,8 @@ Team includes:
 - Database server - MySQL was used
 - Raspberry Pi
 - Python with the MySQL-python module
+- Screen linux package
+
+It's started by running `./start.sh`, it will create a new session and start the program. Using the command `screen -r smart` will open a terminal displaying the programs output. `CTRL, A + D` will close the program but keep it running in the background.
 
 This software makes use of the [MIT License](https://github.com/ScottSmudger/GPIO-Door/blob/master/LICENSE).

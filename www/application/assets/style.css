@@ -22,12 +22,15 @@ header{
 	border-right: 5px solid #004A7C;
 	border-bottom: 5px solid #004A7C;
 }
-#title {
+.title{
+	font-size:3em;
 	border-bottom: 2px solid #004A7C;
+}
+#subtitles{
+	font-size:2em;
 }
 #bottomleft{
 	border-right: 5px solid #004A7C;
-	color: #004A7C;
 }
 #enter{
 	border: none;
@@ -145,16 +148,18 @@ input[type=submit]{
 	margin-right:40%;
 }
 #logout{
-	background-color: #005691; 
+	background-color: #004A7C; 
     border: none;
     color: white;
     padding: 10px 32px;
     text-align: center;
     text-decoration: none;
-    display: inline-block;
-    font-size: 18px;
-	margin-left:86%;
+    font-size: 1.25em;
+	margin-left:86.2%;
 	font-weight:bold;
+	height:auto;
+	width:auto;
+	position:relative;
 }
 #logout:hover{
 	background-color: #CDCDCD; 
@@ -163,10 +168,10 @@ input[type=submit]{
     padding: 10px 32px;
     text-align: center;
     text-decoration: none;
-    display: inline-block;
-    font-size: 18px;
-	margin-left:86%;
+    font-size: 1.25em;
+	margin-left:86.2%;
 	font-weight:bold;
+	position:relative;
 }
 .logowrap{
 	background-color:white;
@@ -174,4 +179,6 @@ input[type=submit]{
 	margin-right:auto;
 	width:50%;
 	overflow: auto;
+	height:auto;
+	position:relative;
 }

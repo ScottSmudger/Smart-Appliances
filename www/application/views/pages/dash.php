@@ -3,19 +3,19 @@
 		<div class="row">
 			<div class="col-sm-4">
 				<div id="topleft">
-					<div id="title"><h3>User Details</h3></div>
+					<div class="title"><h3>User Details</h3></div>
 					<h4>Name</h4><p><?=ucwords(strtolower($user->details["name"]))?></p>
 					<h4>Age</h4><p><?=$user->details["age"]?></p>
 					<h4>Address</h4><p><?=$user->address["house"] . " " . ucwords(strtolower($user->address["street"])) . ",<br/>" . ucfirst(strtolower($user->address["town_city"])) . ",<br/>" . $user->address["postcode"]?></p>
 				</div>
 				<div id="bottomleft">
-					<div id="title"><h3>View Activity</h3></div><br/>
+					<div class="title"><h3>View Activity</h3></div><br/>
 					<select name="time">
-					<option value="" ></option>
-					<option value="day">Day</option>
-					<option value="week">Week</option>
-					<option value="month">Month</option>
-					</select> <br/> <br/>
+						<option value="" ></option>
+						<option value="day">Day</option>
+						<option value="week">Week</option>
+						<option value="month">Month</option>
+					</select><br/><br/>
 					<button id="enter" type="button" onclick="">Enter</button>
 					<br/><br/><br/><br/><br/><br/>
 				</div>

@@ -26,14 +26,26 @@ class Sa extends CI_Controller
 	{
 		// Require login
 		if($this->session->logged_in)
-		{      
-			$this->load->view("header");
-			$this->load->view("pages/".$page, array("user" => $this->client));
-			$this->load->view("footer");
+		{
+			if($this->session->user_data["id"] == 4)
+			{
+				$this->load->model("admin");
+				$this->client = $this->admin->newAdmin();
+
+				$this->load->view("header");
+				$this->load->view("pages/admin", array("admin" => $this->client));
+				$this->load->view("footer");
+			}
+			else
+			{
+				$this->load->view("header");
+				$this->load->view("pages/".$page, array("user" => $this->client));
+				$this->load->view("footer");
+			}
 		}
 		else
 		{
-			redirect("login");
+			redirect("/login");
 		}
 	}
 }

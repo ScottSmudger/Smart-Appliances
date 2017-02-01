@@ -3,23 +3,23 @@
 defined('BASEPATH') OR exit('No direct script access allowed');
 
 
-class User extends CI_Model
+class Admin extends CI_Model
 {
-    // User stuff
+    // Admin stuff
     protected $id;
     public $details;
     public $devices = array();
-    public $guardian;
+    public $address = array();
     protected static $instance;
 
-    public function newUser()
+    public function newAdmin()
     {
         self::$instance = $this;
 
         $this->id = $this->session->user_details["id"];
 
         $this->getDetails();
-        $this->getGuardian();
+        $this->getAddress();
         $this->getDevices();
 
         return self::$instance;
@@ -27,7 +27,7 @@ class User extends CI_Model
 
     protected function getDetails()
     {
-        $this->db->select("CONCAT(first_name, ' ', last_name) as name, age, house_no_name as house, street, town_city, postcode");
+        $this->db->select("CONCAT(first_name, ' ', last_name) as name, age");
         $this->db->from("USERS");
         $this->db->where("id", $this->id);
         $result = $this->db->get();
@@ -42,16 +42,16 @@ class User extends CI_Model
         }
     }
 
-    protected function getGuardian()
+    protected function getAddress()
     {
-        $this->db->select("user_id, first_name, last_name, email, phone");
-        $this->db->from("GUARDIAN_CONTACT_DETAILS");
-        $this->db->where("user_id", $this->id);
+        $this->db->select("house_no_name as house, street, town_city, postcode");
+        $this->db->from("USERS");
+        $this->db->where("id", $this->id);
         $result = $this->db->get();
 
         if($result)
         {
-            $this->guardian = $result->result_array();
+            $this->address = $result->row_array();
         }
         else
         {
@@ -61,9 +61,8 @@ class User extends CI_Model
 
     protected function getDevices()
     {
-        $this->db->select("id, state, date_time, appliance");
+        $this->db->select("id, user_id, state, date_time, appliance");
         $this->db->from("DEVICES");
-        $this->db->where("user_id", $this->id);
         $result = $this->db->get();
 
         if($result)

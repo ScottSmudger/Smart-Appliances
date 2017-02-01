@@ -6,7 +6,6 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 class Sa extends CI_Controller
 {
 	protected $data = array();
-
 	protected $client;
 
 	public function __construct()
@@ -18,8 +17,6 @@ class Sa extends CI_Controller
 
 		// To stop PHP from moaning
 		date_default_timezone_set("UTC");
-
-		$this->client = $this->user->newUser();
 	}
 	
 	public function view($page = "dash")
@@ -27,7 +24,7 @@ class Sa extends CI_Controller
 		// Require login
 		if($this->session->logged_in)
 		{
-			if($this->session->user_data["id"] == 4)
+			if($this->session->user_data["id"] == 0)
 			{
 				$this->load->model("admin");
 				$this->client = $this->admin->newAdmin();
@@ -38,6 +35,8 @@ class Sa extends CI_Controller
 			}
 			else
 			{
+				$this->client = $this->user->newUser();
+
 				$this->load->view("header");
 				$this->load->view("pages/".$page, array("user" => $this->client));
 				$this->load->view("footer");

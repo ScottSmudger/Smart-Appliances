@@ -19,7 +19,6 @@ class Admin extends CI_Model
         $this->id = $this->session->user_details["id"];
 
         $this->getDetails();
-        $this->getAddress();
         $this->getDevices();
 
         return self::$instance;
@@ -27,7 +26,7 @@ class Admin extends CI_Model
 
     protected function getDetails()
     {
-        $this->db->select("CONCAT(first_name, ' ', last_name) as name, age");
+        $this->db->select("CONCAT(first_name, ' ', last_name) as name, age, house_no_name as house, street, town_city, postcode");
         $this->db->from("USERS");
         $this->db->where("id", $this->id);
         $result = $this->db->get();
@@ -35,23 +34,6 @@ class Admin extends CI_Model
         if($result)
         {
             $this->details = $result->row_array();
-        }
-        else
-        {
-            show_error($this->db->error()["message"], 500, "SQL Error: ".$this->db->error()["code"]);
-        }
-    }
-
-    protected function getAddress()
-    {
-        $this->db->select("house_no_name as house, street, town_city, postcode");
-        $this->db->from("USERS");
-        $this->db->where("id", $this->id);
-        $result = $this->db->get();
-
-        if($result)
-        {
-            $this->address = $result->row_array();
         }
         else
         {

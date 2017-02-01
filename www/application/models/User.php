@@ -5,77 +5,77 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 class User extends CI_Model
 {
-    // User stuff
-    protected $id;
-    public $details;
-    public $devices = array();
-    public $guardian;
-    protected static $instance;
+	// User stuff
+	protected $id;
+	public $details;
+	public $devices = array();
+	public $guardian;
+	protected static $instance;
 
-    public function newUser()
-    {
-        self::$instance = $this;
+	public function newUser()
+	{
+		self::$instance = $this;
 
-        $this->id = $this->session->user_details["id"];
+		$this->id = $this->session->user_details["id"];
 
-        $this->getDetails();
-        $this->getGuardian();
-        $this->getDevices();
+		$this->getDetails();
+		$this->getGuardian();
+		$this->getDevices();
 
-        return self::$instance;
-    }
+		return self::$instance;
+	}
 
-    protected function getDetails()
-    {
-        $this->db->select("CONCAT(first_name, ' ', last_name) as name, age, house_no_name as house, street, town_city, postcode");
-        $this->db->from("USERS");
-        $this->db->where("id", $this->id);
-        $result = $this->db->get();
+	protected function getDetails()
+	{
+		$this->db->select("CONCAT(first_name, ' ', last_name) as name, age, house_no_name as house, street, town_city, postcode");
+		$this->db->from("USERS");
+		$this->db->where("id", $this->id);
+		$result = $this->db->get();
 
-        if($result)
-        {
-            $this->details = $result->row_array();
-        }
-        else
-        {
-            show_error($this->db->error()["message"], 500, "SQL Error: ".$this->db->error()["code"]);
-        }
-    }
+		if($result)
+		{
+			$this->details = $result->row_array();
+		}
+		else
+		{
+			show_error($this->db->error()["message"], 500, "SQL Error: ".$this->db->error()["code"]);
+		}
+	}
 
-    protected function getGuardian()
-    {
-        $this->db->select("user_id, first_name, last_name, email, phone");
-        $this->db->from("GUARDIAN_CONTACT_DETAILS");
-        $this->db->where("user_id", $this->id);
-        $result = $this->db->get();
+	protected function getGuardian()
+	{
+		$this->db->select("user_id, first_name, last_name, email, phone");
+		$this->db->from("GUARDIAN_CONTACT_DETAILS");
+		$this->db->where("user_id", $this->id);
+		$result = $this->db->get();
 
-        if($result)
-        {
-            $this->guardian = $result->result_array();
-        }
-        else
-        {
-            show_error($this->db->error()["message"], 500, "SQL Error: ".$this->db->error()["code"]);
-        }
-    }
+		if($result)
+		{
+			$this->guardian = $result->result_array();
+		}
+		else
+		{
+			show_error($this->db->error()["message"], 500, "SQL Error: ".$this->db->error()["code"]);
+		}
+	}
 
-    protected function getDevices()
-    {
-        $this->db->select("id, state, date_time, appliance");
-        $this->db->from("DEVICES");
-        $this->db->where("user_id", $this->id);
-        $result = $this->db->get();
+	protected function getDevices()
+	{
+		$this->db->select("id, state, date_time, appliance");
+		$this->db->from("DEVICES");
+		$this->db->where("user_id", $this->id);
+		$result = $this->db->get();
 
-        if($result)
-        {
-            foreach($result->result_array() as $row)
-            {
-                $this->devices[] = $this->device->newDevice($row);
-            }
-        }
-        else
-        {
-            show_error($this->db->error()["message"], 500, "SQL Error: ".$this->db->error()["code"]);
-        }
-    }
+		if($result)
+		{
+			foreach($result->result_array() as $row)
+			{
+				$this->devices[] = $this->device->newDevice($row);
+			}
+		}
+		else
+		{
+			show_error($this->db->error()["message"], 500, "SQL Error: ".$this->db->error()["code"]);
+		}
+	}
 }

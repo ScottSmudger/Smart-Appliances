@@ -5,7 +5,7 @@
 				<div class="title"><h3>Admin Details</h3></div>
 				<h4>Name</h4><p><?=ucwords(strtolower($admin->details["name"]))?></p>
 				<h4>Age</h4><p><?=$admin->details["age"]?></p>
-				<h4>Address</h4><p><?=$admin->address["house"] . " " . ucwords(strtolower($admin->address["street"])) . ",<br/>" . ucfirst(strtolower($admin->address["town_city"])) . ",<br/>" . $admin->address["postcode"]?></p>
+				<h4>Address</h4><p><?=$admin->details["house"] . " " . ucwords(strtolower($admin->details["street"])) . ",<br/>" . ucfirst(strtolower($admin->details["town_city"])) . ",<br/>" . $admin->details["postcode"]?></p>
 			</div>
 			<div id="bottomleft">
 				<div class="title"><h3>View Activity</h3></div><br/>

@@ -1,36 +1,85 @@
--- By Jazmine Hughes
--- Group Project Design/Implemention (Group 11)
+CREATE DATABASE  IF NOT EXISTS `group11` /*!40100 DEFAULT CHARACTER SET latin1 */;
+USE `group11`;
+-- MySQL dump 10.13  Distrib 5.6.24, for Win64 (x86_64)
+-- ------------------------------------------------------
+-- Server version	5.5.52-cll-lve
+--
+--
+-- Table structure for table `DEVICES`
+--
 
--- CREATE USER TABLE 
-CREATE TABLE USERS
-(USER_ID CHAR(7) PRIMARY KEY, 
-FIRST_NAME VARCHAR(25), 
-LAST_NAME VARCHAR(25), 
-HOUSE_NO_NAME VARCHAR(25), 
-STREET VARCHAR(25), 
-TOWN_CITY VARCHAR(25), 
-POSTCODE CHAR(7));
+DROP TABLE IF EXISTS `DEVICES`;
+CREATE TABLE `DEVICES` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `user_id` int(11) NOT NULL,
+  `state` tinyint(1) NOT NULL,
+  `date_time` int(11) NOT NULL,
+  `appliance` varchar(25) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `id_UNIQUE` (`id`)
+) ENGINE=MyISAM AUTO_INCREMENT=7 DEFAULT CHARSET=latin1;
 
--- CREATE DEVICES TABLE
-CREATE TABLE DEVICES 
-(STATE_ID CHAR(7) PRIMARY KEY,
-USER_ID CHAR(7) REFERENCES USERS (USER_ID),
-STATE BOOLEAN,
-DATE_TIME DATE, 
-APPLIANCE VARCHAR(25));
+--
+-- Table structure for table `DEVICE_HISTORY`
+--
 
--- CREATE GUARDIAN_CONTACT_DETAILS TABLE
-CREATE TABLE GUARDIAN_CONTACT_DETAILS
-(CONTACT_ID CHAR(7) PRIMARY KEY,
-USER_ID CHAR(7) REFERENCES USERS (USER_ID),
-FIRST_NAME VARCHAR(25), 
-LAST_NAME VARCHAR(25),
-EMAIL VARCHAR(25),
-PHONE CHAR(12));
+DROP TABLE IF EXISTS `DEVICE_HISTORY`;
+CREATE TABLE `DEVICE_HISTORY` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `device_id` int(11) NOT NULL,
+  `state` int(1) NOT NULL,
+  `date_time` int(11) NOT NULL,
+  `device_history` varchar(45) NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `id_UNIQUE` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
--- CREATE LOGON_DETAILS TABLE
-CREATE TABLE LOGON_DETAILS
-(LOGON_ID CHAR(7) PRIMARY KEY, 
-USER_ID CHAR(7) REFERENCES USERS (USER_ID),
-USERNAME VARCHAR(15),
-PASSWORD VARCHAR(15));
+--
+-- Table structure for table `GUARDIAN_CONTACT_DETAILS`
+--
+
+DROP TABLE IF EXISTS `GUARDIAN_CONTACT_DETAILS`;
+CREATE TABLE `GUARDIAN_CONTACT_DETAILS` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `user_id` int(11) NOT NULL,
+  `first_name` varchar(25) NOT NULL,
+  `last_name` varchar(25) NOT NULL,
+  `email` varchar(25) NOT NULL,
+  `phone` char(12) NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `id_UNIQUE` (`id`)
+) ENGINE=MyISAM AUTO_INCREMENT=6 DEFAULT CHARSET=latin1;
+
+--
+-- Table structure for table `LOGIN_DETAILS`
+--
+
+DROP TABLE IF EXISTS `LOGIN_DETAILS`;
+CREATE TABLE `LOGIN_DETAILS` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `user_id` int(11) NOT NULL,
+  `username` varchar(15) NOT NULL,
+  `password` varchar(15) NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `id_UNIQUE` (`id`)
+) ENGINE=MyISAM AUTO_INCREMENT=5 DEFAULT CHARSET=latin1;
+
+--
+-- Table structure for table `USERS`
+--
+
+DROP TABLE IF EXISTS `USERS`;
+CREATE TABLE `USERS` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `first_name` varchar(25) NOT NULL,
+  `last_name` varchar(25) NOT NULL,
+  `age` int(2) NOT NULL,
+  `house_no_name` varchar(25) NOT NULL,
+  `street` varchar(25) NOT NULL,
+  `town_city` varchar(25) NOT NULL,
+  `postcode` char(7) NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `id_UNIQUE` (`id`)
+) ENGINE=MyISAM AUTO_INCREMENT=5 DEFAULT CHARSET=latin1;
+
+-- Dump completed on 2017-02-03  2:53:07

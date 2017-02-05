@@ -12,11 +12,19 @@ Team includes:
 
 ## Requirements
 - Web server with a minimum PHP version of 5.6
-- Database server - MySQL was used
-- Raspberry Pi
-- Python with the MySQL-python module
+- Database server - MySQL was used with the database schema in the `db.sql` file
+- Raspberry Pi and Python GPIO module
+- Python with the MySQL-Python module
 - Screen linux package
 
-It's started by running `./start.sh`, this will create a new screen session and start the program. Using the command `screen -r smart` will open a terminal displaying the programs output. `CTRL, A + D` will close the program but keep it running in the background. `CTRL + C` will close it.
+All can be installed using the following command:
+
+    sudo apt-get install apache2 php5 mysql-client python python-mysqldb screen
+
+It is recommended to install the GPIO Python module using pip:
+
+    pip install RPi.GPIO
+
+The program is started by running `./start.sh` in the repositories root directory, this will create a new screen session and start the program. Using the command `screen -r smart` will open the screen where the program is running, displaying the log output. `CTRL, A + D` will close the program but keep it running in the background. `CTRL + C` will close it.
 
 This software makes use of the [MIT License](https://github.com/ScottSmudger/GPIO-Door/blob/master/LICENSE).

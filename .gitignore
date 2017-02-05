@@ -1,7 +1,7 @@
 # Custom
-logs
-www/application/logs
 */database.php
+/www/application/cache/*
+/www/application/logs/*
 
 # Code igniter
 */config/development

@@ -1,6 +1,6 @@
 # Custom
 */database.php
-/logs
+/logs/*
 /www/application/cache/*
 /www/application/logs/*
 

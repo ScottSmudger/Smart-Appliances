@@ -24,7 +24,7 @@ class Sa extends CI_Controller
 		// Require login
 		if($this->session->logged_in)
 		{
-			if($this->session->user_data["id"] == 0)
+			if($this->session->is_admin)
 			{
 				$this->load->model("admin");
 				$this->client = $this->admin->newAdmin();

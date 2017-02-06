@@ -10,11 +10,11 @@ class User extends CI_Model
 	public $details;
 	public $devices = array();
 	public $guardian;
-	protected static $instance;
+	protected $instance;
 
 	public function newUser()
 	{
-		self::$instance = $this;
+		$this->instance = $this;
 
 		$this->id = $this->session->user_details["id"];
 
@@ -22,7 +22,7 @@ class User extends CI_Model
 		$this->getGuardian();
 		$this->getDevices();
 
-		return self::$instance;
+		return $this->instance;
 	}
 
 	protected function getDetails()

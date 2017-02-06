@@ -26,7 +26,14 @@ class Authenticate extends CI_Controller
 		}
 		else
 		{
-			redirect("/dash");
+			if($this->session->is_admin)
+			{
+				redirect("/admin");
+			}
+			else
+			{
+				redirect("/dash");
+			}
 		}
 	}
 
@@ -38,17 +45,19 @@ class Authenticate extends CI_Controller
 
 		if($result)
 		{
-			$user_details = array();
-			foreach($result as $row)
+			$user_details = array(
+				"id" => $result->id,
+				"username" => $result->username,
+				"logged_in_time" => time()
+			);
+			$this->session->user_details = $user_details;
+			$this->session->logged_in = TRUE;
+
+			if($result->id == 4)
 			{
-				$user_details = array(
-					"id" => $row->id,
-					"username" => $row->username,
-					"logged_in_time" => time()
-				);
-				$this->session->user_details = $user_details;
-				$this->session->logged_in = TRUE;
+				$this->session->is_admin = TRUE;
 			}
+
 			return TRUE;
 		}
 		else
@@ -70,7 +79,7 @@ class Authenticate extends CI_Controller
 
 		if($result->num_rows() == 1)
 		{
-			return $result->result();
+			return $result->row();
 		}
 		else
 		{

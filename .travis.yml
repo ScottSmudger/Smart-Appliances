@@ -15,4 +15,4 @@ python:
 before_install:
   - sudo apt-get install -y apache2 php5 mysql-client python python-mysqldb screen
 # command to run tests
-script: pytest
+script: pytest main.py

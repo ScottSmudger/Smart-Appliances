@@ -21,9 +21,9 @@ All can be installed using the following command:
 
     sudo apt-get install apache2 php5 mysql-client python screen
 
-It is recommended to install the GPIO and MySQLdb modules using pip:
+It is recommended to install the GPIO, MySQLdb and optionally picamera modules using pip:
 
-    pip install RPi.GPIO MySQL-python
+    pip install RPi.GPIO MySQL-python picamera
 
 The program is started by running `./start.sh` in the repositories root directory, this will create a new screen session and start the program. Using the command `screen -r smart` will open the screen where the program is running, displaying the log output. `CTRL, A + D` will close the program but keep it running in the background. `CTRL + C` will close it.
 

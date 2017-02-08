@@ -45,14 +45,18 @@ class Authenticate extends CI_Controller
 
 		if($result)
 		{
+			// Get details
 			$user_details = array(
 				"id" => $result->id,
 				"username" => $result->username,
 				"logged_in_time" => time()
 			);
+
+			// Set session
 			$this->session->user_details = $user_details;
 			$this->session->logged_in = TRUE;
 
+			// If admin
 			if($result->id == 4)
 			{
 				$this->session->is_admin = TRUE;

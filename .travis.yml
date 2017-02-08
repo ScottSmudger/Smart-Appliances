@@ -13,7 +13,7 @@ python:
   - "nightly" # currently points to 3.7-dev
 # Packages to install
 before_install:
-  - sudo apt-get install -y apache2 php5 mysql-client python python-mysqldb screen
+  - sudo apt-get install -y apache2 php5 mysql-client python python-mysqldb screen python-picamera python3-picamera
 # command to install dependencies
 install: "pip install -r requirements.txt"
 # command to run tests

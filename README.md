@@ -1,4 +1,4 @@
-# Smart-Appliances ![alt text](https://api.travis-ci.org/ScottSmudger/Smart-Appliances.svg?branch=master "Travis CI Build")
+# Smart-Appliances
 A simple python-based program that monitors a Raspberry-Pi's General Purpose Input Output (GPIO) pins connected to a magnetic door switch (as of now). A MySQL database is updated with the new appliances state.
 
 A [web-interface](http://uni.scottsmudger.website) built using PHP/HTML/CSS with some elements of JavaScript and jQuery, is used to display the usage statistics of the appliances and any relevant user information.
@@ -21,9 +21,9 @@ All can be installed using the following command:
 
     sudo apt-get install apache2 php5 mysql-client python screen
 
-It is recommended to install the GPIO, MySQLdb and optionally picamera modules using pip:
+It is recommended to install the GPIO, MySQLdb, twilio and optionally picamera modules using pip:
 
-    pip install RPi.GPIO MySQL-python picamera
+    pip install RPi.GPIO MySQL-python picamera twilio
 
 The program is started by running `./start.sh` in the repositories root directory, this will create a new screen session and start the program. Using the command `screen -r smart` will open the screen where the program is running, displaying the log output. `CTRL, A + D` will close the program but keep it running in the background. `CTRL + C` will close it.
 

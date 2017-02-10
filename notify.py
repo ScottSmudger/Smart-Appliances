@@ -63,27 +63,45 @@ class Notify(object):
 		twilio = TwilioRestClient(self.account_sid, self.auth_token)
 
 		try:
-			message = twilio.messages.create(
-				body = message,
-				to = to,
-				from_ = self.from_number
-			)
-			self.log.debug("Message sent to %s from %s: %s" % (to, self.from_number, message.sid))
+			# If multiple numbers (tuple/list)
+			if isinstance(to, (list, tuple)):
+				for number in to:
+					message = twilio.messages.create(
+						body = message,
+						to = number,
+						from_ = self.from_number
+					)
+				self.log.debug("Message sent to %s from %s: %s" % (to, self.from_number, message.sid))
+			else:
+				message = twilio.messages.create(
+					body = message,
+					to = to,
+					from_ = self.from_number
+				)
+				self.log.debug("Message sent to %s from %s: %s" % (to, self.from_number, message.sid))
 
 		except TwilioRestException as e:
 			self.log.error(e)
 
 	def sendEmail(self, to, message):
 		try:
-			msg = MIMEText(message, "plain")
-			msg["Subject"] = "Regarding your appliance"
-			msg["From"] = formataddr((str(Header("Group 11 Smart Appliances", "utf-8")), self.from_email))
-
 			conn = SMTP("ssl0.ovh.net")
 			conn.set_debuglevel(False)
 			conn.login("ar51@scottsmudger.website", "AR51SERVERSITE")
+
 			try:
-				conn.sendmail(self.from_email, to, msg.as_string())
+				# If multiple emails (tuple/list)
+				if isinstance(to, (list, tuple)):
+					for email in to:
+						msg = MIMEText(message, "plain")
+						msg["Subject"] = "Regarding your appliance"
+						msg["From"] = formataddr((str(Header("Group 11 Smart Appliances", "utf-8")), self.from_email))
+						conn.sendmail(self.from_email, to, msg.as_string())
+				else:
+					msg = MIMEText(message, "plain")
+					msg["Subject"] = "Regarding your appliance"
+					msg["From"] = formataddr((str(Header("Group 11 Smart Appliances", "utf-8")), self.from_email))
+					conn.sendmail(self.from_email, to, msg.as_string())
 
 				self.log.debug("Email sent to %s from %s" % (to, self.from_email))
 			finally:

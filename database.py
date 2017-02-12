@@ -17,38 +17,38 @@ class Database(object):
 	
 	# Connects to the remote database server
 	def connect(self):
-		db_host = 'ftp.ar51.eu'
+		db_host = "ftp.ar51.eu"
 		db_port = 3306
-		db_user = 'group11'
-		db_pass = 'glyndwrgroup11'
-		db_name = 'group11'
+		db_user = "group11"
+		db_pass = "glyndwrgroup11"
+		db_name = "group11"
 		try:
-			self.log.debug("Initiated MySQL connection on %s as user %s" % (db_host, db_user))
 			self.db_connect = MySQLdb.connect(host = db_host, port = db_port, user = db_user, passwd = db_pass, db = db_name)
+			self.log.debug("Initiated MySQL connection on %s as user %s" % (db_host, db_user))
 		except MySQLdb.Error, e:
 			self.log.critical("Could not initiate MySQL connection: %s" % (e))
 			self.db_connect = False
 			sys.exit()
 	
 	# Updates the state of an appliance
-	def updateState(self, appliances, state):
-		# Update appliances current state
+	def updateState(self, appliance, state):
+		# Update appliance current state
 		try:
-			if self.query("UPDATE DEVICES SET state = %s, date_time = %s WHERE id = %s" % (state, time.time(), appliances)):
-				self.log.debug("Updating state of appliance %s to: %s" % (appliances, state))
+			if self.query("UPDATE DEVICES SET state = %s, date_time = %s WHERE id = %s" % (state, round(time.time()), appliance)):
+				self.log.debug("Updating state of appliance %s to: %s" % (appliance, state))
 			else:
-				self.log.debug("Could not update state of appliance %s to: %s" % (appliances, state))
+				self.log.debug("Could not update state of appliance %s to: %s" % (appliance, state))
 		except Exception, e:
-			self.log.critical("Failed to update appliances %s state to %s. Error: %s" % (appliances, state, e))
+			self.log.critical("Failed to update appliance %s state to %s. Error: %s" % (appliance, state, e))
 
-		# Update appliances history
+		# Update appliance history
 		try:
-			if self.query("INSERT INTO appliances_HISTORY (appliances_id, state, date_time, appliances_history) VALUES (%s, %s, %s, %s)" % (not state, time.time(), appliances, "Not sure what this is for yet")):
-				self.log.debug("Adding to appliances history state: %s for appliances %s" % (not state, appliances))
+			if self.query("INSERT INTO DEVICE_HISTORY (device_id, state, date_time) VALUES (%s, %s, %s, %s)" % (not state, round(time.time()), appliance)):
+				self.log.debug("Adding to appliance history state: %s for appliance %s" % (not state, appliance))
 			else:
-				self.log.debug("Could not add to appliances %s history for sate: %s" % (appliances, not state))
+				self.log.debug("Could not add to appliance %s history for state: %s" % (appliance, not state))
 		except Exception, e:
-			self.log.critical("Failed to update appliances %s history to %s. Error: %s" % (appliances, not state, e))
+			self.log.critical("Failed to update appliance %s history to %s. Error: %s" % (appliance, not state, e))
 	
 	# Executes a SQL query
 	def query(self, query):

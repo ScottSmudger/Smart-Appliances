@@ -1,7 +1,6 @@
 #!/usr/bin/env python
 # Local modules
 import database
-import camera
 # Python modules
 import RPi.GPIO as GPIO
 import time
@@ -36,7 +35,6 @@ class Main(object):
 		GPIO.setmode(GPIO.BCM)
 		GPIO.setup(self.fridge_door, GPIO.IN, GPIO.PUD_UP)
 		# Initialise module classes
-		#self.camera = camera.Camera()
 		self.database = database.Database()
 	
 	# Configures and initiates the Logging library
@@ -77,7 +75,7 @@ class Main(object):
 
 	# Initiates the main loop that tests the GPIO pins
 	def start(self):
-		prev_state = None
+		prev_state = 0
 		try:
 			while self.running:
 				state = GPIO.input(self.fridge_door)
@@ -86,7 +84,6 @@ class Main(object):
 					# Door is open
 					self.log.debug("Door is open!: %s" % (state))
 					# While door is open start recording and wait
-					#self.camera.startRecording()
 					time_start = time.time()
 					while GPIO.input(self.fridge_door):
 						time.sleep(1)
@@ -97,8 +94,9 @@ class Main(object):
 					# Door is closed
 					if prev_state:
 						self.log.debug("Door is closed!: %s" % (state))
-					#self.camera.stopRecording()
 				
+				# We want to insert data during the change of the door state,
+				# otherwise we will be inserting data forever
 				if state != prev_state:
 					prev_state = state
 					self.updateDoorState(state)
@@ -110,7 +108,7 @@ class Main(object):
 	# Cleans up GPIO when the script closes down
 	# Deconstructor
 	def __del__(self):
-		self.log.debug("Cleaning up door")
+		self.log.debug("Cleaning up Main")
 		GPIO.cleanup()
 	
 

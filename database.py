@@ -31,23 +31,24 @@ class Database(object):
 			sys.exit()
 	
 	# Updates the state of an appliance
-	def updateState(self, device, state):
-		# Update devices current state
+	def updateState(self, appliances, state):
+		# Update appliances current state
 		try:
-			if self.query("UPDATE DEVICES SET state = %s, date_time = %s WHERE id = %s" % (state, time.time(), device)):
-				self.log.debug("Updating state of appliance %s to: %s" % (device, state))
+			if self.query("UPDATE DEVICES SET state = %s, date_time = %s WHERE id = %s" % (state, time.time(), appliances)):
+				self.log.debug("Updating state of appliance %s to: %s" % (appliances, state))
 			else:
-				self.log.debug("Could not update state of appliance %s to: %s" % (device, state))
+				self.log.debug("Could not update state of appliance %s to: %s" % (appliances, state))
 		except Exception, e:
-			self.log.critical("Failed to update device %s state to %s. Error: %s" % (device, state, e))
+			self.log.critical("Failed to update appliances %s state to %s. Error: %s" % (appliances, state, e))
 
+		# Update appliances history
 		try:
-			if self.query("INSERT INTO DEVICE_HISTORY (device_id, state, date_time, device_history) VALUES (%s, %s, %s, %s)" % (not state, time.time(), device, "Not sure what this is for yet")):
-				self.log.debug("Adding to device history state: %s for device %s" % (not state, device))
+			if self.query("INSERT INTO appliances_HISTORY (appliances_id, state, date_time, appliances_history) VALUES (%s, %s, %s, %s)" % (not state, time.time(), appliances, "Not sure what this is for yet")):
+				self.log.debug("Adding to appliances history state: %s for appliances %s" % (not state, appliances))
 			else:
-				self.log.debug("Could not add to device %s history for sate: %s" % (device, not state))
+				self.log.debug("Could not add to appliances %s history for sate: %s" % (appliances, not state))
 		except Exception, e:
-			self.log.critical("Failed to update device %s history to %s. Error: %s" % (device, not state, e))
+			self.log.critical("Failed to update appliances %s history to %s. Error: %s" % (appliances, not state, e))
 	
 	# Executes a SQL query
 	def query(self, query):

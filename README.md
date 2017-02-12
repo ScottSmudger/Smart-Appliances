@@ -23,7 +23,7 @@ All can be installed using the following command:
 
 It is recommended to install the GPIO, MySQLdb, twilio and optionally picamera modules using pip:
 
-    pip install RPi.GPIO MySQL-python picamera twilio
+    pip install RPi.GPIO MySQL-python twilio picamera
 
 The program is started by running `./start.sh` in the repositories root directory, this will create a new screen session and start the program. Using the command `screen -r smart` will open the screen where the program is running, displaying the log output. `CTRL, A + D` will close the program but keep it running in the background. `CTRL + C` will close it.
 

@@ -31,13 +31,23 @@ class Database(object):
 			sys.exit()
 	
 	# Updates the state of an appliance
-	def updateState(self, state):
-		if self.query("INSERT INTO bedroom_door (state, time) VALUE (%s, %s)" % (state, time.time())):
-			self.log.debug("Updating door state to: %s" % (state))
-			return True
-		else:
-			self.log.debug("Could not update door state to: %s" % (state))
-			return False
+	def updateState(self, device, state):
+		# Update devices current state
+		try:
+			if self.query("UPDATE DEVICES SET state = %s, date_time = %s WHERE id = %s" % (state, time.time(), device)):
+				self.log.debug("Updating state of appliance %s to: %s" % (device, state))
+			else:
+				self.log.debug("Could not update state of appliance %s to: %s" % (device, state))
+		except Exception, e:
+			self.log.critical("Failed to update device %s state to %s. Error: %s" % (device, state, e))
+
+		try:
+			if self.query("INSERT INTO DEVICE_HISTORY (device_id, state, date_time, device_history) VALUES (%s, %s, %s, %s)" % (not state, time.time(), device, "Not sure what this is for yet")):
+				self.log.debug("Adding to device history state: %s for device %s" % (not state, device))
+			else:
+				self.log.debug("Could not add to device %s history for sate: %s" % (device, not state))
+		except Exception, e:
+			self.log.critical("Failed to update device %s history to %s. Error: %s" % (device, not state, e))
 	
 	# Executes a SQL query
 	def query(self, query):

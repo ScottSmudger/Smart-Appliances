@@ -66,7 +66,7 @@ class Main(object):
 	
 	# Updates the door status
 	def updateDoorState(self, state):
-		return self.database.updateState(state)
+		return self.database.updateState(1, state)
 	
 	# Human version of the state
 	def getHumanState(self, state):

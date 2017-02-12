@@ -3,6 +3,7 @@
 /logs/*
 /www/application/cache/*
 /www/application/logs/*
+*.pyc
 
 # Code igniter
 */config/development

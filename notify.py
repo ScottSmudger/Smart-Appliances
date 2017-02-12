@@ -13,7 +13,7 @@ from twilio.rest import TwilioRestClient
 
 class Notify(object):
 	"""
-		Class manages notifications to email/phone number using twilio
+		Class manages notifications to email/phone number(s) using twilio
 	"""
 	account_sid = "AC6b7b4178019bc48a9de7bcb575ba33df" # Your Account SID from www.twilio.com/console
 	auth_token  = "1c10daddd7cb6568364fec48e807e0d8"  # Your Auth Token from www.twilio.com/console
@@ -23,6 +23,14 @@ class Notify(object):
 	def __init__(self, **kwargs):
 
 		self.initLogger()
+
+		# Connect to SMTP server
+		conn = SMTP("ssl0.ovh.net")
+		conn.set_debuglevel(False)
+		conn.login("ar51@scottsmudger.website", "AR51SERVERSITE")
+
+		# Initialise Twilio
+		self.twilio = TwilioRestClient(self.account_sid, self.auth_token)
 
 		if kwargs is not None:
 			if "email" not in kwargs and "phone_number" not in kwargs:
@@ -59,59 +67,48 @@ class Notify(object):
 		logfile.setFormatter(format)
 		self.log.addHandler(logfile)
 
-	def sendSMS(self, to, message):
-		twilio = TwilioRestClient(self.account_sid, self.auth_token)
-
+	def _sendSMS(self, to, message):
 		try:
-			# If multiple numbers (tuple/list)
-			if isinstance(to, (list, tuple)):
-				for number in to:
-					message = twilio.messages.create(
-						body = message,
-						to = number,
-						from_ = self.from_number
-					)
-				self.log.debug("Message sent to %s from %s: %s" % (to, self.from_number, message.sid))
-			else:
-				message = twilio.messages.create(
-					body = message,
-					to = to,
-					from_ = self.from_number
-				)
-				self.log.debug("Message sent to %s from %s: %s" % (to, self.from_number, message.sid))
-
+			message = self.twilio.messages.create(
+				body = message,
+				to = number,
+				from_ = self.from_number
+			)
 		except TwilioRestException as e:
 			self.log.error(e)
+	self.log.debug("Message sent to %s from %s: %s" % (to, self.from_number, message.sid))
 
-	def sendEmail(self, to, message):
+	def sendSMS(self, to, message):
+		
+
+		# If multiple numbers (tuple/list)
+		if isinstance(to, (list, tuple)):
+			for number in to:
+				self._sendSMS(to, message)
+		else:
+			self._sendSMS(to, message)
+
+	def _sendEmail(self, to, mesage):
 		try:
-			conn = SMTP("ssl0.ovh.net")
-			conn.set_debuglevel(False)
-			conn.login("ar51@scottsmudger.website", "AR51SERVERSITE")
-
-			try:
-				# If multiple emails (tuple/list)
-				if isinstance(to, (list, tuple)):
-					for email in to:
-						msg = MIMEText(message, "plain")
-						msg["Subject"] = "Regarding your appliance"
-						msg["From"] = formataddr((str(Header("Group 11 Smart Appliances", "utf-8")), self.from_email))
-						conn.sendmail(self.from_email, to, msg.as_string())
-				else:
-					msg = MIMEText(message, "plain")
-					msg["Subject"] = "Regarding your appliance"
-					msg["From"] = formataddr((str(Header("Group 11 Smart Appliances", "utf-8")), self.from_email))
-					conn.sendmail(self.from_email, to, msg.as_string())
-
-				self.log.debug("Email sent to %s from %s" % (to, self.from_email))
-			finally:
-				conn.quit()
-
+			msg = MIMEText(message, "plain")
+			msg["Subject"] = "Regarding your appliance"
+			msg["From"] = formataddr((str(Header("Group 11 Smart Appliances", "utf-8")), self.from_email))
+			conn.sendmail(self.from_email, to, msg.as_string())
 		except Exception, e:
 			self.log.error(e)
+		self.log.debug("Email sent to %s from %s" % (to, self.from_email))
+
+	def sendEmail(self, to, message):
+		# If multiple emails (tuple/list)
+		if isinstance(to, (list, tuple)):
+			for email in to:
+				self._sendEmail(to, message)
+		else:
+			self._sendEmail(to, message)
 
 	def __del__(self):
 		self.log.debug("Cleaning up notify")
+		conn.quit()
 
 
 if __name__ == "__main__":

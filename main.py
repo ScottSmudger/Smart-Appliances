@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 # Local modules
 import database
+from notify import notify
 # Python modules
 import RPi.GPIO as GPIO
 import time
@@ -84,11 +85,12 @@ class Main(object):
 					# Door is open
 					self.log.debug("Door is open!: %s" % (state))
 					# While door is open start recording and wait
-					time_start = time.time()
+					open_length = 0
 					while GPIO.input(self.fridge_door):
+						if open_length > 5:
+							notify(phone_number="+447714456013")
+						open_length += 1
 						time.sleep(1)
-					time_end = time.time()
-					open_length = round(time_end - time_start)
 					self.log.debug("Door was open for %s seconds" % (open_length))
 				else:
 					# Door is closed

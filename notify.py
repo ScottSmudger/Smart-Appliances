@@ -77,10 +77,10 @@ class Notify(object):
 				to = number,
 				from_ = self.from_number
 			)
+			self.log.debug("Message sent to %s from %s: %s" % (to, self.from_number, message.sid))
 		except TwilioRestException as e:
-			self.log.error(e)
-	self.log.debug("Message sent to %s from %s: %s" % (to, self.from_number, message.sid))
-
+			self.log.error("Error sending SMS: %s" % e)
+	
 	# Decides if there are multiple numbers
 	def sendSMS(self, to, message):
 		# If multiple numbers (tuple/list)
@@ -97,9 +97,9 @@ class Notify(object):
 			msg["Subject"] = "Regarding your appliance"
 			msg["From"] = formataddr((str(Header("Group 11 Smart Appliances", "utf-8")), self.from_email))
 			conn.sendmail(self.from_email, to, msg.as_string())
+			self.log.debug("Email sent to %s from %s" % (to, self.from_email))
 		except Exception, e:
-			self.log.error(e)
-		self.log.debug("Email sent to %s from %s" % (to, self.from_email))
+			self.log.error("Error sending Email: %s" % e)
 
 	# Decides if there are multiple emails
 	def sendEmail(self, to, message):
@@ -114,7 +114,7 @@ class Notify(object):
 	def __del__(self):
 		self.log.debug("Cleaning up notify")
 		conn.quit()
-
+	
 
 if __name__ == "__main__":
 	Notify(email="scottsmudger@hotmail.com")

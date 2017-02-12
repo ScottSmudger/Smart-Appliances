@@ -8,13 +8,13 @@ from datetime import datetime
 import os
 import logging
 """
-Level               Numeric value
-CRITICAL        50
-ERROR               40
-WARNING         30
-INFO               20
-DEBUG            10
-NOTSET            0
+Level		Numeric value
+CRITICAL	50
+ERROR		40
+WARNING		30
+INFO		20
+DEBUG		10
+NOTSET		0
 """
 
 

@@ -25,6 +25,7 @@ class Main(object):
 	"""
 	running = True
 	
+	# Setup GPIO, logging and initialise the database class
 	def __init__(self):
 		# Set constants
 		self.fridge_door = 18
@@ -67,6 +68,7 @@ class Main(object):
 	def updateDoorState(self, state):
 		return self.database.updateState(state)
 	
+	# Human version of the state
 	def getHumanState(self, state):
 		if state:
 			return "Open"

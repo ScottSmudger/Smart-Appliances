@@ -20,6 +20,7 @@ class Notify(object):
 	from_number = "+442033222777"
 	from_email = "uni@scottsmudger.website"
 
+	# Constructor
 	def __init__(self, **kwargs):
 
 		self.initLogger()
@@ -39,7 +40,8 @@ class Notify(object):
 			else:
 				if "email" in kwargs:
 					self.sendEmail(kwargs["email"], "test")
-				else:
+
+				if "phone_number" in kwargs:
 					self.sendSMS(kwargs["phone_number"])
 
 	def initLogger(self):
@@ -67,6 +69,7 @@ class Notify(object):
 		logfile.setFormatter(format)
 		self.log.addHandler(logfile)
 
+	# Sends the actual SMS (isn't directly callable)
 	def _sendSMS(self, to, message):
 		try:
 			message = self.twilio.messages.create(
@@ -78,9 +81,8 @@ class Notify(object):
 			self.log.error(e)
 	self.log.debug("Message sent to %s from %s: %s" % (to, self.from_number, message.sid))
 
+	# Decides if there are multiple numbers
 	def sendSMS(self, to, message):
-		
-
 		# If multiple numbers (tuple/list)
 		if isinstance(to, (list, tuple)):
 			for number in to:
@@ -88,6 +90,7 @@ class Notify(object):
 		else:
 			self._sendSMS(to, message)
 
+	# Sends the actual email (isn't directly callable)
 	def _sendEmail(self, to, mesage):
 		try:
 			msg = MIMEText(message, "plain")
@@ -98,6 +101,7 @@ class Notify(object):
 			self.log.error(e)
 		self.log.debug("Email sent to %s from %s" % (to, self.from_email))
 
+	# Decides if there are multiple emails
 	def sendEmail(self, to, message):
 		# If multiple emails (tuple/list)
 		if isinstance(to, (list, tuple)):
@@ -106,6 +110,7 @@ class Notify(object):
 		else:
 			self._sendEmail(to, message)
 
+	# Deconstructor
 	def __del__(self):
 		self.log.debug("Cleaning up notify")
 		conn.quit()

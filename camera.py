@@ -9,6 +9,7 @@ class Camera(object):
     """
         Camera class that manages the recording and photos
     """
+    # Constructor
     def __init__(self):
         date = datetime.now().strftime("%d_%m_%y")
         month = datetime.now().strftime("%m")
@@ -44,6 +45,7 @@ class Camera(object):
         self.camera.capture(path)
         self.log.info("Screenshot created: %s" % (path))
     
+    # Deconstructor
     def __del__(self):
         self.log.debug("Cleaning up Camera")
         if self.camera.previewing:

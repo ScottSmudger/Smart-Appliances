@@ -108,6 +108,7 @@ class Main(object):
 			self.log.info("Program interrupted")
 	
 	# Cleans up GPIO when the script closes down
+	# Deconstructor
 	def __del__(self):
 		self.log.debug("Cleaning up door")
 		GPIO.cleanup()

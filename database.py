@@ -9,11 +9,13 @@ class Database(object):
 	"""
 		Database class that manages the connection and any queries
 	"""
+	# Constructor, calls connect() on initialisation
 	def __init__(self):
 		self.log = logging.getLogger(type(self).__name__)
 		self.log.debug("Initialising Database")
 		self.connect()
 	
+	# Connects to the remote database server
 	def connect(self):
 		db_host = 'ftp.ar51.eu'
 		db_port = 3306
@@ -28,6 +30,7 @@ class Database(object):
 			self.db_connect = False
 			sys.exit()
 	
+	# Updates the state of an appliance
 	def updateState(self, state):
 		if self.query("INSERT INTO bedroom_door (state, time) VALUE (%s, %s)" % (state, time.time())):
 			self.log.debug("Updating door state to: %s" % (state))
@@ -36,6 +39,7 @@ class Database(object):
 			self.log.debug("Could not update door state to: %s" % (state))
 			return False
 	
+	# Executes a SQL query
 	def query(self, query):
 		self.log.debug("Running query: %s" % (query))
 		try:
@@ -49,6 +53,7 @@ class Database(object):
 		cursor.close()
 		return cursor
 	
+	# Deconstructor
 	def __del__(self):
 		self.log.debug("Cleaning up Database")
 		if self.db_connect:

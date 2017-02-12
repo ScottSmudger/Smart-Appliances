@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # Local modules
 import database
-from notify import notify
+import notify
 # Python modules
 import RPi.GPIO as GPIO
 import time
@@ -37,7 +37,8 @@ class Main(object):
 		GPIO.setup(self.fridge_door, GPIO.IN, GPIO.PUD_UP)
 		# Initialise module classes
 		self.database = database.Database()
-	
+		self.notify = notify.Notify()
+
 	# Configures and initiates the Logging library
 	def initLogger(self):
 		date = datetime.now().strftime("%d_%m_%y")
@@ -63,6 +64,10 @@ class Main(object):
 		logfile.setFormatter(format)
 		self.log.addHandler(logfile)
 	
+	# Send an SMS or email
+	def sendNotify(self, **kwargs):
+		return self.notify.sendNotification(**kwargs)
+
 	# Updates the door status
 	def updateDoorState(self, state):
 		return self.database.updateState(1, state)
@@ -77,28 +82,33 @@ class Main(object):
 	# Initiates the main loop that tests the GPIO pins
 	def start(self):
 		prev_state = 0
+		open_length = 0
+		sent1 = False
 		try:
 			while self.running:
 				state = GPIO.input(self.fridge_door)
 				
 				if state:
 					# Door is open
-					self.log.debug("Door is open!: %s" % (state))
+					self.log.debug("Door is open!: %s" % state)
 					# While door is open start recording and wait
-					open_length = 0
 					while GPIO.input(self.fridge_door):
-						if open_length > 5:
-							notify(phone_number="+447714456013")
+						if open_length >= 5:
+							if not sent1:
+								# For now texts can only be sent to my number (scott)
+								self.sendNotify(phone_number = "07714456013", message = "Fridge door has been open for %s seconds!" % open_length)
+								sent1 = True
 						open_length += 1
 						time.sleep(1)
-					self.log.debug("Door was open for %s seconds" % (open_length))
+					self.log.debug("Door was open for %s seconds" % open_length)
+					self.sendNotify(phone_number = "07714456013", message = "Fridge door has been closed after %s seconds!" % open_length)
 				else:
 					# Door is closed
 					if prev_state:
-						self.log.debug("Door is closed!: %s" % (state))
+						self.log.debug("Door is closed!: %s" % state)
 				
-				# We want to insert data during the change of the door state,
-				# otherwise we will be inserting data forever
+				# We only want to insert data during the change of the door state,
+				# otherwise we will be inserting data forever (which is bad)
 				if state != prev_state:
 					prev_state = state
 					self.updateDoorState(state)

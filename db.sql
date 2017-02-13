@@ -29,7 +29,6 @@ CREATE TABLE `DEVICE_HISTORY` (
   `device_id` int(11) NOT NULL,
   `state` int(1) NOT NULL,
   `date_time` int(11) NOT NULL,
-  `device_history` varchar(45) NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `id_UNIQUE` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;

@@ -25,8 +25,10 @@ class Notify(object):
 		self.log = logging.getLogger(type(self).__name__)
 		self.log.debug("Initialising Notify")
 
+		# Initialise twilio
 		try:
 			from twilio.rest import TwilioRestClient
+			self.twilio = TwilioRestClient(self.account_sid, self.auth_token)
 		except Exception, e:
 			self.log.error("Twilio module is not installed! Run \"pip install twilio\": ", e)
 
@@ -34,9 +36,6 @@ class Notify(object):
 		self.smtp = SMTP("ssl0.ovh.net")
 		self.smtp.set_debuglevel(False)
 		self.smtp.login("ar51@scottsmudger.website", "AR51SERVERSITE")
-
-		# Initialise Twilio
-		self.twilio = TwilioRestClient(self.account_sid, self.auth_token)
 
 	def sendNotification(self, **kwargs):
 		if kwargs is not None:
@@ -68,7 +67,6 @@ class Notify(object):
 	# Decides if there are multiple numbers
 	def sendSMS(self, to, message):
 		# If multiple numbers (tuple/list)
-		self.log.debug("Number = %s" % to)
 		if isinstance(to, (list, tuple)):
 			for number in to:
 				self._sendSMS(to, message)

@@ -91,17 +91,17 @@ class Main(object):
 				if state:
 					# Door is open
 					self.log.debug("Door is open!: %s" % state)
-					# While door is open start recording and wait
+					# While door is start timer and wait
 					while GPIO.input(self.fridge_door):
 						if open_length >= 5:
 							if not sent1:
 								# For now texts can only be sent to my number (scott)
-								self.sendNotify(phone_number = "07714456013", message = "Fridge door has been open for %s seconds!" % open_length)
+								self.sendNotify(phone_number = "+447714456013", message = "Fridge door has been open for %s seconds!" % open_length)
 								sent1 = True
 						open_length += 1
 						time.sleep(1)
 					self.log.debug("Door was open for %s seconds" % open_length)
-					self.sendNotify(phone_number = "07714456013", message = "Fridge door has been closed after %s seconds!" % open_length)
+					self.sendNotify(phone_number = "+447714456013", message = "Fridge door has been closed after %s seconds!" % open_length)
 				else:
 					# Door is closed
 					if prev_state:

@@ -32,7 +32,7 @@ class Database(object):
 	
 	# Updates the state of an appliance
 	def updateState(self, appliance, state):
-		# Update appliance current state
+		# Update appliances current state
 		try:
 			if self.query("UPDATE DEVICES SET state = %s, date_time = %s WHERE id = %s" % (state, round(time.time()), appliance)):
 				self.log.debug("Updating state of appliance %s to: %s" % (appliance, state))
@@ -41,7 +41,7 @@ class Database(object):
 		except Exception, e:
 			self.log.critical("Failed to update appliance %s state to %s. Error: %s" % (appliance, state, e))
 
-		# Update appliance history
+		# Update appliances state history
 		try:
 			if self.query("INSERT INTO DEVICE_HISTORY (device_id, state, date_time) VALUES (%s, %s, %s, %s)" % (not state, round(time.time()), appliance)):
 				self.log.debug("Adding to appliance history state: %s for appliance %s" % (not state, appliance))
@@ -50,7 +50,7 @@ class Database(object):
 		except Exception, e:
 			self.log.critical("Failed to update appliance %s history to %s. Error: %s" % (appliance, not state, e))
 	
-	# Executes a SQL query
+	# Execute a SQL query
 	def query(self, query):
 		self.log.debug("Running query: %s" % (query))
 		try:

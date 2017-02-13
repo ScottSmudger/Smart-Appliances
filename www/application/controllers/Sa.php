@@ -3,11 +3,22 @@
 defined('BASEPATH') OR exit('No direct script access allowed');
 
 
+/**
+* Sa
+* 
+* @package      Smart Appliances
+* @author       Scott Smith <s15001442@mail.glyndwr.ac.uk>
+*/
 class Sa extends CI_Controller
 {
 	protected $data = array();
 	protected $client;
 
+	/**
+	* Classes constructor
+	*
+	* @return null
+	*/
 	public function __construct()
 	{
 		parent::__construct();
@@ -19,11 +30,19 @@ class Sa extends CI_Controller
 		date_default_timezone_set("UTC");
 	}
 	
+	/**
+	* View - Displays the page being called
+	*
+	* @param string $page The page to be displayed
+	* @return null
+	*/
 	public function view($page = "dash")
 	{
 		// Require login
 		if($this->session->logged_in)
 		{
+			// If logged in display the requested page,
+			// or admin page if logged in as an admin
 			if($this->session->is_admin)
 			{
 				$this->load->model("admin");

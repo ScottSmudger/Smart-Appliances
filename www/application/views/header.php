@@ -25,15 +25,20 @@
 	<meta name="theme-color" content="#ffffff">
 	<script src="//ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
 	<script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-	</head>
+</head>
 <body>
 <header>
 	<div class="logowrap">
-		<img id="logo" src="<?=base_url("application/assets")?>/images/logo.png"><?php
+		<a href="/"><img id="logo" src="<?=base_url("application/assets")?>/images/logo.png"></a>
+	</div>	
+	<ul>
+		<li><a href="/support" target="_href">Support</a></li>
+		<li><a href="http://github.com/ScottSmudger/Smart-Appliances" target="_href">Github</a></li>
+		<?php
 		if($this->session->logged_in)
 		{ ?>
-			<a href="/logout"><button id="logout" type="button">Log Out</button></a></div><?php
+			<li class="navright"><a href="/logout">Log Out</a></li><?php
 		} ?>
-	</div>	
+	</ul>
 </header>
 <main>

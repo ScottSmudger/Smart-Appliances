@@ -1,6 +1,6 @@
 </main>
-<footer style="height: 15px">
-	<h5><i>Copyright&copy; Group 11</i></h5>
+<footer>
+	<h5 id ="copyright">Copyright &copy; Group 11</h5>
 </footer>
 </body>
 </html>

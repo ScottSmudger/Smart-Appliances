@@ -3,8 +3,20 @@
 defined('BASEPATH') OR exit('No direct script access allowed');
 
 
+/**
+* Authenticate
+* 
+* @package      Smart Appliances
+* @subpackage   Authenticate
+* @author       Scott Smith <s15001442@mail.glyndwr.ac.uk>
+*/
 class Authenticate extends CI_Controller
 {
+	/**
+	* Classes constructor
+	*
+	* @return null
+	*/
 	public function __construct()
 	{
 		parent::__construct();
@@ -15,11 +27,17 @@ class Authenticate extends CI_Controller
 		$this->benchmark->mark("starting_point");
 	}
 
+	/**
+	* index - Displays the login form
+	*
+	* @return null
+	*/
 	public function index()
 	{
 		$this->form_validation->set_rules("username", "Username", "trim|required|xss_clean");
 		$this->form_validation->set_rules("password", "Password", "trim|required|xss_clean|callback_check_database");
 
+		// Check if the form succeeded
 		if($this->form_validation->run() == FALSE)
 		{
 			$this->login();
@@ -37,12 +55,19 @@ class Authenticate extends CI_Controller
 		}
 	}
 
+	/**
+	* check_database - Calls checkLogin() function to get the users details
+	*
+	* @param string $password The password to be checked
+	* @return bool
+	*/
 	public function check_database($password)
 	{
 		$username = $this->input->post("username");
 
 		$result = $this->checkLogin($username, $password);
 
+		// Check if checkLogin() returns something
 		if($result)
 		{
 			// Get details
@@ -71,6 +96,13 @@ class Authenticate extends CI_Controller
 		}
 	}
 
+	/**
+	* checkLogin - Checks the users details against the database
+	*
+	* @param string $username The username to be checked
+	* @param string $password The password to be checked
+	* @return bool
+	*/
 	protected function checkLogin($username, $password)
 	{
 		$this->db->select("id, username, password");
@@ -78,10 +110,11 @@ class Authenticate extends CI_Controller
 		$this->db->where("username", $username);
 		$this->db->where("password", $password);
 		$this->db->limit(1);
-
 		$result = $this->db->get();
 
-		if($result->num_rows() == 1)
+		// Check if the query returns something,
+		// and that it contains one row
+		if($result AND $result->num_rows() == 1)
 		{
 			return $result->row();
 		}
@@ -91,6 +124,11 @@ class Authenticate extends CI_Controller
 		}
 	}
 
+	/**
+	* login - Displays the login page
+	*
+	* @return null
+	*/
 	public function login()
 	{
 		$this->load->view("header");
@@ -98,6 +136,11 @@ class Authenticate extends CI_Controller
 		$this->load->view("footer");
 	}
 
+	/**
+	* login - Displays the logout page
+	*
+	* @return null
+	*/
 	public function logout()
 	{
 		// Remove session data

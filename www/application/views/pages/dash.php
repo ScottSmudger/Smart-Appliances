@@ -46,7 +46,7 @@
 						} ?>
 					</tbody>
 				</table>
-				</br>
+				<br/>
 			</div>
 			<div id="container"></div>
 		</div>

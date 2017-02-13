@@ -2,16 +2,16 @@
 	<div class="row">
 		<div class="col-sm-4">
 			<div id="topleft">
-				<h3 class ="title">User Details</h3>
-				<h4 class = "subtitle">Name</h4><p class ="info"><?=ucwords(strtolower($user->details["name"]))?></p>
-				<h4 class = "subtitle">Age</h4><p class ="info"><?=$user->details["age"] . " (".unix_to_human($user->details["dob"], FALSE, "eu").")"?></p>
-				<h4 class = "subtitle">Address</h4><p class ="info"><?=$user->details["house"] . " " . ucwords(strtolower($user->details["street"])) . ",<br/>" . ucfirst(strtolower($user->details["town_city"])) . ",<br/>" . $user->details["postcode"]?></p>
-				<h4 class = "subtitle">Telephone</h4><p class= "info"><?=$user->details["phone"]?></p>
+				<h3 class="title">User Details</h3>
+				<h4 class="subtitle">Name</h4><p class="info"><?=ucwords(strtolower($user->details["name"]))?></p>
+				<h4 class="subtitle">Age</h4><p class="info"><?=$user->details["age"] . " (".unix_to_human($user->details["dob"], FALSE, "eu").")"?></p>
+				<h4 class="subtitle">Address</h4><p class="info"><?=$user->details["house"] . " " . ucwords(strtolower($user->details["street"])) . ",<br/>" . ucfirst(strtolower($user->details["town_city"])) . ",<br/>" . $user->details["postcode"]?></p>
+				<h4 class="subtitle">Telephone</h4><p class= "info"><?=$user->details["phone"]?></p>
 			</div>
 			<div id="bottomleft">
-				<h3 class ="title">View Activity</h3><br/>
-				<h4 class ="subtitle">Devices</h4>
-				<select id = "dropdown1" name="Device">
+				<h3 class="title">View Activity</h3><br/>
+				<h4 class="subtitle">Devices</h4>
+				<select id="dropdown1" name="Device">
 					<option value="" ></option>
 					<option value="Fridge">Fridge</option>
 					<option value="Microwave">Microwave</option>
@@ -21,8 +21,8 @@
 			</div>
 		</div>
 		<div class="col-sm-8">
-			<div id = "table">
-			<h3 class = "title">User Data</h3>
+			<div id="table">
+			<h3 class="title">User Data</h3>
 				<table class="table-striped">
 					<thead>
 						<tr class="theadings">

@@ -72,49 +72,5 @@ class Device extends CI_Model
 
 			$this->instance->$key = $value;
 		}
-
-		$this->getDevicesHistory();
-	}
-	
-	/**
-	* Gets the device history ready for plotting on the highcharts graph
-	*
-	* @return null
-	*/
-	protected function getDevicesHistory()
-	{
-		$this->db->select("device_id, state, date_time");
-		$this->db->from("DEVICE_HISTORY");
-		$result = $this->db->get();
-
-		// Check if query returns something
-		if($result)
-		{
-			$devicecount = 0;
-			foreach($this->devices as $device)
-			{
-				$this->db->select("state, date_time");
-				$this->db->from("DEVICE_HISTORY");
-				$this->db->where("device_id", $device->id);
-				$this->db->order_by("date_time", "DESC");
-				$history = $this->db->get();
-
-				foreach($history->result_array() as $row)
-				{
-					// Change data types to integer otherwise jQuery will not display them
-					settype($row["date_time"], "int");
-					settype($row["state"], "int");
-
-					$this->instance->graph[$devicecount]["name"] = $device->appliance;
-					$this->instance->graph[$devicecount]["data"][] = array($row["date_time"], $row["state"]);
-
-				}
-				$devicecount ++;
-			}
-		}
-		else
-		{
-			show_error($this->db->error()["message"], 500, "SQL Error: ".$this->db->error()["code"]);
-		}
 	}
 }

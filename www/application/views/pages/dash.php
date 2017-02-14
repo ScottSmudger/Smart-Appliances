@@ -1,11 +1,18 @@
+<?php
+
+echo "<pre>";
+var_dump(json_encode($user->graph));
+echo "</pre>";
+
+?>
 <div class="container-fluid">
 	<div class="row">
 		<div class="col-sm-4">
 			<div id="topleft">
 				<h3 class="title">User Details</h3>
-				<h4 class="subtitle">Name</h4><p class="info"><?=ucwords(strtolower($user->details["name"]))?></p>
-				<h4 class="subtitle">Age</h4><p class="info"><?=$user->details["age"] . " (".unix_to_human($user->details["dob"], FALSE, "eu").")"?></p>
-				<h4 class="subtitle">Address</h4><p class="info"><?=$user->details["house"] . " " . ucwords(strtolower($user->details["street"])) . ",<br/>" . ucfirst(strtolower($user->details["town_city"])) . ",<br/>" . $user->details["postcode"]?></p>
+				<h4 class="subtitle">Name</h4><p class="info"><?=$user->details["name"]?></p>
+				<h4 class="subtitle">Age</h4><p class="info"><?=$user->details["age"] . " (".$user->details["dob"].")"?></p>
+				<h4 class="subtitle">Address</h4><p class="info"><?=$user->details["house"] . " " . $user->details["street"] . ",<br/>" . $user->details["town_city"] . ",<br/>" . $user->details["postcode"]?></p>
 				<h4 class="subtitle">Telephone</h4><p class= "info"><?=$user->details["phone"]?></p>
 			</div>
 			<div id="bottomleft">
@@ -56,16 +63,25 @@
 <script>
 Highcharts.chart('container', {
 	title: {
-		text: 'State of Devices from '
+		text: 'State of Devices for user <?=$user->details["name"]?>'
 	},
 
 	xAxis: {
 		title: {
 			text: 'Time'
-		}
+		},
+		type: 'datetime'
 	},
 
 	yAxis: {
+        categories: ['Closed', 'Open'],
+
+        labels: {
+            formatter: function () {
+                return this.value;
+            }
+        },
+
 		title: {
 			text: 'State'
 		}
@@ -83,38 +99,6 @@ Highcharts.chart('container', {
 		}
 	},
 
-	series: [{
-		name: 'Fridge',
-		data: [
-			[1486972800, 0],
-			[1486980000, 0],
-			[1486983600, 1],
-			[1486985400, 0],
-			[1486987200, 1],
-			[1486989000, 0],
-			[1486999800, 1],
-			[1487001600, 0],
-			[1487001600, 0],
-			[1487005200, 0],
-			[1487008800, 1],
-			[1487016000, 1]
-		]
-	}, {
-		name: 'Microwave',
-		data: [
-			[1486972800, 1],
-			[1486980000, 0],
-			[1486983600, 0],
-			[1486985400, 1],
-			[1486987200, 0],
-			[1486989000, 1],
-			[1486999800, 0],
-			[1487001600, 1],
-			[1487001600, 1],
-			[1487005200, 1],
-			[1487008800, 0],
-			[1487016000, 0]
-		]
-	}]
+	series: <?=json_encode($user->graph)?>
 });
 </script>

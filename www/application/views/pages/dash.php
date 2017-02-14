@@ -1,10 +1,3 @@
-<?php
-
-echo "<pre>";
-var_dump(json_encode($user->graph));
-echo "</pre>";
-
-?>
 <div class="container-fluid">
 	<div class="row">
 		<div class="col-sm-4">
@@ -61,44 +54,47 @@ echo "</pre>";
 </div>
 
 <script>
-Highcharts.chart('container', {
-	title: {
-		text: 'State of Devices for user <?=$user->details["name"]?>'
-	},
-
-	xAxis: {
+	Highcharts.chart('container', {
 		title: {
-			text: 'Time'
+			text: 'State of Devices for user <?=$user->details["name"]?>'
 		},
-		type: 'datetime'
-	},
 
-	yAxis: {
-        categories: ['Closed', 'Open'],
+		// X axis (Device state)
+		xAxis: {
+			title: {
+				text: 'Time'
+			},
+			type: 'datetime'
+		},
 
-        labels: {
-            formatter: function () {
-                return this.value;
-            }
-        },
+		// Y axis (time)
+		yAxis: {
+			categories: ['Closed', 'Open'],
 
-		title: {
-			text: 'State'
-		}
-	},
+			labels: {
+				formatter: function () {
+					return this.value;
+				}
+			},
 
-	legend: {
-		layout: 'vertical',
-		align: 'right',
-		verticalAlign: 'middle'
-	},
+			title: {
+				text: 'State'
+			}
+		},
 
-	plotOptions: {
-		series: {
-			pointStart: 2017
-		}
-	},
+		legend: {
+			layout: 'vertical',
+			align: 'right',
+			verticalAlign: 'middle'
+		},
 
-	series: <?=json_encode($user->graph)?>
-});
+		plotOptions: {
+			series: {
+				pointStart: 2017
+			}
+		},
+
+		// Graphs data
+		series: <?=json_encode($user->graph)?>
+	});
 </script>

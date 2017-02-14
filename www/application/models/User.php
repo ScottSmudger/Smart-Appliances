@@ -35,6 +35,7 @@ class User extends CI_Model
 		$this->getDetails();
 		$this->getGuardian();
 		$this->getDevices();
+		$this->getDevicesHistory();
 
 		return $this->instance;
 	}

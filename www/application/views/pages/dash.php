@@ -67,13 +67,6 @@
 			type: 'datetime'
 		},
 
-		// Formats the unix time properly so we can see
-		// the hour and minute
-		tooltip: {
-			xDateFormat: '%a. %e %B %Y - %H:%M',
-			shared: true
-		},
-
 		// Y axis (time)
 		yAxis: {
 			categories: ['Closed', 'Open'],
@@ -87,6 +80,13 @@
 			title: {
 				text: 'State'
 			}
+		},
+
+		// Formats the unix time properly so we can see
+		// the hour and minute
+		tooltip: {
+			xDateFormat: '%a. %e %B %Y - %H:%M',
+			shared: true
 		},
 
 		// Formats the legend representing each series

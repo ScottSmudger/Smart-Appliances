@@ -151,7 +151,7 @@ class User extends CI_Model
 					settype($row["state"], "int");
 
 					$this->instance->graph[$devicecount]["name"] = $device->appliance;
-					$this->instance->graph[$devicecount]["data"][] = array($row["date_time"], $row["state"]);
+					$this->instance->graph[$devicecount]["data"][] = array($row["date_time"] * 1000, $row["state"]);
 
 				}
 				$devicecount ++;

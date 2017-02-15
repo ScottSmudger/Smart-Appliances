@@ -56,7 +56,7 @@
 <script>
 	Highcharts.chart('container', {
 		title: {
-			text: 'State of Devices for user <?=$user->details["name"]?>'
+			text: 'Device States for <?=$user->details["name"]?>'
 		},
 
 		// X axis (Device state)
@@ -65,6 +65,13 @@
 				text: 'Time'
 			},
 			type: 'datetime'
+		},
+
+		// Formats the unix time properly so we can see
+		// the hour and minute
+		tooltip: {
+			xDateFormat: '%a. %e %B %Y - %H:%M',
+			shared: true
 		},
 
 		// Y axis (time)
@@ -82,19 +89,14 @@
 			}
 		},
 
+		// Formats the legend representing each series
 		legend: {
 			layout: 'vertical',
 			align: 'right',
 			verticalAlign: 'middle'
 		},
 
-		plotOptions: {
-			series: {
-				pointStart: 2017
-			}
-		},
-
-		// Graphs data
+		// json_encode()'d for plotting on the graph
 		series: <?=json_encode($user->graph)?>
 	});
 </script>

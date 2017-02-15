@@ -30,6 +30,8 @@ class User extends CI_Model
 	{
 		$this->instance = $this;
 
+		$this->load->helper("date");
+
 		$this->id = $this->session->user_details["id"];
 
 		$this->getDetails();
@@ -62,6 +64,7 @@ class User extends CI_Model
 			$from->setTimestamp($this->details["dob"]);
 			$to = new DateTime('today');
 			$this->details["age"] = $from->diff($to)->y;
+			$this->details["dob"] = unix_to_human($this->details["dob"], FALSE, "eu");
 		}
 		else
 		{

@@ -122,37 +122,89 @@ class User extends CI_Model
 	}
 
 	/**
-	* Gets the device history ready for plotting on the highcharts graph
+	* Gets the device history for each users device
+	* Formats it ready for plotting on the highcharts graph
+	*
+	* e.g. JSON:
+[{
+	"name":"Fridge",
+	"data":[
+		[1487188233,1],
+		[1487184633,0],
+		[1487181033,1],
+		[1487177433,0],
+		[1487173833,1]
+	]
+},{
+	"name":"Oven",
+	"data":[
+		[1487188233,0],
+		[1487184633,1],
+		[1487181033,0],
+		[1487177433,1],
+		[1487173833,0]
+	]
+}]
+	* e.g. PHP:
+	Array (
+    [0] => Array (
+        [name] => Fridge
+        [data] => Array (
+            [0] => Array (
+                [0] => 1487188233
+                [1] => 1
+            )
+            [n] => Array (
+                [0] => 1487173833
+                [1] => 1
+            )
+        )
+    ),
+    [1] => Array (
+        [name] => Oven
+        [data] => Array (
+            [0] => Array (
+                [0] => 1487188233
+                [1] => 0
+            )
+            [n] => Array (
+                [0] => 1487173833
+                [1] => 0
+            )
+        )
+    ))
 	*
 	* @return null
 	*/
 	protected function getDevicesHistory()
 	{
-		$this->db->select("DEVICES.appliance, DEVICE_HISTORY.id, DEVICE_HISTORY.state, DEVICE_HISTORY.date_time");
-		$this->db->from("USERS");
-		$this->db->join('DEVICES', 'USERS.id = DEVICES.USER_ID');
-		$this->db->join('DEVICE_HISTORY', 'DEVICES.id = DEVICE_HISTORY.DEVICE_ID');
-		$this->db->where("USERS.id", $this->session->user_details["id"]);
-		$result = $this->db->get();
-
-		// Check if query returns something
-		if($result)
+		$devicecount = 0;
+		foreach($this->devices as $device)
 		{
-			$devicecount = 0;
-			foreach($result->result_array() as $row)
+			$this->db->select("state, date_time");
+			$this->db->from("DEVICE_HISTORY");
+			$this->db->where("device_id", $device->id);
+			$this->db->order_by("date_time", "DESC");
+			$history = $this->db->get();
+
+			if($history)
 			{
-				// Change data types to integer otherwise jQuery will not display them
-				settype($row["date_time"], "int");
-				settype($row["state"], "int");
-
-				$this->graph[$devicecount]["name"] = $row["appliance"];
-				$this->graph[$devicecount]["data"][] = array($row["date_time"] * 1000, $row["state"]);
+				foreach($history->result_array() as $row)
+				{
+					// Change data types to integer otherwise jQuery will not display them
+					settype($row["date_time"], "int");
+					settype($row["state"], "int");
+					$this->instance->graph[$devicecount]["name"] = $device->appliance;
+					$this->instance->graph[$devicecount]["data"][] = array($row["date_time"], $row["state"]);
+				}
 			}
+			else
+			{
+				show_error($this->db->error()["message"], 500, "SQL Error: ".$this->db->error()["code"]);
+				break;
+			}
+
 			$devicecount ++;
-		}
-		else
-		{
-			show_error($this->db->error()["message"], 500, "SQL Error: ".$this->db->error()["code"]);
 		}
 	}
 }

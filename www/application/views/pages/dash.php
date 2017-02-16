@@ -1,3 +1,9 @@
+<?php
+echo"<pre>";
+print_r(json_encode($user->graph));
+print_r($user->graph);
+echo"</pre>";
+?>
 <div class="container-fluid">
 	<div class="row">
 		<div class="col-sm-4">

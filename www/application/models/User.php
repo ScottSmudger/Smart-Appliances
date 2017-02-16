@@ -147,32 +147,32 @@ class User extends CI_Model
 }]
 	* e.g. PHP:
 	Array (
-    [0] => Array (
-        [name] => Fridge
-        [data] => Array (
-            [0] => Array (
-                [0] => 1487188233
-                [1] => 1
-            )
-            [n] => Array (
-                [0] => 1487173833
-                [1] => 1
-            )
-        )
-    ),
-    [1] => Array (
-        [name] => Oven
-        [data] => Array (
-            [0] => Array (
-                [0] => 1487188233
-                [1] => 0
-            )
-            [n] => Array (
-                [0] => 1487173833
-                [1] => 0
-            )
-        )
-    ))
+	[0] => Array (
+		[name] => Fridge
+		[data] => Array (
+			[0] => Array (
+				[0] => 1487188233
+				[1] => 1
+			)
+			[n] => Array (
+				[0] => 1487173833
+				[1] => 1
+			)
+		)
+	),
+	[1] => Array (
+		[name] => Oven
+		[data] => Array (
+			[0] => Array (
+				[0] => 1487188233
+				[1] => 0
+			)
+			[n] => Array (
+				[0] => 1487173833
+				[1] => 0
+			)
+		)
+	))
 	*
 	* @return null
 	*/
@@ -195,7 +195,7 @@ class User extends CI_Model
 					settype($row["date_time"], "int");
 					settype($row["state"], "int");
 					$this->instance->graph[$devicecount]["name"] = $device->appliance;
-					$this->instance->graph[$devicecount]["data"][] = array($row["date_time"], $row["state"]);
+					$this->instance->graph[$devicecount]["data"][] = array($row["date_time"] * 1000, $row["state"]);
 				}
 			}
 			else

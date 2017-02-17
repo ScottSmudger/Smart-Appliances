@@ -178,33 +178,66 @@ class User extends CI_Model
 	*/
 	protected function getDevicesHistory()
 	{
-		$devicecount = 0;
-		foreach($this->devices as $device)
+		if($this->input->get("device"))
 		{
-			$this->db->select("state, date_time");
+			// For specfic devices
+			$id = $this->input->get("device");
+
+			$this->db->select("DEVICE_HISTORY.state, DEVICE_HISTORY.date_time, DEVICES.appliance");
 			$this->db->from("DEVICE_HISTORY");
-			$this->db->where("device_id", $device->id);
+			$this->db->join("DEVICES", "DEVICE_HISTORY.device_id = DEVICES.id");
+			$this->db->where("device_id", $id);
 			$this->db->order_by("date_time", "DESC");
 			$history = $this->db->get();
 
-			if($history)
+			foreach($history->result_array() as $row)
 			{
-				foreach($history->result_array() as $row)
-				{
-					// Change data types to integer otherwise jQuery will not display them
-					settype($row["date_time"], "int");
-					settype($row["state"], "int");
-					$this->instance->graph[$devicecount]["name"] = $device->appliance;
-					$this->instance->graph[$devicecount]["data"][] = array($row["date_time"] * 1000, $row["state"]);
-				}
-			}
-			else
-			{
-				show_error($this->db->error()["message"], 500, "SQL Error: ".$this->db->error()["code"]);
-				break;
+				// Change data types to integer otherwise jQuery will not display them
+				settype($row["date_time"], "int");
+				settype($row["state"], "int");
+				// Build array
+				$this->graph["devices"][0]["name"] = $row["appliance"];
+				$this->graph["devices"][0]["data"][] = array($row["date_time"] * 1000, $row["state"]);
 			}
 
-			$devicecount ++;
+			$this->graph["title"] = "Device ".$row["appliance"]." for ".$this->details["name"];
+		}
+		else
+		{
+			// For all devices
+			$devicecount = 0;
+			foreach($this->devices as $device)
+			{
+				// For each device get its history
+				$this->db->select("state, date_time");
+				$this->db->from("DEVICE_HISTORY");
+				$this->db->where("device_id", $device->id);
+				$this->db->order_by("date_time", "DESC");
+				$history = $this->db->get();
+
+				if($history)
+				{
+					foreach($history->result_array() as $row)
+					{
+						// For each "history" (row) buld the array
+						// Change data types to integer otherwise jQuery will not display them
+						settype($row["date_time"], "int");
+						settype($row["state"], "int");
+						// Build array
+						$this->graph["devices"][$devicecount]["name"] = $device->appliance;
+						$this->graph["devices"][$devicecount]["data"][] = array($row["date_time"] * 1000, $row["state"]);
+					}
+
+					$this->graph["title"] = "All devices for ".$this->details["name"];
+				}
+				else
+				{
+					show_error($this->db->error()["message"], 500, "SQL Error: ".$this->db->error()["code"]);
+					break;
+				}
+
+				$devicecount ++;
+			}
 		}
 	}
 }

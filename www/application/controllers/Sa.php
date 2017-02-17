@@ -36,8 +36,13 @@ class Sa extends CI_Controller
 	* @param string $page The page to be displayed
 	* @return null
 	*/
-	public function view($page = "dash")
+	public function view($page = "dash", $device = NULL)
 	{
+		if($device)
+		{
+			$_GET["device"] = $device;
+		}
+		
 		// Require login
 		if($this->session->logged_in)
 		{

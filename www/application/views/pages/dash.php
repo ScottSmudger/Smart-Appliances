@@ -56,7 +56,7 @@
 <script>
 	Highcharts.chart('container', {
 		title: {
-			text: 'Device States for <?=$user->details["name"]?>'
+			text: '<?=$user->graph["title"]?>'
 		},
 
 		// X axis (Device state)
@@ -97,6 +97,6 @@
 		},
 
 		// json_encode()'d for plotting on the graph
-		series: <?=json_encode($user->graph)?>
+		series: <?=json_encode($user->graph["devices"])?>
 	});
 </script>

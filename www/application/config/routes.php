@@ -54,4 +54,6 @@ $route["default_controller"] = "sa/view";
 $route["authenticate"] = "authenticate";
 $route["login"] = "authenticate/login";
 $route["logout"] = "authenticate/logout";
+$route["dash/(:num)"] = "sa/view/dash/$1";
+
 $route["(:any)"] = "sa/view/$1";

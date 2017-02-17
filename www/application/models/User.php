@@ -125,26 +125,6 @@ class User extends CI_Model
 	* Gets the device history for each users device
 	* Formats it ready for plotting on the highcharts graph
 	*
-	* e.g. JSON:
-[{
-	"name":"Fridge",
-	"data":[
-		[1487188233,1],
-		[1487184633,0],
-		[1487181033,1],
-		[1487177433,0],
-		[1487173833,1]
-	]
-},{
-	"name":"Oven",
-	"data":[
-		[1487188233,0],
-		[1487184633,1],
-		[1487181033,0],
-		[1487177433,1],
-		[1487173833,0]
-	]
-}]
 	* e.g. PHP:
 	Array (
 	[0] => Array (
@@ -173,6 +153,26 @@ class User extends CI_Model
 			)
 		)
 	))
+	* e.g. JSON:
+	[{
+		"name":"Fridge",
+		"data":[
+			[1487188233,1],
+			[1487184633,0],
+			[1487181033,1],
+			[1487177433,0],
+			[1487173833,1]
+		]
+	}, {
+		"name":"Oven",
+		"data":[
+			[1487188233,0],
+			[1487184633,1],
+			[1487181033,0],
+			[1487177433,1],
+			[1487173833,0]
+		]
+	}]
 	*
 	* @return null
 	*/
@@ -219,7 +219,7 @@ class User extends CI_Model
 				{
 					foreach($history->result_array() as $row)
 					{
-						// For each "history" (row) buld the array
+						// For each "history" (row) build the array
 						// Change data types to integer otherwise jQuery will not display them
 						settype($row["date_time"], "int");
 						settype($row["state"], "int");

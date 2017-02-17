@@ -59,7 +59,7 @@
 			text: '<?=$user->graph["title"]?>'
 		},
 
-		// X axis (Device state)
+		// X axis (time)
 		xAxis: {
 			title: {
 				text: 'Time'
@@ -67,7 +67,7 @@
 			type: 'datetime'
 		},
 
-		// Y axis (time)
+		// Y axis (Device state)
 		yAxis: {
 			categories: ['Closed', 'Open'],
 

@@ -16,12 +16,11 @@ header {
 	color:white;
 }
 #logo {
-	background-color: white;
 	height: 50%;
 	width: 80%;
-	border: white solid 5px;
 	display:inline-block;
 	margin-left:10%;
+	padding-bottom: 5px;
 }
 #logo:hover {
 	cursor:pointer;
@@ -152,6 +151,8 @@ h2 {
 	margin-left:20%;
 	color:white;
 	font-size:1.25em;
+	min-height: 20px;
+	min-width: 60px;
 }
 #loginSection {
 	background-color:#004A7C;
@@ -167,6 +168,7 @@ input[type=text] {
 	border: 1px solid #ccc;
 	border-radius: 4px;
 	box-sizing: border-box;
+
 }
 input[type=password] {
 	color:black;
@@ -178,7 +180,7 @@ input[type=password] {
 	box-sizing: border-box;
 	margin-left:5px;
 }
-input[type=submit] {
+#logsubmit {
 	background-color: #white;
 	border: none;
 	color: #005691;
@@ -191,12 +193,12 @@ input[type=submit] {
 	margin-right:40%;
 }
 
-input[type=submit]:active {
+#logsubmit:active {
   	background-color: #CDCDCD;
   	box-shadow: 0 5px #666;
   	transform: translateY(4px);
 }
-input[type=submit]:hover {
+#logsubmit:hover {
 	background-color: #white;
 	border: none;
 	color: #005691;
@@ -236,7 +238,6 @@ input[type=submit]:hover {
 	position:relative;
 }
 .logowrap {
-	background-color:white;
 	margin-left:auto;
 	margin-right:auto;
 	width:50%;
@@ -246,7 +247,6 @@ input[type=submit]:hover {
 }
 #authentication {
 	color: red;
-	font-weight: bold;
 	font-size: 1.25em;
 	margin-left: 30%;
 	margin-right: 30%;
@@ -297,5 +297,48 @@ li a:hover:not(.active) {
 	height:800px;
 }
 tbody {
-	background-color: #008ae6;
+	background-color: #CDCDCD;
+}
+textarea{
+	width: 100%;
+	height: 200px;
+}
+#formsubmit{
+	background-color: #white;
+	border: none;
+	color: #005691;
+	padding: 10px 32px;
+	text-decoration: none;
+	margin: 4px 2px;
+	cursor: pointer;
+	font-weight: bold;
+	margin-left: 40%;
+	margin-right: 40%;
+	border-radius: 3px;
+
+}
+#formsubmit:hover{
+	background-color: #005691;
+	color: #cdcdcd;
+	padding: 10px 32px;
+	text-decoration: none;
+	margin: 4px 2px;
+	cursor: pointer;
+	font-weight: bold;
+	margin-left: 40%;
+	margin-right: 40%;
+	border-radius: 3px;
+}
+
+.EHeader{
+	color: #005691;
+	font-size: 1.25em;
+}
+.modal-header{
+	color: #005691;
+}
+#box{
+	margin-top:20px;
+	margin-bottom: 20px;
+	border: 5px solid #CDCDCD;
 }

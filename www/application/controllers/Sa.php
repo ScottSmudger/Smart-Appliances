@@ -71,4 +71,26 @@ class Sa extends CI_Controller
 			redirect("/login");
 		}
 	}
+
+	/**
+	* Email - Send an email to Group 11
+	*
+	* @return null
+	*/
+	public function email()
+	{
+		// Load the email library
+		$this->load->library("email");
+
+		// Set the email headers
+		$this->email->from("group11@scottsmudger.website", $this->input->post("from_name"));
+		$this->email->to("scottsmudger@hotmail.com");
+		$this->email->subject($this->input->post("subject"));
+		$this->email->message($this->input->post("message"));
+
+		// Send the email
+		$this->email->send();
+
+		redirect("/");
+	}
 }

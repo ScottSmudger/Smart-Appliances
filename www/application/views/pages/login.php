@@ -10,7 +10,7 @@
 		</br></br>
 		<p id="entryFields">Password: <input id="passowrd" type="password" name="password" value=""></p>
 		</br>
-		<input type="submit" value="Enter">
+		<input id = "logsubmit" type="submit" value="Enter">
 		</br></br>
 		
 		<div id="authentication"><?=validation_errors()?></div>

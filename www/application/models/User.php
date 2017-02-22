@@ -64,7 +64,7 @@ class User extends CI_Model
 			$from->setTimestamp($this->details["dob"]);
 			$to = new DateTime('today');
 			$this->details["age"] = $from->diff($to)->y;
-			$this->details["dob"] = unix_to_human($this->details["dob"], FALSE, "eu");
+			$this->details["dob"] = date("d-m-Y", $this->details["dob"]);
 		}
 		else
 		{

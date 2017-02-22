@@ -48,7 +48,10 @@
 				</table>
 				<br/>
 			</div>
-			<div id="container"></div>
+			<div id ="box">
+				<div id="container"></div>
+			</div>
+			<br>
 		</div>
 	</div>
 </div>
@@ -61,9 +64,6 @@
 
 		// X axis (time)
 		xAxis: {
-			title: {
-				text: 'Time'
-			},
 			type: 'datetime'
 		},
 

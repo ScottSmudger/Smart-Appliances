@@ -26,6 +26,7 @@
 	<script src="//ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
 	<script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 	<script src="//code.highcharts.com/highcharts.js"></script>
+	<script src="https://code.highcharts.com/stock/highstock.js"></script>
 	<script src="//code.highcharts.com/modules/exporting.js"></script>
 </head>
 <body>

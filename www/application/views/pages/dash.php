@@ -18,9 +18,22 @@
 							echo "<option value=".$device->id.">".$device->appliance."</option>";
 						} ?>
 				</select><br/><br/>
+				<select id = "dropdown1" name = "Time">
+					<option value ="time">Time</option> 
+					<option value ="today">Today</option>
+					<option value ="thisweek">This Week</option>
+					<option value ="thismonth">This Month</option>
+					<option value ="thismonth">This Year</option>
+				</select>
+				</br></br>
 				<button id="enter" type="button" onclick="">Enter</button>
-				<br/><br/><br/><br/><br/><br/>
+				<br/><br/><br/><br/><br/><br/></br><br/></br>
 			</div>
+			</br>
+			<div id ="glyndwr">
+				<img id ="stripes" src ="/assets/images/glyndwr.jpg">
+			</div>
+			</br>
 		</div>
 		<div class="col-sm-8">
 			<div id="table">
@@ -49,6 +62,7 @@
 				<br/>
 			</div>
 			<div id ="box">
+				<h3 class="title">Device History</h3>
 				<div id="container"></div>
 			</div>
 			<br>
@@ -56,47 +70,5 @@
 	</div>
 </div>
 
-<script>
-	Highcharts.chart('container', {
-		title: {
-			text: '<?=$user->graph["title"]?>'
-		},
+<?require_once("graph.php")?>
 
-		// X axis (time)
-		xAxis: {
-			type: 'datetime'
-		},
-
-		// Y axis (Device state)
-		yAxis: {
-			categories: ['Closed', 'Open'],
-
-			labels: {
-				formatter: function () {
-					return this.value;
-				}
-			},
-
-			title: {
-				text: 'State'
-			}
-		},
-
-		// Formats the unix time properly so we can see
-		// the hour and minute
-		tooltip: {
-			xDateFormat: '%a. %e %B %Y - %H:%M',
-			shared: true
-		},
-
-		// Formats the legend representing each series
-		legend: {
-			layout: 'vertical',
-			align: 'right',
-			verticalAlign: 'middle'
-		},
-
-		// json_encode()'d for plotting on the graph
-		series: <?=json_encode($user->graph["devices"])?>
-	});
-</script>

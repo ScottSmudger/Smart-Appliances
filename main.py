@@ -3,7 +3,11 @@
 import database
 import notify
 # Python modules
-import RPi.GPIO as GPIO
+try:
+	import RPi.GPIO as GPIO
+except Exception, e:
+	print("GPIO module is not installed")
+	exit()
 import time
 from datetime import datetime
 import os
@@ -81,7 +85,7 @@ class Main(object):
 
 	# Initiates the main loop that tests the GPIO pins
 	def start(self):
-		prev_state = 0
+		prev_state = None
 		open_length = 0
 		sent1 = False
 		try:

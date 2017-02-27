@@ -1,3 +1,8 @@
+<?php
+// This file is so the graph code can be edited separately from the Dash page.
+// This shouldn't be called directly.
+defined('BASEPATH') OR exit('No direct script access allowed');
+?>
 <script>
 	Highcharts.chart('container', {
 		title: {
@@ -6,6 +11,10 @@
 
 		// X axis (time)
 		xAxis: {
+			title: {
+				text: 'Time'
+			},
+
 			type: 'datetime'
 		},
 

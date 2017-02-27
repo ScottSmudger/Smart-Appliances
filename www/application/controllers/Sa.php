@@ -34,6 +34,7 @@ class Sa extends CI_Controller
 	* View - Displays the page being called
 	*
 	* @param string $page The page to be displayed
+	* @param integer $device The device to be displayed
 	* @return null
 	*/
 	public function view($page = "dash", $device = NULL)

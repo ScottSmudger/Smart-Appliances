@@ -18,16 +18,16 @@ header {
 #logo {
 	height: 50%;
 	width: 80%;
-	display:inline-block;
-	margin-left:10%;
+	display: inline-block;
+	margin-left: 10%;
 	padding-bottom: 5px;
 }
 #logo:hover {
-	cursor:pointer;
+	cursor: pointer;
 }
 .row {
 	background-color: white;
-	height:100%;
+	height: 100%;
 }
 #topleft {
 	background-color: #005691;
@@ -41,8 +41,8 @@ header {
 	font-size: 3em;
 	background-color: #CDCDCD;
 	color: #005691;
-	padding-bottom:5px;
-	padding-top:5px;
+	padding-bottom: 5px;
+	padding-top: 5px;
 	text-align: center;
 }
 .subtitle {
@@ -68,10 +68,10 @@ header {
 	border: none;
 	height: 7%;
 	width: 20%;
-	background-color:#cdcdcd;
-	text-align:center;
-	margin-top:1%;
-	margin-bottom:1%;
+	background-color: #cdcdcd;
+	text-align: center;
+	margin-top: 1%;
+	margin-bottom: 1%;
 	color: #005691;
 	margin-left: 40%;
 	margin-right: 0%;
@@ -82,10 +82,10 @@ header {
 	border: none;
 	height: 7%;
 	width: 20%;
-	background-color:#005691;
-	text-align:center;
-	margin-top:1%;
-	margin-bottom:1%;
+	background-color: #005691;
+	text-align: center;
+	margin-top: 1%;
+	margin-bottom: 1%;
 	color: #cdcdcd;
 	margin-left: 40%;
 	margin-right: 0%;
@@ -106,8 +106,8 @@ footer {
 	text-align: left;
 }
 .container-fluid-sm-4 {
-	height:100%;
-	width:100%;
+	height: 100%;
+	width: 100%;
 }
 #copyright {
 	font-family : Verdana;
@@ -124,8 +124,8 @@ table {
 	height: 40%;
 	width: 60%;
 	text-align: center;
-	font-size:1.5em;
-	margin-left:20%;
+	font-size: 1.5em;
+	margin-left: 20%;
 }
 .theadings {
 	background-color: #004A7C;
@@ -161,19 +161,19 @@ h2 {
 #desinfo {
 	text-align: center;
 	color: #005691;
-	font-size:1.25em;
+	font-size: 1.25em;
 }
 #entryFields {
-	margin-left:20%;
-	color:white;
-	font-size:1.25em;
+	margin-left: 20%;
+	color: white;
+	font-size: 1.25em;
 	min-height: 20px;
 	min-width: 60px;
 }
 #loginSection {
-	background-color:#004A7C;
-	margin-left:30%;
-	margin-right:30%;
+	background-color: #004A7C;
+	margin-left: 30%;
+	margin-right: 30%;
 	height: 400px;
 }
 input[type=text] {
@@ -187,14 +187,14 @@ input[type=text] {
 
 }
 input[type=password] {
-	color:black;
+	color: black;
 	padding: 6px 14px;
 	margin: 8px 0;
    	display: inline-block;
 	border: 1px solid #ccc;
 	border-radius: 4px;
 	box-sizing: border-box;
-	margin-left:5px;
+	margin-left: 5px;
 }
 #logsubmit {
 	background-color: #white;
@@ -204,11 +204,10 @@ input[type=password] {
 	text-decoration: none;
 	margin: 4px 2px;
 	cursor: pointer;
-	font-weight:bold;
-	margin-left:40%;
-	margin-right:40%;
+	font-weight: bold;
+	margin-left: 40%;
+	margin-right: 40%;
 }
-
 #logsubmit:active {
   	background-color: #CDCDCD;
   	box-shadow: 0 5px #666;
@@ -235,11 +234,11 @@ input[type=password] {
 	text-align: center;
 	text-decoration: none;
 	font-size: 1.25em;
-	margin-left:86.2%;
-	font-weight:bold;
-	height:auto;
-	width:auto;
-	position:relative;
+	margin-left: 86.2%;
+	font-weight: bold;
+	height: auto;
+	width: auto;
+	position: relative;
 }
 #logout:hover {
 	background-color: #CDCDCD; 
@@ -249,17 +248,17 @@ input[type=password] {
 	text-align: center;
 	text-decoration: none;
 	font-size: 1.25em;
-	margin-left:86.2%;
-	font-weight:bold;
-	position:relative;
+	margin-left: 86.2%;
+	font-weight: bold;
+	position: relative;
 }
 .logowrap {
-	margin-left:auto;
-	margin-right:auto;
-	width:50%;
+	margin-left: auto;
+	margin-right: auto;
+	width: 50%;
 	overflow: auto;
-	height:auto;
-	position:relative;
+	height: auto;
+	position: relative;
 }
 #authentication {
 	color: red;
@@ -274,27 +273,23 @@ ul {
 	overflow: hidden;
 	background-color: #CDCDCD;
 }
-
 li {
 	float: left;
 }
-
 li a {
 	display: block;
 	color: #005691;
 	text-align: center;
 	padding: 14px 16px;
 	text-decoration: none;
-	font-weight:bold;
+	font-weight: bold;
 }
-
 li a:hover:not(.active) {
 	background-color: #005691;
 	color: #cdcdcd;
 	text-decoration: none;
 	cursor: pointer;
 }
-
 .active {
 	background-color: #4CAF50;
 	text-decoration: none;
@@ -303,23 +298,23 @@ li a:hover:not(.active) {
 	float: right;
 }
 #dropdown1 {
-	margin-left:25%;
+	margin-left: 25%;
 	color: black;
 }
 #table {
 	background-color: #005691;
 	border: 5px solid #CDCDCD;
 	border-top: none;
-	height:800px;
+	height: 800px;
 }
 tbody {
 	background-color: #CDCDCD;
 }
-textarea{
+textarea {
 	width: 100%;
 	height: 200px;
 }
-#formsubmit{
+#formsubmit {
 	background-color: #white;
 	border: none;
 	color: #005691;
@@ -333,7 +328,7 @@ textarea{
 	border-radius: 3px;
 
 }
-#formsubmit:hover{
+#formsubmit:hover {
 	background-color: #005691;
 	color: #cdcdcd;
 	padding: 10px 32px;
@@ -345,24 +340,23 @@ textarea{
 	margin-right: 40%;
 	border-radius: 3px;
 }
-
-.EHeader{
+.EHeader {
 	color: #005691;
 	font-size: 1.25em;
 }
-.modal-header{
+.modal-header {
 	color: #005691;
 }
-#box{
-	margin-top:20px;
+#box {
+	margin-top: 20px;
 	margin-bottom: 20px;
 	border: 5px solid #CDCDCD;
 	border-top: none;
 }
-#stripes{
+#stripes {
 	width: 100%;
 	height: 50%; 
 }
-#glyndwr{
+#glyndwr {
 	border: 5px solid #CDCDCD;
 }

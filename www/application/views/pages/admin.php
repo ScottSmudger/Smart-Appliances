@@ -9,9 +9,9 @@
 				<h4 class="subtitle">Telephone</h4><p class= "info"><?=$admin->details["phone"]?></p>
 			</div>
 			<div id="bottomleft">
-				<h3 class ="title">View Activity</h3><br/>
-				<h4 class ="subtitle">Devices</h4>
-				<select id = "dropdown1" name="Device">
+				<h3 class="title">View Activity</h3><br/>
+				<h4 class="subtitle">Devices</h4>
+				<select id="dropdown1" name="Device">
 					<option value="" ></option>
 					<option value="Fridge">Fridge</option>
 					<option value="Microwave">Microwave</option>
@@ -21,8 +21,8 @@
 			</div>
 		</div>
 		<div class="col-sm-8">
-			<div id = "table">
-			<h3 class = "title">User Data</h3>
+			<div id="table">
+			<h3 class="title">User Data</h3>
 				<table class="table-striped">
 					<thead>
 						<tr class="theadings">
@@ -34,6 +34,7 @@
 						</tr>
 					</thead>
 					<tbody><?php
+						// Loop through the devices
 						foreach($admin->devices as $device)
 						{
 							echo "<tr>";

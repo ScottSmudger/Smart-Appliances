@@ -1,6 +1,6 @@
 <div id="description">
 	<h3 id="desHeading">Welcome to the Group 11 Smart Appliances Web Application Service</h3>
-	<p id="desinfo">Please enter your username and password below.</p>
+	<p id="desinfo">Please enter your username and password below</p>
 </div>
 </br>
 <div id="loginSection">
@@ -10,7 +10,7 @@
 		</br></br>
 		<p id="entryFields">Password: <input id="passowrd" type="password" name="password" value=""></p>
 		</br>
-		<input id = "logsubmit" type="submit" value="Enter">
+		<input id="logsubmit" type="submit" value="Enter">
 		</br></br>
 		
 		<div id="authentication"><?=validation_errors()?></div>

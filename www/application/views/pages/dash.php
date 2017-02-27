@@ -18,20 +18,20 @@
 							echo "<option value=".$device->id.">".$device->appliance."</option>";
 						} ?>
 				</select><br/><br/>
-				<select id = "dropdown1" name = "Time">
-					<option value ="time">Time</option> 
-					<option value ="today">Today</option>
-					<option value ="thisweek">This Week</option>
-					<option value ="thismonth">This Month</option>
-					<option value ="thismonth">This Year</option>
+				<select id="dropdown1" name="Time">
+					<option value="time">Time</option> 
+					<option value="today">Today</option>
+					<option value="thisweek">This Week</option>
+					<option value="thismonth">This Month</option>
+					<option value="thismonth">This Year</option>
 				</select>
 				</br></br>
 				<button id="enter" type="button" onclick="">Enter</button>
 				<br/><br/><br/><br/><br/><br/></br><br/></br>
 			</div>
 			</br>
-			<div id ="glyndwr">
-				<img id ="stripes" src ="/assets/images/glyndwr.jpg">
+			<div id="glyndwr">
+				<img id="stripes" src="/assets/images/glyndwr.jpg">
 			</div>
 			</br>
 		</div>
@@ -61,7 +61,7 @@
 				</table>
 				<br/>
 			</div>
-			<div id ="box">
+			<div id="box">
 				<h3 class="title">Device History</h3>
 				<div id="container"></div>
 			</div>
@@ -70,5 +70,7 @@
 	</div>
 </div>
 
-<?require_once("graph.php")?>
-
+<?php
+// Dump the graph script code here
+require_once("graph.php")
+?>

@@ -33,9 +33,12 @@ class Notify(object):
 			self.log.error("Twilio module is not installed! Run \"pip install twilio\": ", e)
 
 		# Connect to SMTP server
-		self.smtp = SMTP("ssl0.ovh.net")
-		self.smtp.set_debuglevel(False)
-		self.smtp.login("ar51@scottsmudger.website", "AR51SERVERSITE")
+		try:
+			self.smtp = SMTP("blabla.ovh.net")
+			self.smtp.set_debuglevel(False)
+			self.smtp.login("ar51@scottsmudger.website", "AR51SERVERSITE")
+		except Exception, e:
+			self.log.error("Could not connect to SMTP server")
 
 	def sendNotification(self, **kwargs):
 		if kwargs is not None:

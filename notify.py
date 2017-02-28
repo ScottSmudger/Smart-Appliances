@@ -9,37 +9,46 @@ from email.utils import formataddr
 import sys
 import logging
 from time import sleep
+import socket
 
 
 class Notify(object):
 	"""
 		Class manages notifications to email/phone number(s) using twilio
 	"""
+	# Twilio settings
 	account_sid = "AC6b7b4178019bc48a9de7bcb575ba33df"
 	auth_token  = "1c10daddd7cb6568364fec48e807e0d8"
 	from_number = "+442033222777"
 	from_email = "uni@scottsmudger.website"
+	# Email settings
+	host = "test.ovh.net"
+	timeout = 5
+	username = "ar51@scottsmudger.website"
+	password = "AR51SERVERSITE"
 
 	# Constructor
 	def __init__(self):
 		self.log = logging.getLogger(type(self).__name__)
 		self.log.debug("Initialising Notify")
 
-		# Initialise twilio
+		# Connect to twilio API
 		try:
 			from twilio.rest import TwilioRestClient
 			self.twilio = TwilioRestClient(self.account_sid, self.auth_token)
 		except Exception, e:
-			self.log.error("Twilio module is not installed! Run \"pip install twilio\": ", e)
+			self.log.error("Twilio module is not installed! Run \"pip install twilio\": %s" % e)
 
 		# Connect to SMTP server
 		try:
-			self.smtp = SMTP("blabla.ovh.net")
-			self.smtp.set_debuglevel(False)
-			self.smtp.login("ar51@scottsmudger.website", "AR51SERVERSITE")
+			socket.setdefaulttimeout(self.timeout)
+			self.smtp = SMTP(self.host)
+			if self.username and self.password:
+				self.smtp.login(self.username, self.password)
 		except Exception, e:
-			self.log.error("Could not connect to SMTP server")
+			self.log.error("Could not connect to SMTP server %s" % self.host)
 
+	# Decides whether or not to send an SMS or email (or both)
 	def sendNotification(self, **kwargs):
 		if kwargs is not None:
 			if "email" not in kwargs and "phone_number" not in kwargs:
@@ -101,8 +110,4 @@ class Notify(object):
 	def __del__(self):
 		self.log.debug("Cleaning up notify")
 		self.smtp.quit()
-
-
-if __name__ == "__main__":
-	Notify(email="scottsmudger@hotmail.com")
 

@@ -2,15 +2,13 @@
 # Local modules
 import database
 import notify
+from devices import buzzer
 # Python modules
-try:
-	import RPi.GPIO as GPIO
-except Exception, e:
-	print("GPIO module is not installed")
-	exit()
+import RPi.GPIO as GPIO
 import time
 from datetime import datetime
 import os
+import sys
 import logging
 """
 Level		Numeric value
@@ -28,11 +26,13 @@ class Main(object):
 		Main class that manages the state of the door and initiates any libraries/classes
 	"""
 	running = True
+	fridge_door = 18
+	buzzer = 17
 	
-	# Setup GPIO, logging and initialise the database class
+	# Setup GPIO, logging and initialise any external classes/modules
 	def __init__(self):
-		# Set constants
-		self.fridge_door = 18
+		# Add current directory to PYTHONPATH
+		sys.path.append(".")
 		# Logging
 		self.initLogger()
 		self.log.debug("Initialising door")
@@ -85,7 +85,7 @@ class Main(object):
 
 	# Initiates the main loop that tests the GPIO pins
 	def start(self):
-		prev_state = None
+		prev_state = 0
 		open_length = 0
 		sent1 = False
 		try:

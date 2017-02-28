@@ -24,9 +24,9 @@ class Database(object):
 		db_name = "group11"
 		try:
 			self.db_connect = MySQLdb.connect(host = db_host, port = db_port, user = db_user, passwd = db_pass, db = db_name)
-			self.log.debug("Initiated MySQL connection on %s as user %s" % (db_host, db_user))
+			self.log.debug("Initiated MySQL connection to %s as user %s" % (db_host, db_user))
 		except MySQLdb.Error, e:
-			self.log.critical("Could not initiate MySQL connection: %s" % (e))
+			self.log.critical("Could not initiate MySQL connection: %s" % e)
 			self.db_connect = False
 			sys.exit()
 	
@@ -57,7 +57,7 @@ class Database(object):
 		   cursor = self.db_connect.cursor()
 		   cursor.execute(query)
 		except(AttributeError, MySQLdb.OperationalError), e:
-		   self.log.error("Exception generated during SQL connection: %s" % (e))
+		   self.log.error("Exception generated during SQL connection: %s" % e) 
 		   self.connect()
 		   cursor = self.db_connect.cursor()
 		   cursor.execute(query)

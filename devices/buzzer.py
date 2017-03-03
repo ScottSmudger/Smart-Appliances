@@ -18,9 +18,6 @@ class Buzzer(object):
 		time.sleep(length)
 		self.PWM.stop()
 
-	def __del__(self):
-		GPIO.cleanup()
-
 
 if __name__ == "__main__":
 	buzzer = Buzzer()

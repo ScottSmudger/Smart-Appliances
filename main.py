@@ -61,9 +61,9 @@ class Main(object):
 		log_dir = os.getcwd() + "/logs"
 		if not os.path.exists(log_dir):
 			os.makedirs(log_dir)
-			self.log.debug("Creating log dir: %s" % (log_dir))
+			self.log.debug("Creating log dir: %s" % log_dir)
 		# For file logging
-		logfile = logging.FileHandler("logs/door-%s.log" % (date))
+		logfile = logging.FileHandler("logs/door-%s.log" % date)
 		logfile.setLevel(logging.WARNING)
 		logfile.setFormatter(format)
 		self.log.addHandler(logfile)
@@ -87,7 +87,6 @@ class Main(object):
 	def start(self):
 		prev_state = 0
 		open_length = 0
-		sent1 = False
 		try:
 			while self.running:
 				state = GPIO.input(self.fridge_door)
@@ -97,11 +96,12 @@ class Main(object):
 					self.log.debug("Door is open!: %s" % state)
 					# While door is start timer and wait
 					while GPIO.input(self.fridge_door):
-						if open_length >= 5:
-							if not sent1:
-								# For now texts can only be sent to my number (scott)
+						if open_length == 5:
+								# For now texts can only be sent to my number (scott) EDIT: Due to Twilio trial limitations, it will only be to my number.
 								self.sendNotify(phone_number = "+447714456013", message = "Fridge door has been open for %s seconds!" % open_length)
-								sent1 = True
+						elif open_length == 15:
+							Buzzer().buzz(5)
+
 						open_length += 1
 						time.sleep(1)
 					self.log.debug("Door was open for %s seconds" % open_length)

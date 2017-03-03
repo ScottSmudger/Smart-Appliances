@@ -1,5 +1,4 @@
 #!/usr/bin/env python
-# Local modules
 from datetime import datetime
 import os
 from smtplib import SMTP
@@ -14,7 +13,7 @@ import socket
 
 class Notify(object):
 	"""
-		Class manages notifications to email/phone number(s) using twilio
+		Class manages notifications to email using SMTP server/phone number(s) using twilio
 	"""
 	# Twilio settings
 	account_sid = "AC6b7b4178019bc48a9de7bcb575ba33df"
@@ -22,7 +21,7 @@ class Notify(object):
 	from_number = "+442033222777"
 	from_email = "uni@scottsmudger.website"
 	# Email settings
-	host = "test.ovh.net"
+	host = "ssl0.ovh.net"
 	timeout = 5
 	username = "ar51@scottsmudger.website"
 	password = "AR51SERVERSITE"
@@ -82,7 +81,7 @@ class Notify(object):
 		if isinstance(to, (list, tuple)):
 			for number in to:
 				self._sendSMS(to, message)
-				sleep(1)
+				sleep(1) # Twilio API has a form of "timeout"
 		else:
 			self._sendSMS(to, message)
 
@@ -111,3 +110,6 @@ class Notify(object):
 		self.log.debug("Cleaning up notify")
 		self.smtp.quit()
 
+
+if __name__ == "__main__":
+	Notify().sendNotification(email="scottsmudger@hotmail.com")

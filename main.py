@@ -51,7 +51,7 @@ class Main(object):
 		# Logging
 		self.log = logging.getLogger()
 		self.log.setLevel(logging.DEBUG)
-		format = logging.Formatter(fmt = "%(asctime)s - %(module)s - %(levelname)s: %(message)s", datefmt = "%d-%m-%Y %H:%M")
+		format = logging.Formatter(fmt = "%(asctime)s - %(module)s - %(levelname)s: %(message)s", datefmt = "%d-%m-%Y %T")
 		# For screen logging
 		screen = logging.StreamHandler()
 		screen.setLevel(logging.DEBUG)
@@ -100,7 +100,7 @@ class Main(object):
 								# For now texts can only be sent to my number (scott) EDIT: Due to Twilio trial limitations, it will only be to my number.
 								self.sendNotify(phone_number = "+447714456013", message = "Fridge door has been open for %s seconds!" % open_length)
 						elif open_length == 15:
-							Buzzer().buzz(5)
+							buzzer.Buzzer(self.buzzer).buzz(5)
 
 						open_length += 1
 						time.sleep(1)

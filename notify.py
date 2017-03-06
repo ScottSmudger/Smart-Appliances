@@ -28,7 +28,7 @@ class Notify(object):
 
 	# Constructor
 	def __init__(self):
-		self.log = logging.getLogger(type(self).__name__)
+		self.log = logging.getLogger(__name__)
 		self.log.debug("Initialising Notify")
 
 		# Connect to twilio API

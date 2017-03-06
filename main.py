@@ -1,8 +1,4 @@
-<<<<<<< HEAD
 #!/usr/bin/python
-=======
-#!/usr/bin/env python
->>>>>>> 316dc7366d7d9d810cc08feb625d8ecae2d073f8
 # Local modules
 import database
 import notify
@@ -12,13 +8,8 @@ import RPi.GPIO as GPIO
 import time
 from datetime import datetime
 import os
-<<<<<<< HEAD
 import logging
 import ConfigParser
-=======
-import sys
-import logging
->>>>>>> 316dc7366d7d9d810cc08feb625d8ecae2d073f8
 """
 Level		Numeric value
 CRITICAL	50

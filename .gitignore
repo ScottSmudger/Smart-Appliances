@@ -4,6 +4,7 @@
 /www/application/cache/*
 /www/application/logs/*
 *.pyc
+config.ini
 
 # Code igniter
 */config/development

@@ -4,13 +4,8 @@
 	<title>Group 11 Alpha</title>
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
-<<<<<<< HEAD
 	<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 	<link id="pagestyle" rel="stylesheet" type="text/css" href="<?=base_url("assets")?>/style.css" title="default">
-=======
-	<link rel="stylesheet" type="text/css" href="<?=base_url("assets")?>/style.css">
-	<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
->>>>>>> 316dc7366d7d9d810cc08feb625d8ecae2d073f8
 	<link rel="apple-touch-icon" type="image/png" sizes="57x57" href="<?=base_url("assets")?>/images/apple-icon-57x57.png">
 	<link rel="apple-touch-icon" type="image/png" sizes="60x60" href="<?=base_url("assets")?>/images/apple-icon-60x60.png">
 	<link rel="apple-touch-icon" type="image/png" sizes="72x72" href="<?=base_url("assets")?>/images/apple-icon-72x72.png">
@@ -33,7 +28,6 @@
 	<script src="//code.highcharts.com/highcharts.js"></script>
 	<script src="//code.highcharts.com/stock/highstock.js"></script>
 	<script src="//code.highcharts.com/modules/exporting.js"></script>
-<<<<<<< HEAD
 	<script type="text/javascript">
 		var current_sheet = true;
 
@@ -54,37 +48,22 @@
 			document.getElementById('pagestyle').setAttribute('href', "http://uni.scottsmudger.website/assets/" + sheet);
 		}
 	</script>
-=======
->>>>>>> 316dc7366d7d9d810cc08feb625d8ecae2d073f8
 </head>
 <body>
 <header>
 	<div class="logowrap">
-<<<<<<< HEAD
 		<a href="/"><img id="logo" alt = "Group 11 Logo" src="<?=base_url("assets")?>/images/logo.png" title = "Group 11 Logo"></a>
 	</div>
 	<ul>
 		<li title = "Link to support page"><a data-toggle="modal" data-target="#Contact">Support</a></li>
 		<li title = "Link to our Github page"><a href="http://github.com/ScottSmudger/Smart-Appliances" target="_blank">Github</a></li>
-=======
-		<a href="/"><img id="logo" src="<?=base_url("assets")?>/images/logo.png"></a>
-	</div>	
-	<ul>
-		<li><a data-toggle="modal" data-target="#Contact">Support</a></li>
-		<li><a href="http://github.com/ScottSmudger/Smart-Appliances" target="_href">Github</a></li>
->>>>>>> 316dc7366d7d9d810cc08feb625d8ecae2d073f8
 		<?php
 		// If logged in display logout button
 		if($this->session->logged_in)
 		{ ?>
-<<<<<<< HEAD
 			<li class="navright" title = "Logout button"><a href="/logout">Log Out</a></li><?php
 		} ?>
 		<li id="switch" onclick="swapStyleSheet()" title = "Change colour scheme"><a>Change Colours</a></li>
-=======
-			<li class="navright"><a href="/logout">Log Out</a></li><?php
-		} ?>
->>>>>>> 316dc7366d7d9d810cc08feb625d8ecae2d073f8
 	</ul>
 </header>
 <main>

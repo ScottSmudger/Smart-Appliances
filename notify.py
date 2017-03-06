@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 #!/usr/bin/python
+=======
+#!/usr/bin/env python
+>>>>>>> 316dc7366d7d9d810cc08feb625d8ecae2d073f8
 from datetime import datetime
 import os
 from smtplib import SMTP

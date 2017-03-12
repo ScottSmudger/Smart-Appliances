@@ -23,79 +23,75 @@
 	<meta name="msapplication-TileColor" content="#ffffff">
 	<meta name="msapplication-TileImage" content="<?=base_url("assets")?>/images/ms-icon-144x144.png">
 	<meta name="theme-color" content="#ffffff">
-	<script src="//ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+	<script src="//code.jquery.com/jquery-3.1.1.min.js"></script>
+	<script src="<?=base_url("assets")?>/js/jquery.cookie.js" type="text/javascript"></script>
 	<script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-	<script src="//code.highcharts.com/highcharts.js"></script>
 	<script src="//code.highcharts.com/stock/highstock.js"></script>
-	<script src="//code.highcharts.com/modules/exporting.js"></script>
-	<script type="text/javascript">
-		var current_sheet = true;
-
-		function swapStyleSheet(){
-			// true = style.css
-			// false = alternativestyle.css
-			current_sheet = !current_sheet;
-
-			if(current_sheet)
-			{
-				sheet = "style.css";
-			}
-			else
-			{
-				sheet = "alternativestyle.css";
-			}
-
-			document.getElementById('pagestyle').setAttribute('href', "http://uni.scottsmudger.website/assets/" + sheet);
+	<script src="//code.highcharts.com/stock/modules/exporting.js"></script>
+	
+	<script>
+		function test2()
+		{
+			alert($("#colorlist option:selected").text());
 		}
 	</script>
 </head>
 <body>
 <header>
+	<br/><br/><br/>
 	<div class="logowrap">
-		<a href="/"><img id="logo" alt = "Group 11 Logo" src="<?=base_url("assets")?>/images/logo.png" title = "Group 11 Logo"></a>
+		<a href="/"><img id="logo" alt = "Group 11 Logo" src="<?=base_url("assets")?>/images/logo.png" title="Group 11 Logo"></a>
 	</div>
 	<ul>
-		<li title = "Link to support page"><a data-toggle="modal" data-target="#Contact">Support</a></li>
-		<li title = "Link to our Github page"><a href="http://github.com/ScottSmudger/Smart-Appliances" target="_blank">Github</a></li>
+		<li title="Link to support page"><a data-toggle="modal" data-target="#Contact">Support</a></li>
+		<li title="Link to our Github page"><a href="http://github.com/ScottSmudger/Smart-Appliances" target="_blank">Github</a></li>
 		<?php
-		// If logged in display logout button
+		// If logged in display the logout button
 		if($this->session->logged_in)
 		{ ?>
-			<li class="navright" title = "Logout button"><a href="/logout">Log Out</a></li><?php
+			<li class="navright" title="Logout button"><a href="/logout">Log Out</a></li><?php
 		} ?>
-		<li id="switch" onclick="swapStyleSheet()" title = "Change colour scheme"><a>Change Colours</a></li>
+		<li id="switch" title="Change colour scheme"> <a href="#">Change Colours</a>
+			<ul id="colorlist" onchange="test2()">
+				<li ><a href="#">Red</a></li >
+				<li ><a href="#">Blue</a></li >
+				<li ><a href="#">Green</a></li >
+			</ul>
+		</li>
 	</ul>
 </header>
-<main>
-<!-- Support Modal -->
-<div class="modal fade" id="Contact" tabindex="-1" role="dialog" aria-labelledby="Contact" aria-hidden="true">
-	<div class="modal-dialog">
-		<div class="modal-content">
-			<div class="modal-header">
-				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-				<h4 class="modal-title" id="Contact">Support Page</h4>
-			</div>
-			<div class="modal-body">
-				<?=form_open('sa/email')?>
-					<p>Please enter your details and describe your issue. We will get back to you as soon as possible.</p>
-					<h5 class="EHeader">Subject</h5>
-					<input type="text" name="subject">
-					
-					<h5 class="EHeader">Name</h5>
-					<input type="text" name="from_name">
+	<main>
+	<!-- Support Modal -->
+	<div class="modal fade" id="Contact" tabindex="-1" role="dialog" aria-labelledby="Contact" aria-hidden="true">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+					<h4 class="modal-title" id="Contact">Support Page</h4>
+				</div>
+				<div class="modal-body">
+					<div class="form-group">
+						<?=form_open('sa/email')?>
+							<p>Please enter your details and describe your issue. We will get back to you as soon as possible.</p>
+							<h5 class="EHeader">Subject</h5>
+							<input type="text" name="subject">
+							
+							<h5 class="EHeader">Name</h5>
+							<input type="text" name="from_name">
 
-					<h5 class="EHeader">Email Address</h5>
-					<input type="text" name="from_email">
+							<h5 class="EHeader">Email Address</h5>
+							<input type="text" name="from_email">
 
-					<h5 class="EHeader">Issue</h5>
-					<textarea></textarea>
+							<h5 class="EHeader">Issue</h5>
+							<textarea class="form-control"></textarea>
 
-					<input id = "formsubmit" type="submit" value="Submit">
-				</form>
-			</div>
-			<div class="modal-footer">
-				<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+							<input id="formsubmit" type="submit" value="Submit">
+						</form>
+					</div>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+				</div>
 			</div>
 		</div>
 	</div>
-</div>

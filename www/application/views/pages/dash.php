@@ -11,19 +11,19 @@
 			<div id="bottomleft">
 				<h3 class="title" title = "Select what data you would like to view below">View Activity</h3><br/>
 				<h4 class="subtitle">Devices</h4>
-				<select id="dropdown1" name="Device" title = "Select the device you would like to view">
+				<select id="dropdown2" name="Device" title = "Select the device you would like to view">
 					<option value="0">All Devices</option><?php
 						foreach($user->devices as $device)
 						{
 							echo "<option value=".$device->id.">".$device->appliance."</option>";
 						} ?>
 				</select><br/><br/>
-				<select id="dropdown1" name="Time" title = "Select the time you would like to view">
+				<select id="dropdown1" name="Time" title = "Select the time you would like to view" onchange="test()">
 					<option value="time">Time</option> 
 					<option value="today">Today</option>
 					<option value="thisweek">This Week</option>
 					<option value="thismonth">This Month</option>
-					<option value="thismonth">This Year</option>
+					<option value="thisyear">This Year</option>
 				</select>
 				</br></br>
 				<button id="enter" type="button" onclick="">Enter</button>

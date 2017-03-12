@@ -329,6 +329,10 @@ li a:hover:not(.active) {
 	margin-left: 25%;
 	color: black;
 }
+#dropdown2 {
+	margin-left: 25%;
+	color: black;
+}
 #table {
 	background-color: #005691;
 	border: 5px solid #CDCDCD;
@@ -388,4 +392,3 @@ textarea {
 #glyndwr {
 	border: 5px solid #CDCDCD;
 }
-

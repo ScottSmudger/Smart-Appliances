@@ -12,7 +12,7 @@ main {
 	padding: 0px auto;
 }
 header {
-	background-color: #CDCDCD;
+	background-color: #006600;
 	color: white;
 }
 #logo {
@@ -20,7 +20,7 @@ header {
 	width: 80%;
 	display: inline-block;
 	margin-left: 10%;
-	padding-bottom: 5px;
+	padding-bottom: 10px;
 }
 #logo:hover {
 	cursor: pointer;
@@ -30,7 +30,7 @@ header {
 	height: 100%;
 }
 #topleft {
-	background-color: #005691;
+	background-color: #006600;
 	border: 5px solid #CDCDCD;
 	color: white;
 	height: 500px;
@@ -40,7 +40,7 @@ header {
 .title {
 	font-size: 3em;
 	background-color: #CDCDCD;
-	color: #005691;
+	color: #006600;
 	padding-bottom: 5px;
 	padding-top: 5px;
 	text-align: center;
@@ -53,12 +53,12 @@ header {
 .info {
 	font-size: 1.5em;
 	background-color: white;
-	color: #005691;
+	color: #006600;
 	padding: 5px;
 	text-align: center;
 }
 #bottomleft {
-	background-color: #005691;
+	background-color: #006600;
 	border: 5px solid #CDCDCD;
 	color: white;
 	height: 100%;
@@ -72,7 +72,7 @@ header {
 	text-align: center;
 	margin-top: 1%;
 	margin-bottom: 1%;
-	color: #005691;
+	color: #006600;
 	margin-left: 40%;
 	margin-right: 0%;
 	font-size: 1em;
@@ -82,11 +82,11 @@ header {
 	border: none;
 	height: 7%;
 	width: 20%;
-	background-color: #005691;
+	background-color: #006600;
 	text-align: center;
 	margin-top: 1%;
 	margin-bottom: 1%;
-	color: #cdcdcd;
+	color: #CDCDCD;
 	margin-left: 40%;
 	margin-right: 0%;
 	font-size: 1em;
@@ -98,7 +98,7 @@ select {
 	font-family: Verdana;
 }
 footer {
-	background-color: #004A7C;
+	background-color: #006600;
 	border: none;
 	text-align: left;
 	border-top: solid 7px #CDCDCD;
@@ -128,7 +128,7 @@ table {
 	margin-left: 20%;
 }
 .theadings {
-	background-color: #004A7C;
+	background-color: #006600;
 	color: #CDCDCD;
 	text-align: center;
 	
@@ -155,12 +155,12 @@ h2 {
 }
 #desHeading {
 	text-align: center;
-	color: #005691;
+	color: #006600;
 	font-weight: bold;
 }
 #desinfo {
 	text-align: center;
-	color: #005691;
+	color: #006600;
 	font-size: 1.25em;
 }
 #entryFields {
@@ -171,7 +171,7 @@ h2 {
 	min-width: 60px;
 }
 #loginSection {
-	background-color: #004A7C;
+	background-color: #006600;
 	margin-left: 30%;
 	margin-right: 30%;
 	height: 400px;
@@ -199,7 +199,7 @@ input[type=password] {
 #logsubmit {
 	background-color: #white;
 	border: none;
-	color: #005691;
+	color: #006600;
 	padding: 10px 32px;
 	text-decoration: none;
 	margin: 4px 2px;
@@ -216,7 +216,7 @@ input[type=password] {
 #logsubmit:hover {
 	background-color: #white;
 	border: none;
-	color: #005691;
+	color: #006600;
 	padding: 10px 32px;
 	text-decoration: none;
 	margin: 4px 2px;
@@ -227,7 +227,7 @@ input[type=password] {
 	box-shadow: 0 12px 16px 0 rgba(0,0,0,0.24), 0 17px 50px 0 rgba(0,0,0,0.19);
 }
 #logout {
-	background-color: #004A7C; 
+	background-color: #006600; 
 	border: none;
 	color: white;
 	padding: 10px 32px;
@@ -243,7 +243,7 @@ input[type=password] {
 #logout:hover {
 	background-color: #CDCDCD; 
 	border: none;
-	color: #005691;
+	color: #006600;
 	padding: 10px 32px;
 	text-align: center;
 	text-decoration: none;
@@ -261,7 +261,7 @@ input[type=password] {
 	position: relative;
 }
 #authentication {
-	color: red;
+	color: white;
 	font-size: 1.25em;
 	margin-left: 30%;
 	margin-right: 30%;
@@ -272,23 +272,46 @@ ul {
 	padding: 0;
 	overflow: hidden;
 	background-color: #CDCDCD;
+	top: 0;
+	position: fixed;
+	width: 100%;
+	z-index: 9;
 }
 li {
 	float: left;
 }
 li a {
 	display: block;
-	color: #005691;
+	color: #006600;
 	text-align: center;
 	padding: 14px 16px;
 	text-decoration: none;
 	font-weight: bold;
 }
 li a:hover:not(.active) {
-	background-color: #005691;
+	background-color: #006600;
 	color: #cdcdcd;
 	text-decoration: none;
 	cursor: pointer;
+}
+
+#switch{
+	float: right;
+}
+
+#switch:hover li a{
+	display: block;
+	z-index: 10;
+	text-decoration: none;
+}
+
+#switch:hover li {
+	display: block;
+	z-index: 10;
+}
+
+#switch li {
+	display: none;
 }
 .active {
 	background-color: #4CAF50;
@@ -302,7 +325,7 @@ li a:hover:not(.active) {
 	color: black;
 }
 #table {
-	background-color: #005691;
+	background-color: #006600;
 	border: 5px solid #CDCDCD;
 	border-top: none;
 	height: 800px;
@@ -317,7 +340,7 @@ textarea {
 #formsubmit {
 	background-color: #white;
 	border: none;
-	color: #005691;
+	color: #006600;
 	padding: 10px 32px;
 	text-decoration: none;
 	margin: 4px 2px;
@@ -329,7 +352,7 @@ textarea {
 
 }
 #formsubmit:hover {
-	background-color: #005691;
+	background-color: #006600;
 	color: #cdcdcd;
 	padding: 10px 32px;
 	text-decoration: none;
@@ -341,11 +364,11 @@ textarea {
 	border-radius: 3px;
 }
 .EHeader {
-	color: #005691;
+	color: #006600;
 	font-size: 1.25em;
 }
 .modal-header {
-	color: #005691;
+	color: #006600;
 }
 #box {
 	margin-top: 20px;
@@ -359,7 +382,4 @@ textarea {
 }
 #glyndwr {
 	border: 5px solid #CDCDCD;
-}
-#switch{
-	float: right;
 }

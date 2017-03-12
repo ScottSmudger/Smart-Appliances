@@ -192,6 +192,7 @@ class User extends CI_Model
 
 			foreach($history->result_array() as $row)
 			{
+				// For each "history" (row) build the array
 				// Change data types to integer otherwise jQuery will not display them
 				settype($row["date_time"], "int");
 				settype($row["state"], "int");

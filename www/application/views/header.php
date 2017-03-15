@@ -30,9 +30,25 @@
 	<script src="//code.highcharts.com/stock/modules/exporting.js"></script>
 	
 	<script>
-		function test2()
+		function changeStyle()
 		{
-			alert($("#colorlist option:selected").text());
+			switch ($("#colourChange option:selected").text())
+			{
+				case 'red':
+					document.getElementById('pagestyle').setAttribute('href', "http://uni.scottsmudger.website/assets/css/" + red.css);
+					break;
+				
+				case 'blue':
+					document.getElementById('pagestyle').setAttribute('href', "http://uni.scottsmudger.website/assets/css/" + blue.css);
+					break;
+				
+				case 'green':
+					document.getElementById('pagestyle').setAttribute('href', "http://uni.scottsmudger.website/assets/css/" + green.css);
+					break;
+				
+				default:
+					document.getElementById('pagestyle').setAttribute('href', "http://uni.scottsmudger.website/assets/" + style.css);
+			}
 		}
 	</script>
 </head>
@@ -40,7 +56,7 @@
 <header>
 	<br/><br/><br/>
 	<div class="logowrap">
-		<a href="/"><img id="logo" alt = "Group 11 Logo" src="<?=base_url("assets")?>/images/logo.png" title="Group 11 Logo"></a>
+		<a href="/"><img id="logo" alt="Group 11 Logo" src="<?=base_url("assets")?>/images/logo.png" title="Group 11 Logo"></a>
 	</div>
 	<ul>
 		<li title="Link to support page"><a data-toggle="modal" data-target="#Contact">Support</a></li>
@@ -51,23 +67,25 @@
 		{ ?>
 			<li class="navright" title="Logout button"><a href="/logout">Log Out</a></li><?php
 		} ?>
-		<li id="switch" title="Change colour scheme"> <a href="#">Change Colours</a>
-			<ul id="colorlist" onchange="test2()">
-				<li ><a href="#">Red</a></li >
-				<li ><a href="#">Blue</a></li >
-				<li ><a href="#">Green</a></li >
-			</ul>
+		<li id="right">
+			<select class="colour_change" id="colourChange" onchange="changeStyle()">
+				<option value="">Change Colour</option>
+				<option value="red">Red</option>
+				<option value="blue">Blue</option>
+				<option value="green">Green</option>
+			</select>
 		</li>
 	</ul>
 </header>
 	<main>
+
 	<!-- Support Modal -->
 	<div class="modal fade" id="Contact" tabindex="-1" role="dialog" aria-labelledby="Contact" aria-hidden="true">
 		<div class="modal-dialog">
 			<div class="modal-content">
 				<div class="modal-header">
 					<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-					<h4 class="modal-title" id="Contact">Support Page</h4>
+					<h4 class="modal-title" >Support Page</h4>
 				</div>
 				<div class="modal-body">
 					<div class="form-group">

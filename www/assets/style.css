@@ -163,7 +163,7 @@ h2 {
 	color: #005691;
 	font-size: 1.25em;
 }
-#entryFields {
+.entryFields {
 	margin-left: 20%;
 	color: white;
 	font-size: 1.25em;
@@ -296,28 +296,6 @@ li a:hover:not(.active) {
 	cursor: pointer;
 }
 
-#switch{
-	width: 200px;
-	float: right;
-    background-color: #CDCDCD;
-    color: #005691;
-}
-
-#switch:hover li a{
-	display: block;
-	z-index: 10;
-	text-decoration: none;
-}
-
-#switch:hover li {
-	display: block;
-	z-index: 10;
-}
-
-#switch li {
-	display: none;
-}
-
 .active {
 	background-color: #4CAF50;
 	text-decoration: none;
@@ -388,4 +366,17 @@ textarea {
 #glyndwr {
 	border: 5px solid #CDCDCD;
 }
-
+#right{
+	float: right;
+}
+.colour_change{
+	width: 240px;
+	height: 40px;
+	overflow: hidden;
+	background: url(new_arrow.png) no-repeat right #ddd;
+	border: 1px solid #ccc;
+	color: #005691;
+	background-color: #b3b3b3;
+	margin-top:1%;
+	font-weight: bold;
+}

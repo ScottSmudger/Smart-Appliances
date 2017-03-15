@@ -13,6 +13,7 @@ class Sa extends CI_Controller
 {
 	protected $data = array();
 	protected $client;
+	protected $averages;
 
 	/**
 	* Classes constructor
@@ -47,13 +48,14 @@ class Sa extends CI_Controller
 		// Require login
 		if($this->session->logged_in)
 		{
+			$this->load->model("average");
+			$this->averages = $this->average->calculate();
 			// If logged in display the requested page,
 			// or admin page if logged in as an admin
 			if($this->session->is_admin)
 			{
 				$this->load->model("admin");
 				$this->client = $this->admin->newAdmin();
-
 				$this->load->view("header");
 				$this->load->view("pages/admin", array("admin" => $this->client));
 				$this->load->view("footer");

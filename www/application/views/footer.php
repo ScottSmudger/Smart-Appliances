@@ -5,9 +5,7 @@
 </body>
 </html>
 
-<center>
 ----------------------------- DEBUGGING -----------------------------
 <?php
 $this->benchmark->mark('ending_point');
 ?>
-</center>

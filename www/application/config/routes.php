@@ -52,12 +52,13 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 $route["default_controller"] = "sa/view";
 
 // For specific pages
+$route["dash"] = "sa/dash";
 $route["authenticate"] = "authenticate";
 $route["login"] = "authenticate/login";
 $route["logout"] = "authenticate/logout";
 
 // For specific devices e.g. dash/2. Sa controller, View method(dash page, $1 device)
-$route["dash/(:num)"] = "sa/view/dash/$1";
+$route["dash/(:num)"] = "sa/dash/$1";
 
 // For everything else
 $route["(:any)"] = "sa/view/$1";

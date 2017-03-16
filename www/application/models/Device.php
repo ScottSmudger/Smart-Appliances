@@ -18,7 +18,7 @@ class Device extends CI_Model
 	* Returns the classes singleton
 	*
 	* @param object $device MySQL row object from User/Admin page
-	* @return object
+	* @return object $instance
 	*/
 	public function newDevice($device)
 	{
@@ -51,7 +51,7 @@ class Device extends CI_Model
 				settype($value, "int");
 			}
 
-			// Puts the state into a human version
+			// Puts the state into a human readable version
 			if($key == "state")
 			{
 				if($value)

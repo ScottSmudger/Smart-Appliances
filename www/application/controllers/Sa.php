@@ -27,7 +27,7 @@ class Sa extends CI_Controller
 		$this->output->enable_profiler(TRUE);
 		$this->benchmark->mark("starting_point");
 
-		// To stop PHP from moaning
+		// To stop PHP from moaning as we're manipulating and displaying times from unix time
 		date_default_timezone_set("UTC");
 	}
 	
@@ -35,39 +35,42 @@ class Sa extends CI_Controller
 	* View - Displays the page being called
 	*
 	* @param string $page The page to be displayed
+	* @return null
+	*/
+	public function view($page = "dash")
+	{
+		$this->client = $this->user->newUser();
+
+		$this->load->view("header");
+		$this->load->view("pages/".$page, array("user" => $this->client));
+		$this->load->view("footer");
+	}
+
+	/**
+	* Dash - Displays the dash page
+	*
 	* @param integer $device The device to be displayed
 	* @return null
 	*/
-	public function view($page = "dash", $device = NULL)
+	public function dash($device = NULL)
 	{
 		if($device)
 		{
 			$_GET["device"] = $device;
 		}
-		
+
+		$this->load->model("average");
+		$this->averages = $this->average->calculate();
+
+		$this->client = $this->user->newUser();
+
 		// Require login
+		// If logged in display the requested page
 		if($this->session->logged_in)
 		{
-			$this->load->model("average");
-			$this->averages = $this->average->calculate();
-			// If logged in display the requested page,
-			// or admin page if logged in as an admin
-			if($this->session->is_admin)
-			{
-				$this->load->model("admin");
-				$this->client = $this->admin->newAdmin();
-				$this->load->view("header");
-				$this->load->view("pages/admin", array("admin" => $this->client));
-				$this->load->view("footer");
-			}
-			else
-			{
-				$this->client = $this->user->newUser();
-
-				$this->load->view("header");
-				$this->load->view("pages/".$page, array("user" => $this->client));
-				$this->load->view("footer");
-			}
+			$this->load->view("header");
+			$this->load->view("pages/dash", array("user" => $this->client));
+			$this->load->view("footer");
 		}
 		else
 		{

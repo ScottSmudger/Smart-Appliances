@@ -16,8 +16,12 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 	
 
 	Highcharts.stockChart('container', {
+		chart: {
+			zoomType: 'x'
+		},
+	
 		title: {
-			text: '<?=$user->graph["title"]?>: '
+			text: '<?=$user->graph["title"]?>'
 		},
 
 		// X axis (time)
@@ -26,12 +30,16 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 				text: 'Time'
 			},
 
+			minRange: 1,
+
 			type: 'datetime'
 		},
 
 		// Y axis (Device state)
 		yAxis: {
-			categories: ['Closed', 'Open'],
+			title: {
+				text: 'State'
+			},
 
 			labels: {
 				formatter: function () {
@@ -39,9 +47,52 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 				}
 			},
 
-			title: {
-				text: 'State'
+			opposite: false
+
+			//categories:['Closed', 'Open']
+		},
+
+		// Display the legend
+		legend: {
+			enabled: true
+		},
+
+		// Customise the range options
+		rangeSelector: {
+			allButtonsEnabled: true,
+			buttons: [{
+				type: 'day',
+				count: 1,
+				text: 'Day',
+				dataGrouping: {
+					forced: true,
+					units: [['day', [1]]]
+				}
+			}, {
+				type: 'week',
+				count: 1,
+				text: 'Week',
+				dataGrouping: {
+					forced: true,
+					units: [['week', [1]]]
+				}
+			}, {
+				type: 'month',
+				count: 1,
+				text: 'Month'
+			}, {
+				type: 'all',
+				text: 'All'
+			}],
+
+		   buttonTheme: {
+				width: 60
 			}
+		},
+
+		// Temporary fix until alternative is found
+		navigator: {
+			enabled: false
 		},
 
 		// Formats the unix time properly so we can see
@@ -63,6 +114,11 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 		var timeSelection = $("#dropdown1").val();
 		
 		Highcharts.stockChart('container', {
+			chart: {
+				type: 'line',
+				zoomType: 'xy'
+			},
+
 			title: {
 				text: '<?=$user->graph["title"]?>: ' + timeSelection
 			},
@@ -71,6 +127,14 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 			xAxis: {
 				title: {
 					text: 'change Time'
+				},
+
+				events: {
+					afterSetExtremes: function(e){
+						if(e.min === e.max){
+							this.setExtremes(.001, .003);
+						}
+					}
 				},
 
 				type: 'datetime'

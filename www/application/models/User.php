@@ -24,7 +24,7 @@ class User extends CI_Model
 	/**
 	* Returns the classes singleton
 	*
-	* @return object
+	* @return object $instance
 	*/
 	public function newUser()
 	{
@@ -190,18 +190,25 @@ class User extends CI_Model
 			$this->db->order_by("date_time", "DESC");
 			$history = $this->db->get();
 
-			foreach($history->result_array() as $row)
+			if($history)
 			{
-				// For each "history" (row) build the array
-				// Change data types to integer otherwise jQuery will not display them
-				settype($row["date_time"], "int");
-				settype($row["state"], "int");
-				// Build array
-				$this->graph["devices"][0]["name"] = $row["appliance"];
-				$this->graph["devices"][0]["data"][] = array($row["date_time"] * 1000, $row["state"]);
-			}
+				foreach($history->result_array() as $row)
+				{
+					// For each "history" (row) build the array
+					// Change data types to integer otherwise jQuery will not display them
+					settype($row["date_time"], "int");
+					settype($row["state"], "int");
+					// Build array
+					$this->graph["devices"][0]["name"] = $row["appliance"];
+					$this->graph["devices"][0]["data"][] = array($row["date_time"] * 1000, $row["state"]);
+				}
 
-			$this->graph["title"] = "Device ".$row["appliance"]." for ".$this->details["name"];
+				$this->graph["title"] = "Device ".$row["appliance"]." for ".$this->details["name"];
+			}
+			else
+			{
+				show_error($this->db->error()["message"], 500, "SQL Error: ".$this->db->error()["code"]);
+			}
 		}
 		else
 		{

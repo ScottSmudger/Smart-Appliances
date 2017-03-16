@@ -21,7 +21,13 @@ class Average extends CI_Model
 	{
 
 	}
-	function average_hour()
+
+	/**
+	* Average (Hour)
+	*
+	* @return array
+	*/
+	protected function average_hour()
 	{
 		//H = Hour;
 		//SELECT * FROM TABLE WHERE HOUR = HOUR_NEEDED
@@ -39,7 +45,12 @@ class Average extends CI_Model
 		$average = $total / $count;
 	}
 
-	function average_day()
+	/**
+	* Average (Day)
+	*
+	* @return array
+	*/
+	protected function average_day()
 	{
 		for($counter = 0; $counter = 17; $counter++)
 		{

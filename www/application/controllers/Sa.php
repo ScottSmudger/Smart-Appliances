@@ -39,11 +39,20 @@ class Sa extends CI_Controller
 	*/
 	public function view($page = "dash")
 	{
-		$this->client = $this->user->newUser();
+		// Require login
+		// If logged in display the requested page
+		if($this->session->logged_in)
+		{
+			$this->client = $this->user->newUser();
 
-		$this->load->view("header");
-		$this->load->view("pages/".$page, array("user" => $this->client));
-		$this->load->view("footer");
+			$this->load->view("header");
+			$this->load->view("pages/".$page, array("user" => $this->client));
+			$this->load->view("footer");
+		}
+		else
+		{
+			redirect("/login");
+		}
 	}
 
 	/**

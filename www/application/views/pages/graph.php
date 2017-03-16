@@ -5,6 +5,16 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 ?>
 <script>
 	var today = <?=json_encode($user->graph["devices"])?>;
+
+	
+	// the button action
+	$('#button').click(function () {
+		var chart = $('#container').highcharts();
+	    chart.xAxis[0].setExtremes(1489618512, 1489618992, true, true);
+	    chart.series = today;
+	});
+
+	
 	
 	var thisweek = [
 		[1487188233000, 3]
@@ -30,7 +40,15 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 				text: 'Time'
 			},
 
-			minRange: 1,
+			events: {
+				afterSetExtremes: function(e) {
+					var chart = $('#container').highcharts();
+					
+					this.isDirty = true;
+					chart.yAxis.isDirty = true;
+					chart.redraw();
+				}
+			},
 
 			type: 'datetime'
 		},
@@ -105,65 +123,4 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 		// json_encode()'d for plotting on the graph
 		series: today
 	});
-
-//--------------------------------------------------------------------
-
-	// Redraw chart depending on which option is selected
-	function test() 
-	{
-		var timeSelection = $("#dropdown1").val();
-		
-		Highcharts.stockChart('container', {
-			chart: {
-				type: 'line',
-				zoomType: 'xy'
-			},
-
-			title: {
-				text: '<?=$user->graph["title"]?>: ' + timeSelection
-			},
-
-			// X axis (time)
-			xAxis: {
-				title: {
-					text: 'change Time'
-				},
-
-				events: {
-					afterSetExtremes: function(e){
-						if(e.min === e.max){
-							this.setExtremes(.001, .003);
-						}
-					}
-				},
-
-				type: 'datetime'
-			},
-
-			// Y axis (Device state)
-			yAxis: {
-				categories: ['Closed', 'Open'],
-
-				labels: {
-					formatter: function () {
-						return this.value;
-					}
-				},
-
-				title: {
-					text: 'change State'
-				}
-			},
-
-			// Formats the unix time properly so we can see
-			// the hour and minute
-			tooltip: {
-				xDateFormat: '%a. %e %B %Y - %H:%M',
-				shared: true
-			},
-
-			// json_encode()'d for plotting on the graph
-			series: timeSelection
-		});
-	}
 </script>

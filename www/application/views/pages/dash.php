@@ -56,6 +56,7 @@
 			</div>
 			<div id="box">
 				<h3 class="title" title="Graphical analysis is shown below">Device History</h3>
+				<button id="button">Set extremes</button>
 				<div id="container"></div>
 			</div>
 			<br>

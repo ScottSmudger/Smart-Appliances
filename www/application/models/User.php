@@ -122,8 +122,9 @@ class User extends CI_Model
 	}
 
 	/**
-	* Gets the device history for each users device
+	* Gets the device history for a specifc device
 	* Formats it ready for plotting on the highcharts graph
+	* Also decides on the time range to use, if a time period is set
 	*
 	* e.g. PHP:
 	Array (
@@ -178,15 +179,115 @@ class User extends CI_Model
 	*/
 	protected function getDevicesHistory()
 	{
-		if($this->input->get("device"))
+		if($this->input->get("device_id") != NULL)
 		{
 			// For specfic devices
-			$id = $this->input->get("device");
+			$id = $this->input->get("device_id");
+			$period = $this->input->get("time_period");
+			settype($id, "int");
 
-			$this->db->select("DEVICE_HISTORY.state, DEVICE_HISTORY.date_time, DEVICES.appliance");
+			// For certain time periods
+			if(isset($period))
+			{
+				switch($period)
+				{
+					case "everything":
+						$time_period = "everywhere";
+						$min = "";
+						$max = "";
+					break;
+					case "today":
+						$time_period = "today";
+						$min = strtotime("midnight");
+						$max = strtotime("tomorrow", time()) - 1;
+					break;
+					case "thisweek":
+						$time_period = "this week";
+						$min = strtotime("-1 week");
+						$max = strtotime("tomorrow", time()) - 1;
+					break;
+					case "thismonth":
+						$time_period = "this month";
+						$min = strtotime("-1 month");
+						$max = strtotime("tomorrow", time()) - 1;
+					break;
+					case "thisyear":
+						$time_period = "this year";
+						$min = strtotime("-1 year");
+						$max = strtotime("tomorrow", time()) - 1;
+					break;
+				}
+			}
+
+			if($id == 0)
+			{
+				$this->getAllDevices($min, $max);
+			}
+			else
+			{
+				$this->db->select("DEVICE_HISTORY.state, DEVICE_HISTORY.date_time, DEVICES.appliance");
+				$this->db->from("DEVICE_HISTORY");
+				$this->db->join("DEVICES", "DEVICE_HISTORY.device_id = DEVICES.id");
+				$this->db->where("device_id", $id);
+				// If the range is set, use it
+				if($min AND $max)
+				{
+					$this->db->where("DEVICE_HISTORY.date_time BETWEEN ".$min." AND ".$max."");
+				}
+				$this->db->order_by("date_time", "DESC");
+				$history = $this->db->get();
+
+				if($history != NULL)
+				{
+					foreach($history->result_array() as $row)
+					{
+						// For each "history" (row) build the array
+						// Change data types to integer otherwise jQuery will not display them
+						settype($row["date_time"], "int");
+						settype($row["state"], "int");
+						// Build array
+						$this->graph["devices"][0]["name"] = $row["appliance"];
+						$this->graph["devices"][0]["data"][] = array($row["date_time"] * 1000, $row["state"]);
+					}
+
+					$this->graph["title"] = "Device ".$row["appliance"]." between $min and $max";
+				}
+				else
+				{
+					show_error($this->db->error()["message"], 500, "SQL Error: ".$this->db->error()["code"]);
+				}
+			}
+		}
+		else
+		{
+			$this->getAllDevices();
+		}
+	}
+
+	/**
+	* Gets the data for all devices
+	*
+	* @return null
+	*/
+	protected function getAllDevices($min = FALSE, $max = FALSE)
+	{
+		// For all devices
+		$devicecount = 0;
+		foreach($this->devices as $device)
+		{
+			// For each device get its history
+			$this->db->select("state, date_time");
 			$this->db->from("DEVICE_HISTORY");
-			$this->db->join("DEVICES", "DEVICE_HISTORY.device_id = DEVICES.id");
-			$this->db->where("device_id", $id);
+			$this->db->where("device_id", $device->id);
+			if($min AND $max)
+			{
+				$this->db->where("DEVICE_HISTORY.date_time BETWEEN ".$min." AND ".$max."");
+				$this->graph["title"] = "All devices between $min and $max";
+			}
+			else
+			{
+				$this->graph["title"] = "All devices";
+			}
 			$this->db->order_by("date_time", "DESC");
 			$history = $this->db->get();
 
@@ -199,53 +300,17 @@ class User extends CI_Model
 					settype($row["date_time"], "int");
 					settype($row["state"], "int");
 					// Build array
-					$this->graph["devices"][0]["name"] = $row["appliance"];
-					$this->graph["devices"][0]["data"][] = array($row["date_time"] * 1000, $row["state"]);
+					$this->graph["devices"][$devicecount]["name"] = $device->appliance;
+					$this->graph["devices"][$devicecount]["data"][] = array($row["date_time"] * 1000, $row["state"]);
 				}
-
-				$this->graph["title"] = "Device ".$row["appliance"]." for ".$this->details["name"];
 			}
 			else
 			{
 				show_error($this->db->error()["message"], 500, "SQL Error: ".$this->db->error()["code"]);
+				break;
 			}
-		}
-		else
-		{
-			// For all devices
-			$devicecount = 0;
-			foreach($this->devices as $device)
-			{
-				// For each device get its history
-				$this->db->select("state, date_time");
-				$this->db->from("DEVICE_HISTORY");
-				$this->db->where("device_id", $device->id);
-				$this->db->order_by("date_time", "DESC");
-				$history = $this->db->get();
 
-				if($history)
-				{
-					foreach($history->result_array() as $row)
-					{
-						// For each "history" (row) build the array
-						// Change data types to integer otherwise jQuery will not display them
-						settype($row["date_time"], "int");
-						settype($row["state"], "int");
-						// Build array
-						$this->graph["devices"][$devicecount]["name"] = $device->appliance;
-						$this->graph["devices"][$devicecount]["data"][] = array($row["date_time"] * 1000, $row["state"]);
-					}
-
-					$this->graph["title"] = "All devices for ".$this->details["name"];
-				}
-				else
-				{
-					show_error($this->db->error()["message"], 500, "SQL Error: ".$this->db->error()["code"]);
-					break;
-				}
-
-				$devicecount ++;
-			}
+			$devicecount ++;
 		}
 	}
 }

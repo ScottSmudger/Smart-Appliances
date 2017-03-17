@@ -11,22 +11,32 @@
 			<div id="bottomleft">
 				<h3 class="title" title="Select what data you would like to view below">View Activity</h3><br/>
 				<h4 class="subtitle">Devices</h4>
-				<select id="dropdown1" name="Time" title="Select the time you would like to view" onchange="test()">
-					<option value="time">All Data</option> 
-					<option value="today">Today</option>
-					<option value="thisweek">This Week</option>
-					<option value="thismonth">This Month</option>
-					<option value="thisyear">This Year</option>
-				</select>
-				</br></br>
-				<button id="enter" type="button" onclick="">Enter</button>
-				<br/><br/><br/><br/><br/><br/></br><br/></br>
+				<form method="GET">
+					<select class="choicedropdown" name="device_id" title="Select the device you would like to view">
+						<option value=0>All Devices</option><?php
+						foreach($user->devices as $device)
+						{
+							echo "<option value=".$device->id.">".$device->appliance."</option>";
+						} ?>
+					</select><br/><br/>
+					<h4 class="subtitle">Time Period</h4>
+					<select class="choicedropdown" name="time_period" title="Select the time you would like to view" onchange="test()">
+						<option value="everything">All Data</option> 
+						<option value="today">Today</option>
+						<option value="thisweek">This Week</option>
+						<option value="thismonth">This Month</option>
+						<option value="thisyear">This Year</option>
+					</select>
+					<br/><br/>
+					<button id="enter" type="button" onclick="this.form.submit()">Enter</button>
+				</form>
+				<br/><br/><br/><br/><br/><br/><br/><br/><br/>
 			</div>
-			</br>
+			<br/>
 			<div id="glyndwr">
 				<img id="stripes" src="/assets/images/glyndwr.jpg" alt="Glyndwr University Logo" title="Glyndwr University Logo">
 			</div>
-			</br>
+			<br/>
 		</div>
 		<div class="col-sm-8">
 			<div id="table">
@@ -56,7 +66,6 @@
 			</div>
 			<div id="box">
 				<h3 class="title" title="Graphical analysis is shown below">Device History</h3>
-				<button id="button">Set extremes</button>
 				<div id="container"></div>
 			</div>
 			<br>
@@ -64,7 +73,52 @@
 	</div>
 </div>
 
-<?php
-// Dump the graph script code here
-require_once("graph.php")
-?>
+<script>
+	// All of the code for the graph
+	var data = <?=json_encode($user->graph["devices"])?>;
+
+	Highcharts.chart('container', {
+		title: {
+			text: '<?=$user->graph["title"]?>'
+		},
+
+		// X axis (time)
+		xAxis: {
+			title: {
+				text: 'Time'
+			},
+
+			type: 'datetime'
+		},
+
+		// Y axis (Device state)
+		yAxis: {
+			title: {
+				text: 'State'
+			},
+
+			labels: {
+				formatter: function () {
+					return this.value;
+				}
+			},
+
+			categories:['Closed', 'Open']
+		},
+
+		// Display the legend
+		legend: {
+			enabled: true
+		},
+
+		// Formats the unix time properly so we can see
+		// the hour and minute
+		tooltip: {
+			xDateFormat: '%a. %e %B %Y - %H:%M',
+			shared: true
+		},
+
+		// json_encode()'d for plotting on the graph
+		series: data
+	});
+</script>

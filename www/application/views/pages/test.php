@@ -5,14 +5,14 @@ $time = time();
 echo "for the date: ".date("d-m-Y H:i:s", $time)."<br/>";
 
 
-echo "for the day:<br/>";
-$start_day = strtotime("midnight", $time);
-$end_day = strtotime("tomorrow", $start_day) - 1;
+echo "for the week:<br/>";
+$start_week = strtotime("last sunday");
+$end_week = strtotime("next saturday") + 86399;
 
 var_dump(
 	array(
-		"beginning" => $start_day,
-		"end" => $end_day
+		"beginning" => $start_week,
+		"end" => $end_week
 	)
 );
 
@@ -28,6 +28,48 @@ var_dump(
 		"end" => $end_hr
 	)
 );
+
+
+echo "<br/><br/>for the day:<br/>";
+$min_value = strtotime("midnight");
+$max_value = strtotime("tomorrow", time()) - 1;
+var_dump(
+	array(
+		"beginning" => $min_value,
+		"end" => $max_value
+	)
+);
+
+echo "<br/><br/>for the week:<br/>";
+$min_value = strtotime("-1 week");
+$max_value = strtotime("tomorrow", time()) - 1;
+var_dump(
+	array(
+		"beginning" => $min_value,
+		"end" => $max_value
+	)
+);
+
+echo "<br/><br/>for the month:<br/>";
+$min_value = strtotime("-1 month");
+$max_value = strtotime("tomorrow", time()) - 1;
+var_dump(
+	array(
+		"beginning" => $min_value,
+		"end" => $max_value
+	)
+);
+
+echo "<br/><br/>for the year:<br/>";
+$min_value = strtotime("-1 year");
+$max_value = strtotime("tomorrow", time()) - 1;
+var_dump(
+	array(
+		"beginning" => $min_value,
+		"end" => $max_value
+	)
+);
+
 
 /*function average_hour() {
 	H = Hour;

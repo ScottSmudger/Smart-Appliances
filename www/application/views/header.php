@@ -25,32 +25,10 @@
 	<meta name="theme-color" content="#ffffff">
 	<script src="//code.jquery.com/jquery-3.1.1.min.js"></script>
 	<script src="<?=base_url("assets")?>/js/jquery.cookie.js" type="text/javascript"></script>
+	<script src="<?=base_url("assets")?>/js/custom.js" type="text/javascript"></script>
 	<script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-	<script src="//code.highcharts.com/stock/highstock.js"></script>
-	<script src="//code.highcharts.com/stock/modules/exporting.js"></script>
-	
-	<script>
-		function changeStyle()
-		{
-			switch ($("#colourChange option:selected").text())
-			{
-				case 'red':
-					document.getElementById('pagestyle').setAttribute('href', "http://uni.scottsmudger.website/assets/css/" + red.css);
-					break;
-				
-				case 'default':
-					document.getElementById('pagestyle').setAttribute('href', "http://uni.scottsmudger.website/assets/css/" + default.css);
-					break;
-				
-				case 'green':
-					document.getElementById('pagestyle').setAttribute('href', "http://uni.scottsmudger.website/assets/css/" + green.css);
-					break;
-				
-				default:
-					document.getElementById('pagestyle').setAttribute('href', "http://uni.scottsmudger.website/assets/" + style.css);
-			}
-		}
-	</script>
+	<script src="//code.highcharts.com/highcharts.js"></script>
+	<script src="//code.highcharts.com/modules/exporting.js"></script>
 </head>
 <body>
 <header>
@@ -69,7 +47,7 @@
 		} ?>
 		<li id="right">
 			<select class="colour_change" id="colourChange" onchange="changeStyle()">
-				<option value="">Change Colour</option>
+				<option>Select Theme</option>
 				<option value="default">Default</option>
 				<option value="red">Red</option>
 				<option value="green">Green</option>
@@ -77,7 +55,7 @@
 		</li>
 	</ul>
 </header>
-	<main>
+<main>
 
 	<!-- Support Modal -->
 	<div class="modal fade" id="Contact" tabindex="-1" role="dialog" aria-labelledby="Contact" aria-hidden="true">
@@ -102,7 +80,7 @@
 
 							<h5 class="EHeader">Issue</h5>
 							<textarea class="form-control"></textarea>
-
+							<br/>
 							<input id="formsubmit" type="submit" value="Submit">
 						</form>
 					</div>

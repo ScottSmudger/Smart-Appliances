@@ -12,7 +12,7 @@ main {
 	padding: 0px auto;
 }
 header {
-	background-color: #FF3333;
+	background-color: #cc0000;
 	color: white;
 }
 #logo {
@@ -30,7 +30,7 @@ header {
 	height: 100%;
 }
 #topleft {
-	background-color: #FF3333;
+	background-color: #cc0000;
 	border: 5px solid #CDCDCD;
 	color: white;
 	height: 500px;
@@ -40,7 +40,7 @@ header {
 .title {
 	font-size: 3em;
 	background-color: #CDCDCD;
-	color: #FF3333;
+	color: #cc0000;
 	padding-bottom: 5px;
 	padding-top: 5px;
 	text-align: center;
@@ -53,12 +53,12 @@ header {
 .info {
 	font-size: 1.5em;
 	background-color: white;
-	color: #FF3333;
+	color: #cc0000;
 	padding: 5px;
 	text-align: center;
 }
 #bottomleft {
-	background-color: #FF3333;
+	background-color: #cc0000;
 	border: 5px solid #CDCDCD;
 	color: white;
 	height: 100%;
@@ -66,39 +66,38 @@ header {
 }
 #enter {
 	border: none;
-	height: 7%;
+	height: 10%;
 	width: 20%;
 	background-color: #cdcdcd;
 	text-align: center;
 	margin-top: 1%;
 	margin-bottom: 1%;
-	color: #FF3333;
+	color: #cc0000;
 	margin-left: 40%;
 	margin-right: 0%;
-	font-size: 1em;
+	font-size: 1.25em;
 	font-weight: bold;
 }
 #enter:hover {
 	border: none;
-	height: 7%;
+	height: 10%;
 	width: 20%;
-	background-color: #FF3333;
+	background-color: #b3b3b3;
 	text-align: center;
 	margin-top: 1%;
 	margin-bottom: 1%;
-	color: #CDCDCD;
+	color: #cc0000;
 	margin-left: 40%;
 	margin-right: 0%;
-	font-size: 1em;
+	font-size: 1.25em;
 	font-weight: bold;
-	border: 2px solid white;
 }
 select {
 	width: 50%;
 	font-family: Verdana;
 }
 footer {
-	background-color: #FF3333;
+	background-color: #cc0000;
 	border: none;
 	text-align: left;
 	border-top: solid 7px #CDCDCD;
@@ -128,7 +127,7 @@ table {
 	margin-left: 20%;
 }
 .theadings {
-	background-color: #FF3333;
+	background-color: #cc0000;
 	color: #CDCDCD;
 	text-align: center;
 	
@@ -155,12 +154,12 @@ h2 {
 }
 #desHeading {
 	text-align: center;
-	color: #FF3333;
+	color: #cc0000;
 	font-weight: bold;
 }
 #desinfo {
 	text-align: center;
-	color: #FF3333;
+	color: #cc0000;
 	font-size: 1.25em;
 }
 .entryFields {
@@ -171,7 +170,7 @@ h2 {
 	min-width: 60px;
 }
 #loginSection {
-	background-color: #FF3333;
+	background-color: #cc0000;
 	margin-left: 30%;
 	margin-right: 30%;
 	height: 400px;
@@ -199,7 +198,7 @@ input[type=password] {
 #logsubmit {
 	background-color: #white;
 	border: none;
-	color: #FF3333;
+	color: #cc0000;
 	padding: 10px 32px;
 	text-decoration: none;
 	margin: 4px 2px;
@@ -216,7 +215,7 @@ input[type=password] {
 #logsubmit:hover {
 	background-color: #white;
 	border: none;
-	color: #FF3333;
+	color: #cc0000;
 	padding: 10px 32px;
 	text-decoration: none;
 	margin: 4px 2px;
@@ -227,7 +226,7 @@ input[type=password] {
 	box-shadow: 0 12px 16px 0 rgba(0,0,0,0.24), 0 17px 50px 0 rgba(0,0,0,0.19);
 }
 #logout {
-	background-color: #FF3333; 
+	background-color: #cc0000; 
 	border: none;
 	color: white;
 	padding: 10px 32px;
@@ -243,7 +242,7 @@ input[type=password] {
 #logout:hover {
 	background-color: #CDCDCD; 
 	border: none;
-	color: #FF3333;
+	color: #cc0000;
 	padding: 10px 32px;
 	text-align: center;
 	text-decoration: none;
@@ -276,20 +275,21 @@ ul {
 	position: fixed;
 	width: 100%;
 	z-index: 9;
+	border-bottom: #cc0000 6px solid;
 }
 li {
 	float: left;
 }
 li a {
 	display: block;
-	color: #FF3333;
+	color: #cc0000;
 	text-align: center;
 	padding: 14px 16px;
 	text-decoration: none;
 	font-weight: bold;
 }
 li a:hover:not(.active) {
-	background-color: #FF3333;
+	background-color: #cc0000;
 	color: #cdcdcd;
 	text-decoration: none;
 	cursor: pointer;
@@ -302,12 +302,14 @@ li a:hover:not(.active) {
 .navright{
 	float: right;
 }
-#dropdown1 {
+.choicedropdown {
 	margin-left: 25%;
 	color: black;
+	height: 30px;
+	font-size: 1.25em;
 }
 #table {
-	background-color: #FF3333;
+	background-color: #cc0000;
 	border: 5px solid #CDCDCD;
 	border-top: none;
 	height: 800px;
@@ -322,7 +324,7 @@ textarea {
 #formsubmit {
 	background-color: #white;
 	border: none;
-	color: #FF3333;
+	color: #cc0000;
 	padding: 10px 32px;
 	text-decoration: none;
 	margin: 4px 2px;
@@ -334,7 +336,7 @@ textarea {
 
 }
 #formsubmit:hover {
-	background-color: #FF3333;
+	background-color: #cc0000;
 	color: #cdcdcd;
 	padding: 10px 32px;
 	text-decoration: none;
@@ -346,11 +348,11 @@ textarea {
 	border-radius: 3px;
 }
 .EHeader {
-	color: #FF3333;
+	color: #cc0000;
 	font-size: 1.25em;
 }
 .modal-header {
-	color: #FF3333;
+	color: #cc0000;
 }
 #box {
 	margin-top: 20px;
@@ -369,10 +371,12 @@ textarea {
 	width: 240px;
 	height: 40px;
 	overflow: hidden;
-	background: url(new_arrow.png) no-repeat right #ddd;
 	border: 1px solid #ccc;
-	color: white;
+	color: #cc0000;
 	background-color: #b3b3b3;
 	margin-top:1%;
 	font-weight: bold;
+}
+#right{
+	float: right;
 }

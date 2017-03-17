@@ -66,7 +66,7 @@ header {
 }
 #enter {
 	border: none;
-	height: 7%;
+	height: 10%;
 	width: 20%;
 	background-color: #cdcdcd;
 	text-align: center;
@@ -75,23 +75,22 @@ header {
 	color: #006600;
 	margin-left: 40%;
 	margin-right: 0%;
-	font-size: 1em;
+	font-size: 1.25em;
 	font-weight: bold;
 }
 #enter:hover {
 	border: none;
-	height: 7%;
+	height: 10%;
 	width: 20%;
-	background-color: #006600;
+	background-color: #b3b3b3;
 	text-align: center;
 	margin-top: 1%;
 	margin-bottom: 1%;
-	color: #CDCDCD;
+	color: #006600;
 	margin-left: 40%;
 	margin-right: 0%;
-	font-size: 1em;
+	font-size: 1.25em;
 	font-weight: bold;
-	border: 2px solid white;
 }
 select {
 	width: 50%;
@@ -276,6 +275,7 @@ ul {
 	position: fixed;
 	width: 100%;
 	z-index: 9;
+	border-bottom: #006600 6px solid;
 }
 li {
 	float: left;
@@ -302,9 +302,11 @@ li a:hover:not(.active) {
 .navright{
 	float: right;
 }
-#dropdown1 {
+.choicedropdown {
 	margin-left: 25%;
 	color: black;
+	height: 30px;
+	font-size: 1.25em;
 }
 #table {
 	background-color: #006600;
@@ -369,10 +371,12 @@ textarea {
 	width: 240px;
 	height: 40px;
 	overflow: hidden;
-	background: url(new_arrow.png) no-repeat right #ddd;
 	border: 1px solid #ccc;
-	color: white;
+	color: #006600;
 	background-color: #b3b3b3;
 	margin-top:1%;
 	font-weight: bold;
+}
+#right{
+	float: right;
 }

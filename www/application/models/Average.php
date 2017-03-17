@@ -58,4 +58,31 @@ class Average extends CI_Model
 			//save into array for day
 		}
 	}
+/*
+	Average (Week)
+
+	$time = time();
+	echo "for the date: ".date("d-m-Y H:i:s", $time)."<br/>";
+
+
+	echo "for the week:<br/>";
+	$start_week = strtotime("midnight", $time);
+	$end_week = strtotime("tomorrow", $start_week) - 1;
+
+	var_dump(
+		array(
+			"beginning" => $start_week,
+			"end" => $end_week
+		)
+	);
+
+
+
+	$this->db->select("date_time");
+		$this->db->from("DEVICE_HISTORY");
+		$this->db->where(date_time betweeen );
+
+*/
 }
+
+	

@@ -52,10 +52,9 @@ class Main(object):
 
 	# Configures and initiates the Logging library
 	def initLogger(self):
+		# For log name (1 per day)
 		date = datetime.now().strftime("%d_%m_%y")
-		month = datetime.now().strftime("%m")
-		day = datetime.now().strftime("%d")
-		# Logging
+		# Root logger
 		self.log = logging.getLogger()
 		self.log.setLevel(logging.DEBUG)
 		format = logging.Formatter(fmt = "%(asctime)s - %(module)s - %(levelname)s: %(message)s", datefmt = "%d-%m-%Y %T")

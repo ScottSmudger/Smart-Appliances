@@ -97,38 +97,65 @@ select {
 	font-family: Verdana;
 }
 footer {
-	background-color: #006600;
+	background-color: #004A7C;
 	border: none;
 	text-align: left;
 	border-top: solid 7px #CDCDCD;
 	border-bottom: solid 7px #CDCDCD;
-	text-align: left;
 }
 .container-fluid-sm-4 {
 	height: 100%;
 	width: 100%;
 }
-#copyright {
-	font-family : Verdana;
-	margin-left: 1%;
-	font-size: 1.10em;
-	font-style: italic;
+.lowermenu {
+	list-style-type: none;
+	margin: 0;
+	padding: 0;
+	overflow: hidden;
+	background-color: #006600;
+	width: 100%;
+}
+.lowerlist{
+	float: right;
+}
+
+.lowerlist a {
+	display: block;
 	color: white;
-	line-height: 30px;
+	text-align: center;
+	text-decoration: none;
+	padding: 10px;
+	font-size: 1.1em;
+}
+.lowerlist a:hover {
+	display: block;
+	color: white;
+	text-align: center;
+	text-decoration: none;
+	padding: 10px;
+	background-color: #008200;
+	font-size: 1.1em;
+}
+
+#copyright {
+	float:left;
+	color: white;
+	font-style: italic;
+	padding: 10px;
+	font-size: 1.1em;
 }
 table {
 	border: 2px black solid;
 	margin-left: 10%;
 	margin-top: 3%;
 	height: 40%;
-	width: 60%;
+	width: 80%;
 	text-align: center;
 	font-size: 1.5em;
-	margin-left: 20%;
 }
 .theadings {
 	background-color: #006600;
-	color: #CDCDCD;
+	color: white;
 	text-align: center;
 	
 }
@@ -165,15 +192,16 @@ h2 {
 .entryFields {
 	margin-left: 20%;
 	color: white;
-	font-size: 1.25em;
-	min-height: 20px;
-	min-width: 60px;
+	font-size: 1.5em;
+	min-height: 5px;
+	min-width: 30px;
 }
 #loginSection {
 	background-color: #006600;
-	margin-left: 30%;
-	margin-right: 30%;
+	margin-left: 22%;
+	margin-right: 22%;
 	height: 400px;
+	width: 55%;
 }
 input[type=text] {
 	color:black;
@@ -183,6 +211,7 @@ input[type=text] {
 	border: 1px solid #ccc;
 	border-radius: 4px;
 	box-sizing: border-box;
+	width: 50%;
 
 }
 input[type=password] {
@@ -194,18 +223,22 @@ input[type=password] {
 	border-radius: 4px;
 	box-sizing: border-box;
 	margin-left: 5px;
+	width: 50%;
 }
 #logsubmit {
-	background-color: #white;
+	background-color: white;
 	border: none;
 	color: #006600;
-	padding: 10px 32px;
 	text-decoration: none;
 	margin: 4px 2px;
 	cursor: pointer;
 	font-weight: bold;
-	margin-left: 40%;
-	margin-right: 40%;
+	font-size: 1.25em;
+	width: 100px;
+	height: 40px;
+	margin-left: 42%;
+	margin-right: 42%;
+	border-radius: 3px;
 }
 #logsubmit:active {
   	background-color: #CDCDCD;
@@ -213,20 +246,21 @@ input[type=password] {
   	transform: translateY(4px);
 }
 #logsubmit:hover {
-	background-color: #white;
+	background-color: white;
 	border: none;
 	color: #006600;
-	padding: 10px 32px;
 	text-decoration: none;
 	margin: 4px 2px;
 	cursor: pointer;
-	font-weight: bold;
-	margin-left: 40%;
-	margin-right: 40%;
+	font-weight: bold;;
 	box-shadow: 0 12px 16px 0 rgba(0,0,0,0.24), 0 17px 50px 0 rgba(0,0,0,0.19);
+	width: 100px;
+	height: 40px;
+	margin-left: 42%;
+	margin-right: 42%;
 }
 #logout {
-	background-color: #006600; 
+	background-color: #004A7C; 
 	border: none;
 	color: white;
 	padding: 10px 32px;
@@ -265,7 +299,7 @@ input[type=password] {
 	margin-left: 30%;
 	margin-right: 30%;
 }
-ul {
+#uppermenu {
 	list-style-type: none;
 	margin: 0;
 	padding: 0;
@@ -277,10 +311,10 @@ ul {
 	z-index: 9;
 	border-bottom: #006600 6px solid;
 }
-li {
+.upperoptions {
 	float: left;
 }
-li a {
+.upperoptions a {
 	display: block;
 	color: #006600;
 	text-align: center;
@@ -288,7 +322,8 @@ li a {
 	text-decoration: none;
 	font-weight: bold;
 }
-li a:hover:not(.active) {
+
+.upperoptions a:hover:not(.active) {
 	background-color: #006600;
 	color: #cdcdcd;
 	text-decoration: none;
@@ -301,6 +336,28 @@ li a:hover:not(.active) {
 }
 .navright{
 	float: right;
+}
+.navright:hover{
+	display: block;
+	color: #006600;
+	text-align: center;
+	text-decoration: none;
+	font-weight: bold;
+}
+.navright a{
+	text-decoration: none;
+	display: block;
+	color: #006600;
+	text-align: center;
+	padding: 14px 16px;
+	text-decoration: none;
+	font-weight: bold;
+}
+.navright a:hover:not(.active) {
+	background-color: #006600;
+	color: #cdcdcd;
+	text-decoration: none;
+	cursor: pointer;
 }
 .choicedropdown {
 	margin-left: 25%;
@@ -367,6 +424,9 @@ textarea {
 #glyndwr {
 	border: 5px solid #CDCDCD;
 }
+#right{
+	float: right;
+}
 .colour_change{
 	width: 240px;
 	height: 40px;
@@ -376,7 +436,5 @@ textarea {
 	background-color: #b3b3b3;
 	margin-top:1%;
 	font-weight: bold;
-}
-#right{
-	float: right;
+	cursor: pointer;
 }

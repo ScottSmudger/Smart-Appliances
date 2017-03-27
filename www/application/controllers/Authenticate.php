@@ -13,21 +13,6 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 class Authenticate extends CI_Controller
 {
 	/**
-	* Classes constructor
-	*
-	* @return null
-	*/
-	public function __construct()
-	{
-		parent::__construct();
-
-		$this->load->library("form_validation");
-
-		$this->output->enable_profiler(TRUE);
-		$this->benchmark->mark("starting_point");
-	}
-
-	/**
 	* index - Displays the login form
 	*
 	* @return null
@@ -44,14 +29,7 @@ class Authenticate extends CI_Controller
 		}
 		else
 		{
-			if($this->session->is_admin)
-			{
-				redirect("/admin");
-			}
-			else
-			{
-				redirect("/dash");
-			}
+			redirect("/dash");
 		}
 	}
 
@@ -80,13 +58,7 @@ class Authenticate extends CI_Controller
 			// Set session
 			$this->session->user_details = $user_details;
 			$this->session->logged_in = TRUE;
-
-			// If admin
-			if($result->id == 4)
-			{
-				$this->session->is_admin = TRUE;
-			}
-
+			
 			return TRUE;
 		}
 		else
@@ -114,7 +86,7 @@ class Authenticate extends CI_Controller
 
 		// Check if the query returns something,
 		// and that it contains one row
-		if($result AND $result->num_rows() == 1)
+		if($result)
 		{
 			return $result->row();
 		}

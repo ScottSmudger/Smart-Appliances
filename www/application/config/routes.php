@@ -49,10 +49,12 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 | Examples:	my-controller/index	-> my_controller/index
 |		my-controller/my-method	-> my_controller/my_method
 */
-$route["default_controller"] = "sa/view";
+$route["default_controller"] = "sa/dash";
 
 // For specific pages
 $route["dash"] = "sa/dash";
+$route["api"] = "sa/api";
+$route["test"] = "sa/view/test";
 $route["authenticate"] = "authenticate";
 $route["login"] = "authenticate/login";
 $route["logout"] = "authenticate/logout";
@@ -60,5 +62,3 @@ $route["logout"] = "authenticate/logout";
 // For specific devices e.g. dash/2. Sa controller, View method(dash page, $1 device)
 $route["dash/(:num)"] = "sa/dash/$1";
 
-// For everything else
-$route["(:any)"] = "sa/view/$1";

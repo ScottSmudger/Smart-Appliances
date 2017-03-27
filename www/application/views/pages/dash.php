@@ -65,10 +65,17 @@
 				<br/>
 			</div>
 			<div id="box">
-				<h3 class="title" title="Graphical analysis is shown below">Device History</h3>
-				<div id="container"></div>
+				<h3 class="title" title="Graphical analysis is shown below">Device History</h3><?php
+				if($user->graph["devices"] > 0)
+				{ ?>
+					<div id="container"></div><?php
+				}
+				else
+				{ ?>
+					<div class="alert alert-danger">No Data to Display!</div><?php
+				} ?>
 			</div>
-			<br>
+			<br/>
 		</div>
 	</div>
 </div>

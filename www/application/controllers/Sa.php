@@ -30,30 +30,6 @@ class Sa extends CI_Controller
 		// To stop PHP from moaning as we're manipulating and displaying times from unix time
 		date_default_timezone_set("UTC");
 	}
-	
-	/**
-	* View - Displays the page being called
-	*
-	* @param string $page The page to be displayed
-	* @return null
-	*/
-	public function view($page = "dash")
-	{
-		// Require login
-		// If logged in display the requested page
-		if($this->session->logged_in)
-		{
-			$this->client = $this->user->newUser();
-
-			$this->load->view("header");
-			$this->load->view("pages/".$page, array("user" => $this->client));
-			$this->load->view("footer");
-		}
-		else
-		{
-			redirect("/login");
-		}
-	}
 
 	/**
 	* Dash - Displays the dash page
@@ -69,7 +45,7 @@ class Sa extends CI_Controller
 		}
 
 		$this->load->model("average");
-		$this->averages = $this->average->calculate();
+		$averages = $this->average->calculate();
 
 		$this->client = $this->user->newUser();
 
@@ -78,13 +54,26 @@ class Sa extends CI_Controller
 		if($this->session->logged_in)
 		{
 			$this->load->view("header");
-			$this->load->view("pages/dash", array("user" => $this->client));
+			$this->load->view("pages/dash", array("user" => $this->client, "averages" => $averages));
 			$this->load->view("footer");
 		}
 		else
 		{
 			redirect("/login");
 		}
+	}
+	
+	/**
+	* API - Displays the API page
+	*
+	* @return null
+	*/
+	public function api()
+	{
+		$this->load->model("average");
+		$averages = $this->average->api();
+	
+		$this->load->view("pages/api", array("averages" => $averages));
 	}
 
 	/**

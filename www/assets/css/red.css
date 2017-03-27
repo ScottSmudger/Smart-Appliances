@@ -12,7 +12,7 @@ main {
 	padding: 0px auto;
 }
 header {
-	background-color: #cc0000;
+	background-color: #CC0000;
 	color: white;
 }
 #logo {
@@ -30,7 +30,7 @@ header {
 	height: 100%;
 }
 #topleft {
-	background-color: #cc0000;
+	background-color: #CC0000;
 	border: 5px solid #CDCDCD;
 	color: white;
 	height: 500px;
@@ -40,7 +40,7 @@ header {
 .title {
 	font-size: 3em;
 	background-color: #CDCDCD;
-	color: #cc0000;
+	color: #CC0000;
 	padding-bottom: 5px;
 	padding-top: 5px;
 	text-align: center;
@@ -53,12 +53,12 @@ header {
 .info {
 	font-size: 1.5em;
 	background-color: white;
-	color: #cc0000;
+	color: #CC0000;
 	padding: 5px;
 	text-align: center;
 }
 #bottomleft {
-	background-color: #cc0000;
+	background-color: #CC0000;
 	border: 5px solid #CDCDCD;
 	color: white;
 	height: 100%;
@@ -72,7 +72,7 @@ header {
 	text-align: center;
 	margin-top: 1%;
 	margin-bottom: 1%;
-	color: #cc0000;
+	color: #CC0000;
 	margin-left: 40%;
 	margin-right: 0%;
 	font-size: 1.25em;
@@ -86,7 +86,7 @@ header {
 	text-align: center;
 	margin-top: 1%;
 	margin-bottom: 1%;
-	color: #cc0000;
+	color: #CC0000;
 	margin-left: 40%;
 	margin-right: 0%;
 	font-size: 1.25em;
@@ -97,38 +97,65 @@ select {
 	font-family: Verdana;
 }
 footer {
-	background-color: #cc0000;
+	background-color: #004A7C;
 	border: none;
 	text-align: left;
 	border-top: solid 7px #CDCDCD;
 	border-bottom: solid 7px #CDCDCD;
-	text-align: left;
 }
 .container-fluid-sm-4 {
 	height: 100%;
 	width: 100%;
 }
-#copyright {
-	font-family : Verdana;
-	margin-left: 1%;
-	font-size: 1.10em;
-	font-style: italic;
+.lowermenu {
+	list-style-type: none;
+	margin: 0;
+	padding: 0;
+	overflow: hidden;
+	background-color: #CC0000;
+	width: 100%;
+}
+.lowerlist{
+	float: right;
+}
+
+.lowerlist a {
+	display: block;
 	color: white;
-	line-height: 30px;
+	text-align: center;
+	text-decoration: none;
+	padding: 10px;
+	font-size: 1.1em;
+}
+.lowerlist a:hover {
+	display: block;
+	color: white;
+	text-align: center;
+	text-decoration: none;
+	padding: 10px;
+	background-color: #e00000;
+	font-size: 1.1em;
+}
+
+#copyright {
+	float:left;
+	color: white;
+	font-style: italic;
+	padding: 10px;
+	font-size: 1.1em;
 }
 table {
 	border: 2px black solid;
 	margin-left: 10%;
 	margin-top: 3%;
 	height: 40%;
-	width: 60%;
+	width: 80%;
 	text-align: center;
 	font-size: 1.5em;
-	margin-left: 20%;
 }
 .theadings {
-	background-color: #cc0000;
-	color: #CDCDCD;
+	background-color: #CC0000;
+	color: white;
 	text-align: center;
 	
 }
@@ -154,26 +181,27 @@ h2 {
 }
 #desHeading {
 	text-align: center;
-	color: #cc0000;
+	color: #CC0000;
 	font-weight: bold;
 }
 #desinfo {
 	text-align: center;
-	color: #cc0000;
+	color: #CC0000;
 	font-size: 1.25em;
 }
 .entryFields {
 	margin-left: 20%;
 	color: white;
-	font-size: 1.25em;
-	min-height: 20px;
-	min-width: 60px;
+	font-size: 1.5em;
+	min-height: 5px;
+	min-width: 30px;
 }
 #loginSection {
-	background-color: #cc0000;
-	margin-left: 30%;
-	margin-right: 30%;
+	background-color: #CC0000;
+	margin-left: 22%;
+	margin-right: 22%;
 	height: 400px;
+	width: 55%;
 }
 input[type=text] {
 	color:black;
@@ -183,6 +211,7 @@ input[type=text] {
 	border: 1px solid #ccc;
 	border-radius: 4px;
 	box-sizing: border-box;
+	width: 50%;
 
 }
 input[type=password] {
@@ -194,18 +223,22 @@ input[type=password] {
 	border-radius: 4px;
 	box-sizing: border-box;
 	margin-left: 5px;
+	width: 50%;
 }
 #logsubmit {
-	background-color: #white;
+	background-color: white;
 	border: none;
-	color: #cc0000;
-	padding: 10px 32px;
+	color: #CC0000;
 	text-decoration: none;
 	margin: 4px 2px;
 	cursor: pointer;
 	font-weight: bold;
-	margin-left: 40%;
-	margin-right: 40%;
+	font-size: 1.25em;
+	width: 100px;
+	height: 40px;
+	margin-left: 42%;
+	margin-right: 42%;
+	border-radius: 3px;
 }
 #logsubmit:active {
   	background-color: #CDCDCD;
@@ -213,20 +246,21 @@ input[type=password] {
   	transform: translateY(4px);
 }
 #logsubmit:hover {
-	background-color: #white;
+	background-color: white;
 	border: none;
-	color: #cc0000;
-	padding: 10px 32px;
+	color: #CC0000;
 	text-decoration: none;
 	margin: 4px 2px;
 	cursor: pointer;
-	font-weight: bold;
-	margin-left: 40%;
-	margin-right: 40%;
+	font-weight: bold;;
 	box-shadow: 0 12px 16px 0 rgba(0,0,0,0.24), 0 17px 50px 0 rgba(0,0,0,0.19);
+	width: 100px;
+	height: 40px;
+	margin-left: 42%;
+	margin-right: 42%;
 }
 #logout {
-	background-color: #cc0000; 
+	background-color: #004A7C; 
 	border: none;
 	color: white;
 	padding: 10px 32px;
@@ -242,7 +276,7 @@ input[type=password] {
 #logout:hover {
 	background-color: #CDCDCD; 
 	border: none;
-	color: #cc0000;
+	color: #CC0000;
 	padding: 10px 32px;
 	text-align: center;
 	text-decoration: none;
@@ -265,7 +299,7 @@ input[type=password] {
 	margin-left: 30%;
 	margin-right: 30%;
 }
-ul {
+#uppermenu {
 	list-style-type: none;
 	margin: 0;
 	padding: 0;
@@ -275,21 +309,22 @@ ul {
 	position: fixed;
 	width: 100%;
 	z-index: 9;
-	border-bottom: #cc0000 6px solid;
+	border-bottom: #CC0000 6px solid;
 }
-li {
+.upperoptions {
 	float: left;
 }
-li a {
+.upperoptions a {
 	display: block;
-	color: #cc0000;
+	color: #CC0000;
 	text-align: center;
 	padding: 14px 16px;
 	text-decoration: none;
 	font-weight: bold;
 }
-li a:hover:not(.active) {
-	background-color: #cc0000;
+
+.upperoptions a:hover:not(.active) {
+	background-color: #CC0000;
 	color: #cdcdcd;
 	text-decoration: none;
 	cursor: pointer;
@@ -302,6 +337,28 @@ li a:hover:not(.active) {
 .navright{
 	float: right;
 }
+.navright:hover{
+	display: block;
+	color: #CC0000;
+	text-align: center;
+	text-decoration: none;
+	font-weight: bold;
+}
+.navright a{
+	text-decoration: none;
+	display: block;
+	color: #CC0000;
+	text-align: center;
+	padding: 14px 16px;
+	text-decoration: none;
+	font-weight: bold;
+}
+.navright a:hover:not(.active) {
+	background-color: #CC0000;
+	color: #cdcdcd;
+	text-decoration: none;
+	cursor: pointer;
+}
 .choicedropdown {
 	margin-left: 25%;
 	color: black;
@@ -309,7 +366,7 @@ li a:hover:not(.active) {
 	font-size: 1.25em;
 }
 #table {
-	background-color: #cc0000;
+	background-color: #CC0000;
 	border: 5px solid #CDCDCD;
 	border-top: none;
 	height: 800px;
@@ -324,7 +381,7 @@ textarea {
 #formsubmit {
 	background-color: #white;
 	border: none;
-	color: #cc0000;
+	color: #CC0000;
 	padding: 10px 32px;
 	text-decoration: none;
 	margin: 4px 2px;
@@ -336,7 +393,7 @@ textarea {
 
 }
 #formsubmit:hover {
-	background-color: #cc0000;
+	background-color: #CC0000;
 	color: #cdcdcd;
 	padding: 10px 32px;
 	text-decoration: none;
@@ -348,11 +405,11 @@ textarea {
 	border-radius: 3px;
 }
 .EHeader {
-	color: #cc0000;
+	color: #CC0000;
 	font-size: 1.25em;
 }
 .modal-header {
-	color: #cc0000;
+	color: #CC0000;
 }
 #box {
 	margin-top: 20px;
@@ -367,16 +424,17 @@ textarea {
 #glyndwr {
 	border: 5px solid #CDCDCD;
 }
+#right{
+	float: right;
+}
 .colour_change{
 	width: 240px;
 	height: 40px;
 	overflow: hidden;
 	border: 1px solid #ccc;
-	color: #cc0000;
+	color: #CC0000;
 	background-color: #b3b3b3;
 	margin-top:1%;
 	font-weight: bold;
-}
-#right{
-	float: right;
+	cursor: pointer;
 }

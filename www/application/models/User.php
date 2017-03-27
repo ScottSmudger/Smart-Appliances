@@ -12,6 +12,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 */
 class User extends CI_Model
 {
+	protected $date = "l dS F Y";
+	
 	// User stuff
 	protected $id;
 	public $details;
@@ -183,13 +185,14 @@ class User extends CI_Model
 		{
 			// For specfic devices
 			$id = $this->input->get("device_id");
-			$period = $this->input->get("time_period");
-			settype($id, "int");
-
+			
+			// For the given time period
+			$this->period = $this->input->get("time_period");
+			
 			// For certain time periods
-			if(isset($period))
+			if(isset($this->period))
 			{
-				switch($period)
+				switch($this->period)
 				{
 					case "everything":
 						$time_period = "everywhere";
@@ -218,7 +221,8 @@ class User extends CI_Model
 					break;
 				}
 			}
-
+			
+			// If form is set to 0, just display all devices between min and max
 			if($id == 0)
 			{
 				$this->getAllDevices($min, $max);
@@ -229,15 +233,21 @@ class User extends CI_Model
 				$this->db->from("DEVICE_HISTORY");
 				$this->db->join("DEVICES", "DEVICE_HISTORY.device_id = DEVICES.id");
 				$this->db->where("device_id", $id);
+
 				// If the range is set, use it
 				if($min AND $max)
 				{
 					$this->db->where("DEVICE_HISTORY.date_time BETWEEN ".$min." AND ".$max."");
+					$this->graph["title"] = "Data for device $id BETWEEN ".date($this->date, $min)." and ".date($this->date, $max)."";
+				}
+				else
+				{
+					$this->graph["title"] = "Data for device $id";
 				}
 				$this->db->order_by("date_time", "DESC");
 				$history = $this->db->get();
 
-				if($history != NULL)
+				if($history)
 				{
 					foreach($history->result_array() as $row)
 					{
@@ -249,8 +259,6 @@ class User extends CI_Model
 						$this->graph["devices"][0]["name"] = $row["appliance"];
 						$this->graph["devices"][0]["data"][] = array($row["date_time"] * 1000, $row["state"]);
 					}
-
-					$this->graph["title"] = "Device ".$row["appliance"]." between $min and $max";
 				}
 				else
 				{
@@ -279,10 +287,19 @@ class User extends CI_Model
 			$this->db->select("state, date_time");
 			$this->db->from("DEVICE_HISTORY");
 			$this->db->where("device_id", $device->id);
+			// If the range is set, use it
 			if($min AND $max)
 			{
 				$this->db->where("DEVICE_HISTORY.date_time BETWEEN ".$min." AND ".$max."");
-				$this->graph["title"] = "All devices between $min and $max";
+				
+				if($this->period == "today")
+				{
+					$this->graph["title"] = "All devices on ".date($this->date, $min);
+				}
+				else
+				{
+					$this->graph["title"] = "All devices between ".date($this->date, $min)." and ".date($this->date, $max)."";
+				}
 			}
 			else
 			{

@@ -10,6 +10,7 @@ from datetime import datetime
 import os
 import logging
 import ConfigParser
+import requests
 """
 Level		Numeric value
 CRITICAL	50
@@ -49,6 +50,10 @@ class Main(object):
 		# Initialise module classes
 		self.database = database.Database()
 		self.notify = notify.Notify()
+		
+		# Average stuff
+		self.averages = self.getAvgs()
+		self.cur_avg_time = 0
 
 	# Configures and initiates the Logging library
 	def initLogger(self):
@@ -94,11 +99,15 @@ class Main(object):
 		open_length = 0
 		try:
 			while self.running:
-				state = GPIO.input(self.fridge)
+			
+				self.state = GPIO.input(self.fridge)
 				
-				if state:
+				if not self.inRange():
+					self.log.debug("Fridge is not open when it should be")
+				
+				if self.state:
 					# Door is open
-					self.log.debug("Door is open!: %s" % state)
+					self.log.debug("Door is open!: %s" % self.state)
 					# While door is start timer and wait
 					while GPIO.input(self.fridge):
 						if open_length == 5:
@@ -114,18 +123,45 @@ class Main(object):
 				else:
 					# Door is closed
 					if prev_state:
-						self.log.debug("Door is closed!: %s" % state)
+						self.log.debug("Door is closed!: %s" % self.state)
 				
 				# We only want to insert data during the change of the door state,
 				# otherwise we will be inserting data forever (which is bad)
-				if state != prev_state:
-					prev_state = state
-					self.updateDoorState(state)
+				if self.state != prev_state:
+					prev_state = self.state
+					self.updateDoorState(self.state)
 					self.log.info("prev_state updated to: %s %s" % (self.getHumanState(prev_state), prev_state))
 					
 		except KeyboardInterrupt:
 			self.log.info("Program interrupted")
 	
+	# Gets the averages from the php API
+	def getAvgs(self):
+		r = requests.get('http://uni.scottsmudger.website/api')
+		return r.json()
+	
+	def genState(self):
+		state = randint(0, 1)
+		
+		return state
+	
+	# If in range of 10 mins before and after the verage time
+	def inRange(self):
+		# 900 = 15 mins
+		# 600 = 10 mins
+		avg_time = self.averages[self.cur_avg_time]
+		
+		print datetime.fromtimestamp(avg_time).strftime('%H:%M')
+		
+		start_period = avg_time - 600
+		end_period = avg_time + 600
+		self.cur_avg_time += 1
+		# If is in range
+		if avg_time >= start_period and avg_time <= end_period and not self.state:
+			True
+		else:
+			False
+			
 	# Cleans up GPIO when the script closes down
 	# Deconstructor
 	def __del__(self):

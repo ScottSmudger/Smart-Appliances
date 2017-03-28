@@ -46,7 +46,7 @@ class Authenticate extends CI_Controller
 		$result = $this->checkLogin($username, $password);
 
 		// Check if checkLogin() returns something
-		if($result)
+		if($result AND password_verify($password, $result->password))
 		{
 			// Get details
 			$user_details = array(
@@ -80,7 +80,6 @@ class Authenticate extends CI_Controller
 		$this->db->select("id, username, password");
 		$this->db->from("LOGIN_DETAILS");
 		$this->db->where("username", $username);
-		$this->db->where("password", $password);
 		$this->db->limit(1);
 		$result = $this->db->get();
 

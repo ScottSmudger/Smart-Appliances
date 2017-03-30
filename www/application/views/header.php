@@ -29,6 +29,8 @@
 	<script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 	<script src="//code.highcharts.com/highcharts.js"></script>
 	<script src="//code.highcharts.com/modules/exporting.js"></script>
+	<link rel="stylesheet" type="text/css" href="//cdnjs.cloudflare.com/ajax/libs/cookieconsent2/3.0.3/cookieconsent.min.css" />
+	<script src="//cdnjs.cloudflare.com/ajax/libs/cookieconsent2/3.0.3/cookieconsent.min.js"></script>
 </head>
 <body>
 <header>
@@ -37,8 +39,8 @@
 		<a href="/"><img id="logo" alt="Group 11 Logo" src="<?=base_url("assets")?>/images/logo.png" title="Group 11 Logo"></a>
 	</div>
 	<ul id ="uppermenu">
-		<li class = "upperoptions" title="Link to support page"><a data-toggle="modal" data-target="#Contact">Support</a></li>
-		<li class = "upperoptions" title="Link to our Github page"><a href="http://github.com/ScottSmudger/Smart-Appliances" target="_blank">Github</a></li>
+		<li class="upperoptions" title="Link to support page"><a data-toggle="modal" data-target="#Contact">Support</a></li>
+		<li class="upperoptions" title="Link to our Github page"><a href="http://github.com/ScottSmudger/Smart-Appliances" target="_blank">Github</a></li>
 		<?php
 		// If logged in display the logout button
 		if($this->session->logged_in)

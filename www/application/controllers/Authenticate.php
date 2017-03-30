@@ -73,7 +73,7 @@ class Authenticate extends CI_Controller
 	*
 	* @param string $username The username to be checked
 	* @param string $password The password to be checked
-	* @return bool
+	* @return object or bool $result from database or FALSE 
 	*/
 	protected function checkLogin($username, $password)
 	{

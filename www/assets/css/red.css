@@ -1,7 +1,7 @@
 html, body {
 	font-family: Verdana;
 	color: black;
-	height: 100%;
+	height: 80%;
 	margin:  0px auto;
 	padding: 0px auto;
 }
@@ -33,7 +33,7 @@ header {
 	background-color: #CC0000;
 	border: 5px solid #CDCDCD;
 	color: white;
-	height: 500px;
+	height: 480px;
 	border-top: none;
 	
 }
@@ -97,7 +97,6 @@ select {
 	font-family: Verdana;
 }
 footer {
-	background-color: #004A7C;
 	border: none;
 	text-align: left;
 	border-top: solid 7px #CDCDCD;
@@ -118,7 +117,6 @@ footer {
 .lowerlist{
 	float: right;
 }
-
 .lowerlist a {
 	display: block;
 	color: white;
@@ -126,6 +124,7 @@ footer {
 	text-decoration: none;
 	padding: 10px;
 	font-size: 1.1em;
+	cursor: pointer;
 }
 .lowerlist a:hover {
 	display: block;
@@ -133,10 +132,17 @@ footer {
 	text-align: center;
 	text-decoration: none;
 	padding: 10px;
-	background-color: #e00000;
+	background-color: #e00202;
 	font-size: 1.1em;
 }
-
+#html{
+	display: block;
+	float: left;
+	padding: 6px;
+}
+#badge{
+	height: 30px;
+}
 #copyright {
 	float:left;
 	color: white;
@@ -144,6 +150,7 @@ footer {
 	padding: 10px;
 	font-size: 1.1em;
 }
+
 table {
 	border: 2px black solid;
 	margin-left: 10%;
@@ -152,6 +159,7 @@ table {
 	width: 80%;
 	text-align: center;
 	font-size: 1.5em;
+	overflow: auto;
 }
 .theadings {
 	background-color: #CC0000;
@@ -162,7 +170,7 @@ table {
 .set1 {
 	background-color: white;
 }
-th, td {
+.table-responsive th, td {
 	padding: 10px;
 	text-align: center;
 	border-left: 2px black solid;
@@ -190,18 +198,17 @@ h2 {
 	font-size: 1.25em;
 }
 .entryFields {
-	margin-left: 20%;
+	margin-left: 22%;
 	color: white;
 	font-size: 1.5em;
-	min-height: 5px;
-	min-width: 30px;
+	min-height: 3px;
+	min-width: 35px;
 }
 #loginSection {
 	background-color: #CC0000;
-	margin-left: 22%;
-	margin-right: 22%;
-	height: 400px;
+	height: 100%;
 	width: 55%;
+	margin: 0 auto;
 }
 input[type=text] {
 	color:black;
@@ -222,7 +229,7 @@ input[type=password] {
 	border: 1px solid #ccc;
 	border-radius: 4px;
 	box-sizing: border-box;
-	margin-left: 5px;
+	margin-left: 7px;
 	width: 50%;
 }
 #logsubmit {
@@ -230,15 +237,15 @@ input[type=password] {
 	border: none;
 	color: #CC0000;
 	text-decoration: none;
-	margin: 4px 2px;
 	cursor: pointer;
 	font-weight: bold;
 	font-size: 1.25em;
 	width: 100px;
 	height: 40px;
+	border-radius: 3px;
+	position: relative;
 	margin-left: 42%;
 	margin-right: 42%;
-	border-radius: 3px;
 }
 #logsubmit:active {
   	background-color: #CDCDCD;
@@ -250,9 +257,8 @@ input[type=password] {
 	border: none;
 	color: #CC0000;
 	text-decoration: none;
-	margin: 4px 2px;
 	cursor: pointer;
-	font-weight: bold;;
+	font-weight: bold;
 	box-shadow: 0 12px 16px 0 rgba(0,0,0,0.24), 0 17px 50px 0 rgba(0,0,0,0.19);
 	width: 100px;
 	height: 40px;
@@ -263,7 +269,7 @@ input[type=password] {
 	background-color: #004A7C; 
 	border: none;
 	color: white;
-	padding: 10px 32px;
+	padding: 14px 16px;
 	text-align: center;
 	text-decoration: none;
 	font-size: 1.25em;
@@ -277,7 +283,7 @@ input[type=password] {
 	background-color: #CDCDCD; 
 	border: none;
 	color: #CC0000;
-	padding: 10px 32px;
+	padding: 14px 16px;
 	text-align: center;
 	text-decoration: none;
 	font-size: 1.25em;
@@ -293,11 +299,13 @@ input[type=password] {
 	height: auto;
 	position: relative;
 }
-#authentication {
-	color: white;
-	font-size: 1.25em;
-	margin-left: 35%;
-	margin-right: 35%;
+.alert-danger{
+	font-size: 1.1em;
+	padding: 10px;
+	text-align: center;
+	width: 290px;
+	height: 50px;
+	margin: 0 auto;
 }
 #uppermenu {
 	list-style-type: none;
@@ -318,7 +326,7 @@ input[type=password] {
 	display: block;
 	color: #CC0000;
 	text-align: center;
-	padding: 14px 16px;
+	padding: 12px 14px;
 	text-decoration: none;
 	font-weight: bold;
 }
@@ -349,7 +357,7 @@ input[type=password] {
 	display: block;
 	color: #CC0000;
 	text-align: center;
-	padding: 14px 16px;
+	padding: 12px 14px;
 	text-decoration: none;
 	font-weight: bold;
 }
@@ -369,7 +377,7 @@ input[type=password] {
 	background-color: #CC0000;
 	border: 5px solid #CDCDCD;
 	border-top: none;
-	height: 800px;
+	height: 480px;
 }
 tbody {
 	background-color: #CDCDCD;
@@ -428,26 +436,18 @@ textarea {
 	float: right;
 }
 .colour_change{
-	width: 240px;
-	height: 40px;
+	width: 100%;
+	height: 60%;
 	overflow: hidden;
 	border: 1px solid #ccc;
 	color: #CC0000;
 	background-color: #b3b3b3;
-	margin-top:1%;
+	margin-top:9%;
 	font-weight: bold;
 	cursor: pointer;
 }
-.alert-danger{
-	text-align: center;
-	width: 70%;
-	margin: 15%;
-	font-size: 1.25em;
-
-}
 .alert-info{
-	padding-top: 10px;
-	padding-bottom: 10px;
+	position: absolute;
 	margin-top: 1%;
 	margin-bottom: 1%;
 }

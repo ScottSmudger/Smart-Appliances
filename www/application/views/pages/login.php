@@ -14,7 +14,7 @@
 		<input id="logsubmit" type="submit" value="Enter" title = "Log into system">
 		<br/>
 		<br/>
-		
-		<div id="authentication"><?=validation_errors()?></div>
 	</form>
 </div>
+<br/>
+<?=validation_errors('<div class="alert alert-danger">', '<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a></div><br/>')?>

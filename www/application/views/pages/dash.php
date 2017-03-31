@@ -3,7 +3,7 @@
 		<div class="col-sm-4">
 			<div id="topleft">
 				<h3 class="title" title="User's Details are displayed below">User Details</h3>
-				<h4 class="subtitle" title="User's Name is below">Name</h4><p class="info"><?=$user->details["name"]?></p>
+				<h4 class="subtitle" title="User's Name is below">Name</h4><p class="info"><?=$user->details["first_name"]." ".$user->details["last_name"]?></p>
 				<h4 class="subtitle" title="User's Age is below">Age</h4><p class="info"><?=$user->details["age"] . " (".$user->details["dob"].")"?></p>
 				<h4 class="subtitle" title="User's Address is below">Address</h4><p class="info"><?=$user->details["house"] . " " . $user->details["street"] . ",<br/>" . $user->details["town_city"] . ",<br/>" . $user->details["postcode"]?></p>
 				<h4 class="subtitle" title="User's Telephone number is below">Telephone</h4><p class= "info"><?=$user->details["phone"]?></p>
@@ -28,45 +28,42 @@
 						<option value="thisyear">This Year</option>
 					</select>
 					<br/><br/>
-					<button id="enter" type="button" onclick="this.form.submit()">Enter</button>
+					<button title = "Enter your selection" id="enter" type="button" onclick="this.form.submit()">Enter</button>
 				</form>
-				<br/><br/><br/><br/><br/><br/><br/><br/><br/>
+				<br/><br/><br/><br/><br/><br/><br/>
 			</div>
-			<br/>
-			<div id="glyndwr">
-				<img id="stripes" src="/assets/images/glyndwr.jpg" alt="Glyndwr University Logo" title="Glyndwr University Logo">
-			</div>
-			<br/>
 		</div>
 		<div class="col-sm-8">
 			<div id="table">
 				<h3 class="title" title="Selected data is viewed below">User Data</h3>
-				<table class="table-striped">
-					<thead>
-						<tr class="theadings">
-							<th title="The device's ID number">Device ID</th>
-							<th title="The device's state">State</th>
-							<th title="The device's date and time update">Date/Time Updated</th>
-							<th title="The appliance's name">Appliance</th>
-						</tr>
-					</thead>
-					<tbody><?php
-						foreach($user->devices as $device)
-						{
-							echo "<tr>";
-								echo "<td>".$device->id."</td>";
-								echo "<td>".$device->state."</td>";
-								echo "<td>".$device->date_time."</td>";
-								echo "<td>".$device->appliance."</td>";
-							echo "</tr>";
-						} ?>
-					</tbody>
-				</table>
-				<br/>
+					<div class="table-responsive">
+					<table class="table-striped">
+						<thead>
+							<tr class="theadings">
+								<th title="The device's ID number">Device ID</th>
+								<th title="The device's state">State</th>
+								<th title="The device's date and time update">Date/Time Updated</th>
+								<th title="The appliance's name">Appliance</th>
+							</tr>
+						</thead>
+						<tbody><?php
+							foreach($user->devices as $device)
+							{
+								echo "<tr>";
+									echo "<td>".$device->id."</td>";
+									echo "<td>".$device->state."</td>";
+									echo "<td>".$device->date_time."</td>";
+									echo "<td>".$device->appliance."</td>";
+								echo "</tr>";
+							} ?>
+						</tbody>
+					</table>
+					</div>
 			</div>
+
 			<div id="box">
 				<h3 class="title" title="Graphical analysis is shown below">Device History</h3><?php
-				if($user->graph["devices"] > 0)
+				if($user->graph["devices"])
 				{ ?>
 					<div id="container"></div><?php
 				}

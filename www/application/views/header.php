@@ -48,7 +48,7 @@
 			<li class="navright" title="Logout button"><a href="/logout">Log Out</a></li><?php
 		} ?>
 		<li id="right">
-			<select class="colour_change" id="colourChange" onchange="changeStyle()">
+			<select title = "Select which theme you would like"class="colour_change" id="colourChange" onchange="changeStyle()">
 				<option>Select Theme</option>
 				<option value="default">Default</option>
 				<option value="red">Red</option>

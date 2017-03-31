@@ -63,7 +63,7 @@ class Authenticate extends CI_Controller
 		}
 		else
 		{
-			$this->form_validation->set_message("check_database", "Invalid username or password");
+			$this->form_validation->set_message("check_database", "Invalid Username or Password.");
 			return FALSE;
 		}
 	}
@@ -79,7 +79,7 @@ class Authenticate extends CI_Controller
 	{
 		$this->db->select("id, username, password");
 		$this->db->from("LOGIN_DETAILS");
-		$this->db->where("username", $username);
+		$this->db->where("username", $this->encryption->decrypt($username));
 		$this->db->limit(1);
 		$result = $this->db->get();
 

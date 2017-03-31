@@ -30,6 +30,7 @@ class User extends CI_Model
 	*/
 	public function newUser()
 	{
+
 		$this->instance = $this;
 
 		$this->load->helper("date");
@@ -51,7 +52,7 @@ class User extends CI_Model
 	*/
 	protected function getDetails()
 	{
-		$this->db->select("CONCAT(first_name, ' ', last_name) as name, dob, house_no_name as house, street, town_city, postcode, phone");
+		$this->db->select("first_name, last_name, dob, house_no_name as house, street, town_city, postcode, phone");
 		$this->db->from("USERS");
 		$this->db->where("id", $this->id);
 		$result = $this->db->get();
@@ -59,12 +60,15 @@ class User extends CI_Model
 		// Check if query returns something
 		if($result)
 		{
-			$this->details = $result->row_array();
+			foreach($result->row_array() as $key => $value)
+			{
+				$this->details[$key] = $this->encryption->decrypt($value);
+			}
 
 			// get actual age
 			$from = new DateTime();
 			$from->setTimestamp($this->details["dob"]);
-			$to = new DateTime('today');
+			$to = new DateTime("today");
 			$this->details["age"] = $from->diff($to)->y;
 			$this->details["dob"] = date("d-m-Y", $this->details["dob"]);
 		}
@@ -161,18 +165,12 @@ class User extends CI_Model
 		"name":"Fridge",
 		"data":[
 			[1487188233,1],
-			[1487184633,0],
-			[1487181033,1],
-			[1487177433,0],
 			[1487173833,1]
 		]
 	}, {
 		"name":"Oven",
 		"data":[
 			[1487188233,0],
-			[1487184633,1],
-			[1487181033,0],
-			[1487177433,1],
 			[1487173833,0]
 		]
 	}]
@@ -181,6 +179,9 @@ class User extends CI_Model
 	*/
 	protected function getDevicesHistory()
 	{
+		// As the "default" value
+		$this->graph["devices"] = FALSE;
+
 		if($this->input->get("device_id") != NULL)
 		{
 			// For specfic devices
@@ -244,7 +245,7 @@ class User extends CI_Model
 				{
 					$this->graph["title"] = "Data for device $id";
 				}
-				$this->db->order_by("date_time", "DESC");
+				$this->db->order_by("date_time", "ASC");
 				$history = $this->db->get();
 
 				if($history)
@@ -275,10 +276,15 @@ class User extends CI_Model
 	/**
 	* Gets the data for all devices
 	*
+	* @param $min Integer Minimum of the range that date_time needs to be in
+	* @param $max Integer Maximum of the range that date_time needs to be in
 	* @return null
 	*/
 	protected function getAllDevices($min = FALSE, $max = FALSE)
 	{
+		// As the "default" value
+		$this->graph["devices"] = FALSE;
+
 		// For all devices
 		$devicecount = 0;
 		foreach($this->devices as $device)
@@ -305,7 +311,7 @@ class User extends CI_Model
 			{
 				$this->graph["title"] = "All devices";
 			}
-			$this->db->order_by("date_time", "DESC");
+			$this->db->order_by("date_time", "ASC");
 			$history = $this->db->get();
 
 			if($history)

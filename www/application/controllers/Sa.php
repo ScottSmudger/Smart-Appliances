@@ -71,7 +71,7 @@ class Sa extends CI_Controller
 	public function api()
 	{
 		$this->load->model("average");
-		$averages = $this->average->api();
+		$averages = $this->average->calculate();
 	
 		$this->load->view("pages/api", array("averages" => $averages));
 	}

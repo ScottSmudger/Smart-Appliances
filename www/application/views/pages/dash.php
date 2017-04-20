@@ -28,7 +28,7 @@
 						<option value="thisyear">This Year</option>
 					</select>
 					<br/><br/>
-					<button title = "Enter your selection" id="enter" type="button" onclick="this.form.submit()">Enter</button>
+					<button title="Enter your selection" id="enter" type="button" onclick="this.form.submit()">Enter</button>
 				</form>
 				<br/><br/><br/><br/><br/><br/><br/>
 			</div>
@@ -81,7 +81,7 @@
 	// All of the code for the graph
 	var data = <?=json_encode($user->graph["devices"])?>;
 
-	Highcharts.chart('container', {
+	var chart = Highcharts.chart('container', {
 		title: {
 			text: '<?=$user->graph["title"]?>'
 		},
@@ -126,3 +126,4 @@
 		series: data
 	});
 </script>
+ 

@@ -102,6 +102,8 @@ class Main(object):
 			
 				self.state = GPIO.input(self.fridge)
 				
+				# When not in the expected time period
+				# i.e. When the fridge is not openeded in an expected period of time
 				if not self.inRange():
 					self.log.debug("Fridge is not open when it should be")
 				
@@ -142,7 +144,6 @@ class Main(object):
 	
 	def genState(self):
 		state = randint(0, 1)
-		
 		return state
 	
 	# If in range of 10 mins before and after the verage time
@@ -150,8 +151,6 @@ class Main(object):
 		# 900 = 15 mins
 		# 600 = 10 mins
 		avg_time = self.averages[self.cur_avg_time]
-		
-		print datetime.fromtimestamp(avg_time).strftime('%H:%M')
 		
 		start_period = avg_time - 600
 		end_period = avg_time + 600

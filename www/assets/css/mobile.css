@@ -1,0 +1,130 @@
+@media only screen and (max-device-width: 400px){
+#logsubmit {
+	text-decoration: none;
+	cursor: pointer;
+	font-weight: bold;
+	font-size: 1.25em;
+	border-radius: 3px;
+	position: relative;
+	height: 45px;
+	width: 150px;
+	margin: 0;
+	margin-left: 25%;
+	padding: 0; 
+	border: 0;
+}
+#logsubmit:hover {
+	text-decoration: none;
+	cursor: pointer;
+	font-weight: bold;
+	box-shadow: 0 12px 16px 0 rgba(0,0,0,0.24), 0 17px 50px 0 rgba(0,0,0,0.19);
+	height: 45px;
+	width: 150px;
+	margin: 0;
+	margin-left: 25%;
+	padding: 0; 
+	border: 0;
+}
+input[type=text] {
+	color:black;
+	height: 30px;
+	width: 150px;
+
+}
+input[type=password] {
+	color: black;
+	height: 30px;
+	width: 150px;
+	margin-left: 10px;
+}
+.entryFields {
+	color: white;
+	margin-left: 5px;
+}
+#loginSection{
+	width: 100%;
+	margin: none;
+}
+.colour_change{
+	width: 60%;
+	font-weight: normal;
+	cursor: pointer;
+	float: none;
+	position: relative;
+	margin-top: 10px;
+	margin-bottom: 10px;
+	margin-left: 25%;
+}
+#right{
+	float: none;
+}
+#uppermenu {
+	list-style-type: none;
+	margin: 0;
+	padding: 0;
+	width: 100%;
+	position: relative;
+}
+.navright li.right,
+.navright{
+	float:none;
+	position: relative;
+	border-bottom: 2px white solid;
+}
+.upperoptions li.right,
+.upperoptions{
+	position: relative;
+	float: none;
+	border-bottom: 2px white solid;
+}
+.upperoptions a {
+	display: block;
+	text-align: center;
+	padding: 12px 14px;
+	text-decoration: none;
+	font-weight: bold;
+}
+.upperoptions a:hover:not(.active) {
+	text-decoration: none;
+	cursor: pointer;
+}
+#logo {
+	height: 100%;
+	width: 100%;
+	display: inline-block;
+	margin-left: 0;
+	padding-bottom: 50px;
+}
+.lowerlist {
+	display: none;
+}
+#enter {
+	border: none;
+	height: 45px;
+	width: 140px;
+	text-align: center;
+	font-size: 1.25em;
+	font-weight: bold;
+	margin-top: 20px;
+	margin-left: 25%;
+	border-radius: 3px;
+}
+#enter:hover {
+	border: none;
+	height: 45px;
+	width: 140px;
+	background-color: #b3b3b3;
+	text-align: center;
+	font-size: 1.25em;
+	margin-top: 20px;
+	margin-left: 25%;
+	border-radius: 3px;
+}
+.choicedropdown {
+	margin-left: 10%;
+	color: black;
+	height: 30px;
+	width: 80%;
+	font-size: 1.25em;
+}
+}

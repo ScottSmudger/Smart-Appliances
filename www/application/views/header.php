@@ -4,8 +4,8 @@
 	<title>Group 11 Beta</title>
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-	<link id="pagestyle" rel="stylesheet" type="text/css" href="<?=base_url("assets")?>/css/default.css" title="default">
+
+	<!-- Favicon stuff -->
 	<link rel="apple-touch-icon" type="image/png" sizes="57x57" href="<?=base_url("assets")?>/images/apple-icon-57x57.png">
 	<link rel="apple-touch-icon" type="image/png" sizes="60x60" href="<?=base_url("assets")?>/images/apple-icon-60x60.png">
 	<link rel="apple-touch-icon" type="image/png" sizes="72x72" href="<?=base_url("assets")?>/images/apple-icon-72x72.png">
@@ -23,10 +23,21 @@
 	<meta name="msapplication-TileColor" content="#ffffff">
 	<meta name="msapplication-TileImage" content="<?=base_url("assets")?>/images/ms-icon-144x144.png">
 	<meta name="theme-color" content="#ffffff">
+
+	<!-- jQuery -->
 	<script src="//code.jquery.com/jquery-3.1.1.min.js"></script>
 	<script src="<?=base_url("assets")?>/js/jquery.cookie.js" type="text/javascript"></script>
+
+	<!-- Custom CSS and JavaScript-->
+	<link id="pagestyle" rel="stylesheet" type="text/css" href="<?=base_url("assets")?>/css/blue.css" title="default">
+	<link rel="stylesheet" type="text/css" href="<?=base_url("assets")?>/css/mobile.css">
 	<script src="<?=base_url("assets")?>/js/custom.js" type="text/javascript"></script>
+	
+	<!-- BootStrap CSS and JavaScript-->
+	<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 	<script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+	<!-- Third party libraries -->
 	<script src="//code.highcharts.com/highcharts.js"></script>
 	<script src="//code.highcharts.com/modules/exporting.js"></script>
 	<link rel="stylesheet" type="text/css" href="//cdnjs.cloudflare.com/ajax/libs/cookieconsent2/3.0.3/cookieconsent.min.css" />
@@ -39,7 +50,7 @@
 		<a href="/"><img id="logo" alt="Group 11 Logo" src="<?=base_url("assets")?>/images/logo.png" title="Group 11 Logo"></a>
 	</div>
 	<ul id ="uppermenu">
-		<li class="upperoptions" title="Link to support page"><a data-toggle="modal" data-target="#Contact">Support</a></li>
+		<li class="upperoptions" class="supButton" title="Link to support page"><a data-toggle="modal" data-target="#Contact">Support</a></li>
 		<li class="upperoptions" title="Link to our Github page"><a href="http://github.com/ScottSmudger/Smart-Appliances" target="_blank">Github</a></li>
 		<?php
 		// If logged in display the logout button
@@ -48,9 +59,8 @@
 			<li class="navright" title="Logout button"><a href="/logout">Log Out</a></li><?php
 		} ?>
 		<li id="right">
-			<select title = "Select which theme you would like"class="colour_change" id="colourChange" onchange="changeStyle()">
-				<option>Select Theme</option>
-				<option value="default">Default</option>
+			<select title="Select which theme you would like" class="colour_change" id="colourChange" onchange="changeStyle()">
+				<option value="blue">Default</option>
 				<option value="red">Red</option>
 				<option value="green">Green</option>
 			</select>
@@ -59,37 +69,37 @@
 </header>
 <main>
 
-	<!-- Support Modal -->
-	<div class="modal fade" id="Contact" tabindex="-1" role="dialog" aria-labelledby="Contact" aria-hidden="true">
-		<div class="modal-dialog">
-			<div class="modal-content">
-				<div class="modal-header">
-					<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-					<h4 class="modal-title" >Support Page</h4>
-				</div>
-				<div class="modal-body">
-					<div class="form-group">
-						<?=form_open('sa/email')?>
-							<p>Please enter your details and describe your issue. We will get back to you as soon as possible.</p>
-							<h5 class="EHeader">Subject</h5>
-							<input type="text" name="subject">
-							
-							<h5 class="EHeader">Name</h5>
-							<input type="text" name="from_name">
+<!-- Support Modal -->
+<div class="modal fade" id="Contact" tabindex="-1" role="dialog" aria-labelledby="Contact" aria-hidden="true">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+				<h4 class="modal-title" >Support Page</h4>
+			</div>
+			<div class="modal-body">
+				<div class="form-group">
+					<?=form_open("sa/email")?>
+						<p>Please enter your details and describe your issue. We will get back to you as soon as possible.</p>
+						<h5 class="EHeader">Subject</h5>
+						<input type="text" name="subject">
+						
+						<h5 class="EHeader">Name</h5>
+						<input type="text" name="from_name">
 
-							<h5 class="EHeader">Email Address</h5>
-							<input type="text" name="from_email">
+						<h5 class="EHeader">Email Address</h5>
+						<input type="text" name="from_email">
 
-							<h5 class="EHeader">Issue</h5>
-							<textarea class="form-control"></textarea>
-							<br/>
-							<input id="formsubmit" type="submit" value="Submit">
-						</form>
-					</div>
+						<h5 class="EHeader">Issue</h5>
+						<textarea class="form-control"></textarea>
+						<br/>
+						<input id="formsubmit" type="submit" value="Submit">
+					</form>
 				</div>
-				<div class="modal-footer">
-					<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-				</div>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
 			</div>
 		</div>
 	</div>
+</div>

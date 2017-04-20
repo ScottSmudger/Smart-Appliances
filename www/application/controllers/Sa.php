@@ -24,7 +24,7 @@ class Sa extends CI_Controller
 	{
 		parent::__construct();
 		
-		$this->output->enable_profiler(TRUE);
+		$this->output->enable_profiler(FALSE);
 		$this->benchmark->mark("starting_point");
 
 		// To stop PHP from moaning as we're manipulating and displaying times from unix time

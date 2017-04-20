@@ -31,7 +31,7 @@ class Average extends CI_Model
 		$result = $this->db->get();
 
 		// If there are results
-		if($result AND $result->num_rows() > 0)
+		if($result AND $result->num_rows() > 2)
 		{
 			// Separates times into hourly periods
 			$counter = 0;

@@ -41,7 +41,7 @@ class Notify(object):
 			except Exception, e:
 				self.log.error("Could not initiate the Twilio API: %s" % e)
 
-			self.log.debug("Successfully loaded and initiated the Twilo API")
+			self.log.debug("Successfully loaded and initiated the Twilio API")
 		except Exception, e:
 			self.log.error("Twilio module is not installed! Run \"pip install twilio\": %s" % e)
 

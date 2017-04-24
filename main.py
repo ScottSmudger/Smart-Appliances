@@ -38,22 +38,17 @@ class Main(object):
 		self.fridge = config.getint("Pins", "fridge")
 		self.buzzer = config.getint("Pins", "buzzer")
 		self.logs_dir = os.getcwd() + "/" + config.get("Other", "logs_dir")
-
 		# Logging
 		self.initLogger()
 		self.log.debug("Initialising door")
-
 		# Setup GPIO
 		GPIO.setmode(GPIO.BCM)
 		GPIO.setup(config.getint("Pins", "fridge"), GPIO.IN, GPIO.PUD_UP)
-
 		# Initialise module classes
 		self.database = database.Database()
 		self.notify = notify.Notify()
-		
 		# Average stuff
 		self.averages = self.getAvgs()
-		self.cur_avg_time = 0
 
 	# Configures and initiates the Logging library
 	def initLogger(self):
@@ -99,12 +94,12 @@ class Main(object):
 		open_length = 0
 		try:
 			while self.running:
-			
+				
 				self.state = GPIO.input(self.fridge)
 				
 				# When not in the expected time period
-				# i.e. When the fridge is not openeded in an expected period of time
-				if not self.inRange():
+				# i.e. When the fridge is not opened in an expected period of time
+				if self.inRange():
 					self.log.debug("Fridge is not open when it should be")
 				
 				if self.state:
@@ -113,8 +108,8 @@ class Main(object):
 					# While door is start timer and wait
 					while GPIO.input(self.fridge):
 						if open_length == 5:
-								# For now texts can only be sent to my number (scott) EDIT: Due to Twilio trial limitations, it will only be to my number.
-								self.sendNotify(phone_number="+447714456013", message="Fridge door has been open for %s seconds!" % open_length)
+							# Texts can now be sent to any number (I think)
+							self.sendNotify(phone_number="+447714456013", message="Fridge door has been open for %s seconds!" % open_length)
 						elif open_length == 15:
 							buzzer.Buzzer(self.buzzer).buzz(5)
 
@@ -132,35 +127,61 @@ class Main(object):
 				if self.state != prev_state:
 					prev_state = self.state
 					self.updateDoorState(self.state)
-					self.log.info("prev_state updated to: %s %s" % (self.getHumanState(prev_state), prev_state))
+					self.log.info("Updating device state to: %s (%s)" % (self.getHumanState(prev_state), prev_state))
 					
 		except KeyboardInterrupt:
 			self.log.info("Program interrupted")
 	
-	# Gets the averages from the php API
+	# Gets the averages from the PHP API
 	def getAvgs(self):
-		r = requests.get('http://uni.scottsmudger.website/api')
-		return r.json()
+		avgs = requests.get("http://uni.scottsmudger.website/api").json()
+		no_avgs = len(avgs)
+		
+		counter = 0
+		self.avgs_time = []
+		for avg_hour, avg in avgs.iteritems():
+			if counter == no_avgs - 1:
+				break
+			temp = {} # Re-declare the temp dictionary while resetting it
+			
+			# Calculate the hour and minute for each average
+			# append to the final list
+			hour = datetime.fromtimestamp(avg).strftime("%H")
+			minute = datetime.fromtimestamp(avg).strftime("%M")
+			
+			temp["hour"] = hour
+			temp["minute"] = minute
+			self.avgs_time.append(temp)
+
+			counter += 1
+			
+		return avgs
 	
 	def genState(self):
 		state = randint(0, 1)
 		return state
 	
-	# If in range of 10 mins before and after the verage time
+	# If in range of 10 mins before and after the average time
 	def inRange(self):
 		# 900 = 15 mins
 		# 600 = 10 mins
-		avg_time = self.averages[self.cur_avg_time]
+		cur_time = time.time()
+		cur_time_hr = datetime.fromtimestamp(cur_time).strftime("%H")
 		
-		start_period = avg_time - 600
-		end_period = avg_time + 600
-		self.cur_avg_time += 1
-		# If is in range
-		if avg_time >= start_period and avg_time <= end_period and not self.state:
-			True
-		else:
-			False
-			
+		# If it's in range
+		if cur_time_hr in self.avgs_time:
+			avg_time = self.avgs_time[int(cur_time_hr)]
+			start_period_min = datetime.fromtimestamp(avg_time - 600).strftime("%M")
+			end_period_min = datetime.fromtimestamp(avg_time + 600).strftime("%M")
+			for hour, avg in self.averages.iteritems():
+				if cur_time >= start_period_min and cur_time <= end_period_min \
+				and not self.state:
+					# The fridge has been opened during the time frame
+					return True
+				else:
+					# The fridge hasn't been opened during the time frame
+					return False
+				
 	# Cleans up GPIO when the script closes down
 	# Deconstructor
 	def __del__(self):
@@ -171,3 +192,8 @@ class Main(object):
 # Start it
 if __name__ == "__main__":
 	Main().start()
+
+
+
+
+

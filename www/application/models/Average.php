@@ -22,45 +22,46 @@ class Average extends CI_Model
 		// Set the min and max
 		$min = strtotime("-1 month");
 		$max = strtotime("tomorrow", time()) - 1;
-
+		
 		// Get the data
 		$this->db->select("state, date_time");
 		$this->db->from("DEVICE_HISTORY");
 		$this->db->where("state", "1");
 		$this->db->where("date_time BETWEEN ".$min." AND ".$max."");
 		$result = $this->db->get();
-
+		
 		// If there are results
-		if($result AND $result->num_rows() > 2)
+		if($result AND $result->num_rows() > 4)
 		{
 			// Separates times into hourly periods
-			$counter = 0;
 			foreach($result->result_array() as $row)
 			{
-				settype($row["date_time"], "int");
-				
 				$hour = date("H", $row["date_time"]);
-				settype($hour, "int");
 				
 				$data[$hour]["times"][] = $row["date_time"];
 			}
 			
 			// Calculates the averages for each hourly period
-			foreach($data as $hour)
+			$averages = array();
+			foreach($data as $hour => $times)
 			{
-				// After each loop of the hour we need to reset the total
-				// in order to calculate the new average
+				// After each loop of the hour we need to reset the total,
+				// in order to calculate the new average.
+				// If the user has opened/closed the fridge only twice during the hour,
+				// this also accomodates for "rogue" opens/closes. i.e. Opening + Closing across an hour
+				// then don't contribute it towards the average.
 				$total = 0;
-				foreach($hour["times"] as $time)
+				if(count($times["times"]) > 5)
 				{
-					$total = $total + $time;
+					foreach($times["times"] as $time)
+					{
+						$total = $total + date("i", $time);
+					}
 				}
 				
-				$count = count($hour["times"]);
-				
-				$averages[] = $total / $count;
+				$averages[$hour] = $total / count($times["times"]);
 			}
-			
+
 			return $averages;
 		}
 	}

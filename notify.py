@@ -33,7 +33,7 @@ class Notify(object):
 		self.timeout = config.getint("Email", "timeout")
 		self.from_email = config.get("Email", "from_email")
 
-		# Connect to thetwilio API
+		# Connect to the twilio API
 		try:
 			from twilio.rest import TwilioRestClient
 			try:
@@ -45,7 +45,7 @@ class Notify(object):
 		except Exception, e:
 			self.log.error("Twilio module is not installed! Run \"pip install twilio\": %s" % e)
 
-		# Connect to SMTP server
+		# Connect to the SMTP server
 		try:
 			socket.setdefaulttimeout(self.timeout)
 			self.smtp = SMTP(self.host)

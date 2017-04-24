@@ -14,7 +14,7 @@ class Sa extends CI_Controller
 	protected $data = array();
 	protected $client;
 	protected $averages;
-
+	
 	/**
 	* Classes constructor
 	*
@@ -26,11 +26,11 @@ class Sa extends CI_Controller
 		
 		$this->output->enable_profiler(FALSE);
 		$this->benchmark->mark("starting_point");
-
+		
 		// To stop PHP from moaning as we're manipulating and displaying times from unix time
 		date_default_timezone_set("UTC");
 	}
-
+	
 	/**
 	* Dash - Displays the dash page
 	*
@@ -43,12 +43,9 @@ class Sa extends CI_Controller
 		{
 			$_GET["device"] = $device;
 		}
-
-		$this->load->model("average");
-		$averages = $this->average->calculate();
-
+		
 		$this->client = $this->user->newUser();
-
+		
 		// Require login
 		// If logged in display the requested page
 		if($this->session->logged_in)
@@ -75,7 +72,7 @@ class Sa extends CI_Controller
 	
 		$this->load->view("pages/api", array("averages" => $averages));
 	}
-
+	
 	/**
 	* Email - Send an email to Group 11
 	*
@@ -85,16 +82,16 @@ class Sa extends CI_Controller
 	{
 		// Load the email library
 		$this->load->library("email");
-
+		
 		// Set the email headers
 		$this->email->from("group11@scottsmudger.website", $this->input->post("from_name"));
 		$this->email->to("scottsmudger@hotmail.com");
 		$this->email->subject($this->input->post("subject"));
 		$this->email->message($this->input->post("message"));
-
+		
 		// Send the email
 		$this->email->send();
-
+		
 		redirect("/");
 	}
 }

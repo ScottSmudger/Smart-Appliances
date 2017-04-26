@@ -13,7 +13,7 @@ function changeStyle()
 	}
 	else
 	{
-		dropdown.setAttribute("href", "http://uni.scottsmudger.website/assets/css/default.css");
+		dropdown.setAttribute("href", "http://uni.scottsmudger.website/assets/css/blue.css");
 	}
 
 	$.cookie("sheet", colour, {expires: 10});
@@ -66,15 +66,20 @@ window.cookieconsent.initialise({
 $(document).ready(function()
 {
 	var colour = $.cookie("sheet");
+	var dropdown = document.getElementById("pagestyle");
 
 	// Setting default sheet on dropdown
 	$('#colourChange').val(colour);
 
 	if(colour !== undefined)
 	{
-		document.getElementById("pagestyle").setAttribute("href", "http://uni.scottsmudger.website/assets/css/" + colour + ".css" );
+		dropdown.setAttribute("href", "http://uni.scottsmudger.website/assets/css/" + colour + ".css" );
 
 		// Change graph colour because why not
 		changeGraphColour(colour);
+	}
+	else
+	{
+		dropdown.setAttribute("href", "http://uni.scottsmudger.website/assets/css/blue.css" );
 	}
 });

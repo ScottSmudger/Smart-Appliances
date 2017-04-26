@@ -105,7 +105,7 @@ class Main(object):
 				if self.state:
 					# Door is open
 					self.log.debug("Door is open!: %s" % self.state)
-					# While door is start timer and wait
+					# While door is open, start the timer and wait
 					while GPIO.input(self.fridge):
 						if open_length == 5:
 							# Texts can now be sent to any number (I think)

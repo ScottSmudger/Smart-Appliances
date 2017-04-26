@@ -51,7 +51,7 @@ class Sa extends CI_Controller
 		if($this->session->logged_in)
 		{
 			$this->load->view("header");
-			$this->load->view("pages/dash", array("user" => $this->client, "averages" => $averages));
+			$this->load->view("pages/dash", array("user" => $this->client));
 			$this->load->view("footer");
 		}
 		else

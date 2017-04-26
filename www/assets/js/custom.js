@@ -1,27 +1,21 @@
 // This function changes the style sheet
-function changeStyle()
+function changeStyle(colour = $("#colourChange option:selected").val())
 {
-	var colour = $("#colourChange option:selected").val();
 	var dropdown = document.getElementById("pagestyle");
 
+	// If colour is set then set the css to that colour
 	if(colour)
 	{
-		dropdown.setAttribute("href", "http://uni.scottsmudger.website/assets/css/" + colour + ".css");
-
-		// Change graph colour because why not
-		changeGraphColour(colour);
-	}
-	else
-	{
-		dropdown.setAttribute("href", "http://uni.scottsmudger.website/assets/css/blue.css");
+		dropdown.setAttribute("href", "/assets/css/" + colour + ".css");
 	}
 
 	$.cookie("sheet", colour, {expires: 10});
 }
 
-// Change the graph colour only if there is 1 device being displayed
+// Change the graph colour
 function changeGraphColour(colour)
 {
+	// Only if the chart is displaying 1 device
 	if(chart.series.length == 1)
 	{
 		// Set the specific hex colours that the style sheet is set to
@@ -47,17 +41,17 @@ function changeGraphColour(colour)
 
 // jQuery for the cookie bar
 window.addEventListener("load", function(){
-window.cookieconsent.initialise({
-	"palette": {
-		"popup": {
-			"background": "#edeff5",
-			"text": "#838391"
-		},
-		"button": {
-			"background": "#4b81e8"
+	window.cookieconsent.initialise({
+		"palette": {
+			"popup": {
+				"background": "#edeff5",
+				"text": "#838391"
+			},
+			"button": {
+				"background": "#4b81e8"
+			}
 		}
-	}
-})
+	})
 });
 
 // Things that need setting on page load
@@ -66,20 +60,21 @@ window.cookieconsent.initialise({
 $(document).ready(function()
 {
 	var colour = $.cookie("sheet");
-	var dropdown = document.getElementById("pagestyle");
-
-	// Setting default sheet on dropdown
-	$('#colourChange').val(colour);
 
 	if(colour !== undefined)
 	{
-		dropdown.setAttribute("href", "http://uni.scottsmudger.website/assets/css/" + colour + ".css" );
+		// Change style colour
+		changeStyle(colour);
 
 		// Change graph colour because why not
 		changeGraphColour(colour);
+
+		// Set dropdown to that colour
+		$('#colourChange').val(colour);
 	}
 	else
 	{
-		dropdown.setAttribute("href", "http://uni.scottsmudger.website/assets/css/blue.css" );
+		// Set to default
+		document.getElementById("pagestyle").setAttribute("href", "http://uni.scottsmudger.website/assets/css/blue.css" );
 	}
 });

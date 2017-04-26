@@ -6,32 +6,32 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 
 	<!-- Favicon stuff -->
-	<link rel="apple-touch-icon" type="image/png" sizes="57x57" href="<?=base_url("assets")?>/images/apple-icon-57x57.png">
-	<link rel="apple-touch-icon" type="image/png" sizes="60x60" href="<?=base_url("assets")?>/images/apple-icon-60x60.png">
-	<link rel="apple-touch-icon" type="image/png" sizes="72x72" href="<?=base_url("assets")?>/images/apple-icon-72x72.png">
-	<link rel="apple-touch-icon" type="image/png" sizes="76x76" href="<?=base_url("assets")?>/images/apple-icon-76x76.png">
-	<link rel="apple-touch-icon" type="image/png" sizes="114x114" href="<?=base_url("assets")?>/images/apple-icon-114x114.png">
-	<link rel="apple-touch-icon" type="image/png" sizes="120x120" href="<?=base_url("assets")?>/images/apple-icon-120x120.png">
-	<link rel="apple-touch-icon" type="image/png" sizes="144x144" href="<?=base_url("assets")?>/images/apple-icon-144x144.png">
-	<link rel="apple-touch-icon" type="image/png" sizes="152x152" href="<?=base_url("assets")?>/images/apple-icon-152x152.png">
-	<link rel="apple-touch-icon" type="image/png" sizes="180x180" href="<?=base_url("assets")?>/images/apple-icon-180x180.png">
-	<link rel="icon" type="image/png" sizes="192x192" href="<?=base_url("assets")?>/images/android-icon-192x192.png">
-	<link rel="icon" type="image/png" sizes="32x32" href="<?=base_url("assets")?>/images/favicon-32x32.png">
-	<link rel="icon" type="image/png" sizes="96x96" href="<?=base_url("assets")?>/images/favicon-96x96.png">
-	<link rel="icon" type="image/png" sizes="16x16" href="<?=base_url("assets")?>/images/favicon-16x16.png">
-	<link rel="manifest" href="<?=base_url("assets")?>/images/manifest.json">
+	<link rel="apple-touch-icon" type="image/png" sizes="57x57" href="assets/images/apple-icon-57x57.png">
+	<link rel="apple-touch-icon" type="image/png" sizes="60x60" href="assets/images/apple-icon-60x60.png">
+	<link rel="apple-touch-icon" type="image/png" sizes="72x72" href="assets/images/apple-icon-72x72.png">
+	<link rel="apple-touch-icon" type="image/png" sizes="76x76" href="assets/images/apple-icon-76x76.png">
+	<link rel="apple-touch-icon" type="image/png" sizes="114x114" href="assets/images/apple-icon-114x114.png">
+	<link rel="apple-touch-icon" type="image/png" sizes="120x120" href="assets/images/apple-icon-120x120.png">
+	<link rel="apple-touch-icon" type="image/png" sizes="144x144" href="assets/images/apple-icon-144x144.png">
+	<link rel="apple-touch-icon" type="image/png" sizes="152x152" href="assets/images/apple-icon-152x152.png">
+	<link rel="apple-touch-icon" type="image/png" sizes="180x180" href="assets/images/apple-icon-180x180.png">
+	<link rel="icon" type="image/png" sizes="192x192" href="assets/images/android-icon-192x192.png">
+	<link rel="icon" type="image/png" sizes="32x32" href="assets/images/favicon-32x32.png">
+	<link rel="icon" type="image/png" sizes="96x96" href="assets/images/favicon-96x96.png">
+	<link rel="icon" type="image/png" sizes="16x16" href="assets/images/favicon-16x16.png">
+	<link rel="manifest" href="assets/images/manifest.json">
 	<meta name="msapplication-TileColor" content="#ffffff">
-	<meta name="msapplication-TileImage" content="<?=base_url("assets")?>/images/ms-icon-144x144.png">
+	<meta name="msapplication-TileImage" content="assets/images/ms-icon-144x144.png">
 	<meta name="theme-color" content="#ffffff">
 
 	<!-- jQuery -->
 	<script src="//code.jquery.com/jquery-3.1.1.min.js"></script>
-	<script src="<?=base_url("assets")?>/js/jquery.cookie.js" type="text/javascript"></script>
+	<script src="assets/js/jquery.cookie.js" type="text/javascript"></script>
 
 	<!-- Custom CSS and JavaScript-->
-	<link id="pagestyle" rel="stylesheet" type="text/css" href="<?=base_url("assets")?>/css/blue.css" title="default">
-	<link rel="stylesheet" type="text/css" href="<?=base_url("assets")?>/css/mobile.css">
-	<script src="<?=base_url("assets")?>/js/custom.js" type="text/javascript"></script>
+	<link id="pagestyle" rel="stylesheet" type="text/css" href="assets/css/blue.css" title="default">
+	<link rel="stylesheet" type="text/css" href="assets/css/mobile.css">
+	<script src="assets/js/custom.js" type="text/javascript"></script>
 	
 	<!-- BootStrap CSS and JavaScript-->
 	<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
@@ -47,7 +47,7 @@
 <header>
 	<br/><br/><br/>
 	<div class="logowrap">
-		<a href="/"><img id="logo" alt="Group 11 Logo" src="<?=base_url("assets")?>/images/logo.png" title="Group 11 Logo"></a>
+		<a href="/"><img id="logo" alt="Group 11 Logo" src="assets/images/logo.png" title="Group 11 Logo"></a>
 	</div>
 	<ul id ="uppermenu">
 		<li class="upperoptions" class="supButton" title="Link to support page"><a data-toggle="modal" data-target="#Contact">Support</a></li>

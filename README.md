@@ -2,10 +2,10 @@
 A simple python-based program that monitors a Raspberry-Pi's General Purpose Input Output (GPIO) pins connected to a magnetic door switch (as of now). A MySQL database is updated with the new appliances state.
 Future ideas:
 
-~~- Fridge buzzer that will buzz when the fridge has been left open for a certain period of time.~~
+- ~~Fridge buzzer that will buzz when the fridge has been left open for a certain period of time.~~
 - Microwave sensor that will detect when the microwave has finished (For personal curiosity!)
-~~- PHP report system~~
-~~- Highcharts jQuery graphs~~
+- ~~PHP report system~~
+- ~~Highcharts jQuery graphs~~
 
 A [web-interface](http://uni.scottsmudger.website) built using PHP/HTML/CSS with some elements of JavaScript and jQuery, is used to display the usage statistics of the appliances and any relevant user information.
 

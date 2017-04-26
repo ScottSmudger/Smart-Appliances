@@ -7,7 +7,7 @@ import time
 
 class Database(object):
 	"""
-		Database class that manages the connection and any queries
+		Database class that manages the connection and "most" queries
 	"""
 	# Constructor, calls connect() on initialisation
 	def __init__(self):

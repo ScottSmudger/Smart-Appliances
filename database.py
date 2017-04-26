@@ -48,7 +48,7 @@ class Database(object):
 
 		# Update appliances state history
 		try:
-			if self.query("INSERT INTO DEVICE_HISTORY (device_id, state, date_time) VALUES (%s, %s, %s, %s)" % (not state, round(time.time()), appliance)):
+			if self.query("INSERT INTO DEVICE_HISTORY (device_id, state, date_time) VALUES (%s, %s, %s)" % (appliance, not state, round(time.time()))):
 				self.log.debug("Adding to appliance history state: %s for appliance %s" % (not state, appliance))
 			else:
 				self.log.debug("Could not add to appliance %s history for state: %s" % (appliance, not state))

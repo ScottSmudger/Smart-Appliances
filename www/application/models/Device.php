@@ -67,7 +67,7 @@ class Device extends CI_Model
 			// Changes unix time to a human date
 			if($key == "date_time")
 			{
-				$value = unix_to_human($value, FALSE, "eu");
+				$value = date("d-m-Y H:i:s", $value);
 			}
 
 			$this->instance->$key = $value;

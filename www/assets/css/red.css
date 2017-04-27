@@ -248,6 +248,7 @@ h2 {
 	width: 290px;
 	height: 50px;
 	margin: 0 auto;
+	margin-bottom: 10px;
 }
 #uppermenu {
 	list-style-type: none;
@@ -366,13 +367,14 @@ textarea {
 }
 .colour_change{
 	width: 150px;
-	height: 100%;
+	-webkit-appearance: menulist-button;
+	height: 40px;
+	margin-top: 2px;
 	border: 1px solid #ccc;
 	color: #CC0000;
 	background-color: #b3b3b3;
 	font-weight: bold;
 	cursor: pointer;
-	margin-top: 8%;
 }
 .alert-info{
 	position: absolute;

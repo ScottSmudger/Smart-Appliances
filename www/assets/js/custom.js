@@ -7,6 +7,9 @@ function changeStyle(colour = $("#colourChange option:selected").val())
 	if(colour)
 	{
 		dropdown.setAttribute("href", "/assets/css/" + colour + ".css");
+		
+		// Change graph colour because why not
+		changeGraphColour(colour);
 	}
 
 	$.cookie("sheet", colour, {expires: 10});
@@ -15,25 +18,25 @@ function changeStyle(colour = $("#colourChange option:selected").val())
 // Change the graph colour
 function changeGraphColour(colour)
 {
-	// Only if the chart is displaying 1 device
-	if(chart.series.length == 1)
+	// Set the specific hex colours that the style sheet is set to
+	if(colour == "blue")
 	{
-		// Set the specific hex colours that the style sheet is set to
-		if(colour == "blue")
-		{
-			hex = "#005691";
-		}
-		else if(colour == "red")
-		{
-			hex = "#CC0000";
-		}
-		else if(colour == "green")
-		{
-			hex = "#006600";
-		}
-
-		// Change the colour
-		chart.series[0].update({
+		hex = "#005691";
+	}
+	else if(colour == "red")
+	{
+		hex = "#CC0000";
+	}
+	else if(colour == "green")
+	{
+		hex = "#006600";
+	}
+	
+	// Change the colour
+	// for all series (this may change in the future
+	for(i = 0; i < chart.series.length; i++)
+	{
+		chart.series[i].update({
 			color: hex
 		});
 	}
@@ -75,6 +78,6 @@ $(document).ready(function()
 	else
 	{
 		// Set to default
-		document.getElementById("pagestyle").setAttribute("href", "http://uni.scottsmudger.website/assets/css/blue.css" );
+		document.getElementById("pagestyle").setAttribute("href", "/assets/css/blue.css" );
 	}
 });

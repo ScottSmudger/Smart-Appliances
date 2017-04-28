@@ -4,7 +4,7 @@
 			<div id="topleft">
 				<h3 class="title" title="User's Details are displayed below">User Details</h3>
 				<h4 class="subtitle" title="User's Name is below">Name</h4><p class="info"><?=$user->details["first_name"]." ".$user->details["last_name"]?></p>
-				<h4 class="subtitle" title="User's Age is below">Age</h4><p class="info"><?=$user->details["age"]?></p>
+				<h4 class="subtitle" title="User's Age is below">Age (Date of Birth)</h4><p class="info"><?=$user->details["age"] . " (".$user->details["dob"].")"?></p>
 				<h4 class="subtitle" title="User's Address is below">Address</h4><p class="info"><?=$user->details["house"] . " " . $user->details["street"] . ",<br/>" . $user->details["town_city"] . ",<br/>" . $user->details["postcode"]?></p>
 				<h4 class="subtitle" title="User's Telephone number is below">Telephone</h4><p class= "info"><?=$user->details["phone"]?></p>
 			</div>

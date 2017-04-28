@@ -39,6 +39,7 @@ class newUser extends User
 	public $graph = array();
 	public $guardian;
 	public $phone_number;
+	protected $date = "l dS F Y";
 
 	/**
 	* Returns the classes singleton

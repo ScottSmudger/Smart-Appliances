@@ -15,6 +15,9 @@ class Notify(object):
 	"""
 		Class manages notifications to email using SMTP server/phone number(s) using twilio
 	"""
+	email = False
+	sms = True
+	
 	# Constructor
 	def __init__(self):
 		self.log = logging.getLogger(__name__)
@@ -34,27 +37,30 @@ class Notify(object):
 		self.from_email = config.get("Email", "from_email")
 
 		# Connect to the twilio API
-		try:
-			from twilio.rest import TwilioRestClient
+		if self.sms:
 			try:
-				self.twilio = TwilioRestClient(self.account_sid, self.auth_token)
-			except Exception, e:
-				self.log.error("Could not initiate the Twilio API: %s" % e)
+				from twilio.rest import TwilioRestClient
+				try:
+					self.twilio = TwilioRestClient(self.account_sid, self.auth_token)
+				except Exception, e:
+					self.log.error("Could not initiate the Twilio API: %s" % e)
 
-			self.log.debug("Successfully loaded and initiated the Twilio API")
-		except Exception, e:
-			self.log.error("Twilio module is not installed! Run \"pip install twilio\": %s" % e)
+				self.log.debug("Successfully loaded and initiated the Twilio API")
+			except Exception, e:
+				self.log.error("Twilio module is not installed! Run \"pip install twilio\": %s" % e)
 
 		# Connect to the SMTP server
-		try:
-			socket.setdefaulttimeout(self.timeout)
-			self.smtp = SMTP(self.host)
-			if self.username and self.password:
-				self.smtp.login(self.username, self.password)
+		if self.email:
+			
+			try:
+				socket.setdefaulttimeout(self.timeout)
+				self.smtp = SMTP(self.host)
+				if self.username and self.password:
+					self.smtp.login(self.username, self.password)
 
-			self.log.debug("Successfully connected to SMTP server %s" % self.host)
-		except Exception, e:
-			self.log.error("Could not connect to SMTP server %s: %s" % (self.host, e))
+				self.log.debug("Successfully connected to SMTP server %s" % self.host)
+			except Exception, e:
+				self.log.error("Could not connect to SMTP server %s: %s" % (self.host, e))
 
 	# Decides whether or not to send an SMS or email (or both)
 	def sendNotification(self, **kwargs):

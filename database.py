@@ -13,7 +13,7 @@ class Database(object):
 	def __init__(self):
 		self.log = logging.getLogger(__name__)
 		self.log.debug("Initialising Database")
-
+		
 		# Database settings
 		from main import config
 		self.db_host = config.get("Database", "db_host")
@@ -21,7 +21,7 @@ class Database(object):
 		self.db_user = config.get("Database", "db_user")
 		self.db_pass = config.get("Database", "db_pass")
 		self.db_name = config.get("Database", "db_name")
-
+		
 		# Connect
 		self.connect()
 	
@@ -39,28 +39,37 @@ class Database(object):
 	def updateState(self, appliance, state):
 		# Update appliances current state
 		try:
-			if self.query("UPDATE DEVICES SET state = %s, date_time = %s WHERE id = %s" % (state, round(time.time()), appliance)):
-				self.log.debug("Updating state of appliance %s to: %s" % (appliance, state))
+			if self.query("UPDATE DEVICES SET state = %s, date_time = %s WHERE id = %s" % (self.getBoolState(state), int(time.time()), appliance)):
+				self.log.debug("Updating state of appliance %s to: %s" % (appliance, self.getBoolState(state)))
 			else:
-				self.log.debug("Could not update state of appliance %s to: %s" % (appliance, state))
+				self.log.debug("Could not update state of appliance %s to: %s" % (appliance, self.getBoolState(state)))
 		except Exception, e:
 			self.log.critical("Failed to update appliance %s state to %s. Error: %s" % (appliance, state, e))
-
+		
 		# Update appliances state history
 		try:
-			if self.query("INSERT INTO DEVICE_HISTORY (device_id, state, date_time) VALUES (%s, %s, %s)" % (appliance, not state, round(time.time()))):
-				self.log.debug("Adding to appliance history state: %s for appliance %s" % (not state, appliance))
+			if self.query("INSERT INTO DEVICE_HISTORY (device_id, state, date_time) VALUES (%s, %s, %s)" % (appliance, self.getBoolState(state, True), int(time.time()))):
+				self.log.debug("Adding to appliance history state: %s for appliance %s" % (self.getBoolState(state, True), appliance))
 			else:
-				self.log.debug("Could not add to appliance %s history for state: %s" % (appliance, not state))
+				self.log.debug("Could not add to appliance %s history for state: %s" % (appliance, self.getBoolState(state, True)))
 		except Exception, e:
-			self.log.critical("Failed to update appliance %s history to %s. Error: %s" % (appliance, not state, e))
+			self.log.critical("Failed to update appliance %s history to %s. Error: %s" % (appliance, self.getBoolState(state, True), e))
+	
+	# Get boolean version of the expression
+	def getBoolState(self, state, invert):
+		if state and invert:
+			return 1
+		else:
+			return 0
 	
 	# Execute a SQL query
 	def query(self, query):
 		self.log.debug("Running query: %s" % query)
+		cursor = self.db_connect.cursor()
+		# Try and execute the query
 		try:
-		   cursor = self.db_connect.cursor()
-		   cursor.execute(query)
+			cursor.execute(query)
+			self.db_connect.commit()
 		except(AttributeError, MySQLdb.OperationalError), e:
 		   self.log.error("Exception generated during SQL connection: %s" % e) 
 		   self.connect()

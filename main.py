@@ -49,7 +49,7 @@ class Main(object):
 		self.notify = notify.Notify()
 		# Average stuff
 		self.averages = self.getAvgs()
-
+	
 	# Configures and initiates the Logging library
 	def initLogger(self):
 		# For log name (1 per day)
@@ -76,7 +76,7 @@ class Main(object):
 	# Send an SMS or email
 	def sendNotify(self, **kwargs):
 		return self.notify.sendNotification(**kwargs)
-
+	
 	# Updates the door status
 	def updateDoorState(self, state):
 		return self.database.updateState(1, state)
@@ -87,45 +87,46 @@ class Main(object):
 			return "Open"
 		else:
 			return "Closed"
-
+	
 	# Initiates the main loop that tests the GPIO pins
 	def start(self):
 		prev_state = None
-		open_length = 0
 		try:
+			# Just say what the current state is
+			self.log.debug("Current fridge state: %s (%s)" % (GPIO.input(self.fridge), self.getHumanState(GPIO.input(self.fridge))))
+		
 			while self.running:
-				
 				self.state = GPIO.input(self.fridge)
-				
 				# When not in the expected time period
 				# i.e. When the fridge is not opened in an expected period of time
 				if self.inRange():
-					self.log.debug("Fridge is not open when it should be")
+					self.log.debug("Fridge has not been opened when expected")
 				
 				if self.state:
 					# Door is open
-					self.log.debug("Door is open!: %s" % self.state)
+					self.log.debug("Fridge is open!: %s (%s)" % self.getHumanState(self.state), self.state)
 					# While door is open, start the timer and wait
+					open_length = 0
 					while GPIO.input(self.fridge):
 						if open_length == 5:
 							# Texts can now be sent to any number (I think)
-							self.sendNotify(phone_number="+447714456013", message="Fridge door has been open for %s seconds!" % open_length)
+							self.sendNotify(phone_number="+447714456013", message="Fridge has been open for %s seconds!" % open_length)
 						elif open_length == 15:
 							buzzer.Buzzer(self.buzzer).buzz(5)
-
+							
 						open_length += 1
 						time.sleep(1)
-					self.log.debug("Door was open for %s seconds" % open_length)
-					self.sendNotify(phone_number="+447714456013", message="Fridge door has been closed after %s seconds!" % open_length)
+					self.log.debug("Fridge was open for %s seconds" % open_length)
+					#self.sendNotify(phone_number="+447714456013", message="Fridge door has been closed after %s seconds!" % open_length)
 					
 				else:
 					# Door is closed
 					if prev_state:
-						self.log.debug("Door is closed!: %s" % self.state)
+						self.log.debug("Fridge is closed!: %s (%s)" % self.getHumanState(self.state), self.state)
 				
 				# We only want to insert data during the change of the door state,
 				# otherwise we will be inserting data forever (which is bad)
-				if self.state != prev_state:
+				if self.state != prev_state and prev_state is not None:
 					prev_state = self.state
 					self.updateDoorState(self.state)
 					self.log.info("Updating device state to: %s (%s)" % (self.getHumanState(prev_state), prev_state))
@@ -135,27 +136,26 @@ class Main(object):
 	
 	# Get the averages from the PHP API
 	def getAvgs(self):
+		# The indexes of the array are strings, making it an associate dict.
+		# Needs converting to integers
+		# The indexes of the array are strings, making it an associate dict.
+		# Needs converting to integers
+		# The indexes of the array are strings, making it an associate dict.
+		# Needs converting to integers
+		# The indexes of the array are strings, making it an associate dict.
+		# Needs converting to integers
+		# The indexes of the array are strings, making it an associate dict.
+		# Needs converting to integers
+		# The indexes of the array are strings, making it an associate dict.
+		# Needs converting to integers
+		# The indexes of the array are strings, making it an associate dict.
+		# Needs converting to integers
+		# The indexes of the array are strings, making it an associate dict.
+		# Needs converting to integers
+		# The indexes of the array are strings, making it an associate dict.
+		# Needs converting to integers
 		avgs = requests.get("http://uni.scottsmudger.website/api").json()
-		no_avgs = len(avgs)
-		
-		counter = 0
-		self.avgs_time = []
-		for avg_hour, avg in avgs.iteritems():
-			if counter == no_avgs - 1:
-				break
-			temp = {} # Re-declare the temp dictionary while resetting it
-			
-			# Calculate the hour and minute for each average
-			# append to the final list
-			hour = datetime.fromtimestamp(avg).strftime("%H")
-			minute = datetime.fromtimestamp(avg).strftime("%M")
-			
-			temp["hour"] = hour
-			temp["minute"] = minute
-			self.avgs_time.append(temp)
-
-			counter += 1
-			
+		print avgs
 		return avgs
 	
 	def genState(self):
@@ -170,16 +170,17 @@ class Main(object):
 		cur_time_hr = datetime.fromtimestamp(cur_time).strftime("%H")
 		
 		# If it's in range
-		if cur_time_hr in self.avgs_time:
-			# The current average time
-			avg_time = self.avgs_time[int(cur_time_hr)]
-			# Start and end periods
-			start_period_min = datetime.fromtimestamp(avg_time - 600).strftime("%M")
-			end_period_min = datetime.fromtimestamp(avg_time + 600).strftime("%M")
-			self.log.debug("Start period = %s, end period = %s for avg %s" % (start_period_min, end_period_min, avg_time))
-			
-			# Get the data
+		if cur_time_hr in self.averages:
+		
+			# Loop through the data
 			for hour, avg in self.averages.iteritems():
+			
+				# Start and end periods
+				start_period_min = datetime.fromtimestamp(avg - 600).strftime("%M")
+				end_period_min = datetime.fromtimestamp(avg + 600).strftime("%M")
+				start_period_hr = datetime.fromtimestamp(avg - 600).strftime("%H")
+				end_period_hr = datetime.fromtimestamp(avg + 600).strftime("%H")
+				
 				# Check if the current time is between the range
 				if cur_time >= start_period_min and cur_time <= end_period_min \
 				and not self.state:
@@ -188,7 +189,7 @@ class Main(object):
 				else:
 					# The fridge hasn't been opened during the time frame
 					return False
-				
+	
 	# Cleans up GPIO when the script closes down
 	# Deconstructor
 	def __del__(self):
@@ -199,8 +200,3 @@ class Main(object):
 # Start it
 if __name__ == "__main__":
 	Main().start()
-
-
-
-
-

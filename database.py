@@ -57,7 +57,7 @@ class Database(object):
 	
 	# Execute a SQL query
 	def query(self, query):
-		self.log.debug("Running query: %s" % (query))
+		self.log.debug("Running query: %s" % query)
 		try:
 		   cursor = self.db_connect.cursor()
 		   cursor.execute(query)

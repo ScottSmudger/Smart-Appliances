@@ -117,7 +117,7 @@ class Notify(object):
 	# Deconstructor
 	def __del__(self):
 		self.log.debug("Cleaning up notify")
-		if self.smtp is not None:
+		if self.smtp:
 			self.smtp.quit()
 
 

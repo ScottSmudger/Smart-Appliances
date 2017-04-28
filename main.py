@@ -117,6 +117,7 @@ class Main(object):
 						time.sleep(1)
 					self.log.debug("Door was open for %s seconds" % open_length)
 					self.sendNotify(phone_number="+447714456013", message="Fridge door has been closed after %s seconds!" % open_length)
+					
 				else:
 					# Door is closed
 					if prev_state:
@@ -132,7 +133,7 @@ class Main(object):
 		except KeyboardInterrupt:
 			self.log.info("Program interrupted")
 	
-	# Gets the averages from the PHP API
+	# Get the averages from the PHP API
 	def getAvgs(self):
 		avgs = requests.get("http://uni.scottsmudger.website/api").json()
 		no_avgs = len(avgs)
@@ -170,10 +171,16 @@ class Main(object):
 		
 		# If it's in range
 		if cur_time_hr in self.avgs_time:
+			# The current average time
 			avg_time = self.avgs_time[int(cur_time_hr)]
+			# Start and end periods
 			start_period_min = datetime.fromtimestamp(avg_time - 600).strftime("%M")
 			end_period_min = datetime.fromtimestamp(avg_time + 600).strftime("%M")
+			self.log.debug("Start period = %s, end period = %s for avg %s" % (start_period_min, end_period_min, avg_time))
+			
+			# Get the data
 			for hour, avg in self.averages.iteritems():
+				# Check if the current time is between the range
 				if cur_time >= start_period_min and cur_time <= end_period_min \
 				and not self.state:
 					# The fridge has been opened during the time frame

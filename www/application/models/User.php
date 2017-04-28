@@ -12,17 +12,6 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 */
 class User extends CI_Model
 {
-	protected $date = "l dS F Y";
-	
-	// User stuff
-	protected $id;
-	public $details;
-	public $devices = array();
-	public $graph = array();
-	public $guardian;
-	public $phone_number;
-	protected $instance;
-
 	/**
 	* Returns the classes singleton
 	*
@@ -30,19 +19,40 @@ class User extends CI_Model
 	*/
 	public function newUser()
 	{
+		return new newUser($this->session->user_details["id"]);
+	}
+}
 
-		$this->instance = $this;
+/**
+* User
+* 
+* @package      Smart Appliances
+* @subpackage   User
+* @author       Scott Smith <s15001442@mail.glyndwr.ac.uk>
+*/
+class newUser extends User
+{
+	// User stuff
+	protected $id;
+	public $details;
+	public $devices = array();
+	public $graph = array();
+	public $guardian;
+	public $phone_number;
 
-		$this->load->helper("date");
-
-		$this->id = $this->session->user_details["id"];
+	/**
+	* Returns the classes singleton
+	*
+	* @return object $instance
+	*/
+	public function __construct($id)
+	{
+		$this->id = $id;
 
 		$this->getDetails();
 		$this->getGuardian();
 		$this->getDevices();
 		$this->getDevicesHistory();
-
-		return $this->instance;
 	}
 
 	/**

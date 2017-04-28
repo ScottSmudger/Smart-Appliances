@@ -12,8 +12,6 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 */
 class Device extends CI_Model
 {
-	protected $instance;
-
 	/**
 	* Returns the classes singleton
 	*
@@ -22,13 +20,22 @@ class Device extends CI_Model
 	*/
 	public function newDevice($device)
 	{
-		$this->instance = new stdClass();
+		return new newDevice($device);
+	}
+}
 
-		$this->load->helper("date");
+class newDevice extends Device
+{
 
+	/**
+	* Returns the classes singleton
+	*
+	* @param object $device MySQL row object from User/Admin page
+	* @return object $instance
+	*/
+	public function __construct($device)
+	{
 		$this->setAttrs($device);
-
-		return $this->instance;
 	}
 
 	/**
@@ -39,7 +46,7 @@ class Device extends CI_Model
 	*/
 	protected function setAttrs($device)
 	{
-		$new = array("id", "state");
+		$new = array("id", "state", "date_time");
 
 		// Set each class attribute to a value from the database
 		foreach((array) $device as $key => $value)
@@ -64,13 +71,10 @@ class Device extends CI_Model
 				}
 			}
 
-			// Changes unix time to a human date
-			if($key == "date_time")
-			{
-				$value = date("d-m-Y H:i:s", $value);
-			}
-
-			$this->instance->$key = $value;
+			$this->$key = $value;
 		}
+		
+		// Set the date_time to a proper format
+		$this->date_time = date("d-m-Y H:i:s", $this->date_time);
 	}
 }

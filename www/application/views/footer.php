@@ -2,7 +2,7 @@
 <footer>
 	<ul class="lowermenu">
 		<li id="copyright">&copy; Copyright Group 11 </li>
-		<li id="html" title="HTML5 Approved Badge"><img id="badge" src="<?=base_url("assets")?>/images/htmlbadge.png"/></li>
+		<li id="html" title="HTML5 Approved Badge"><img alt ="HTML5 Badge" id="badge" src="<?=base_url("assets")?>/images/htmlbadge.png"/></li>
 		<?php
 			// If logged in display the logout button
 			if($this->session->logged_in)

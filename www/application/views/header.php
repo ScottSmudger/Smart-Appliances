@@ -50,7 +50,7 @@
 		<a href="/"><img id="logo" alt="Group 11 Logo" src="/assets/images/logo.png" title="Group 11 Logo"></a>
 	</div>
 	<ul id ="uppermenu">
-		<li class="upperoptions" class="supButton" title="Link to support page"><a data-toggle="modal" data-target="#Contact">Support</a></li>
+		<li class="upperoptions" id="supButton" title="Link to support page"><a data-toggle="modal" data-target="#Contact">Support</a></li>
 		<li class="upperoptions" title="Link to our Github page"><a href="http://github.com/ScottSmudger/Smart-Appliances" target="_blank">Github</a></li>
 		<?php
 		// If logged in display the logout button

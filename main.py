@@ -42,7 +42,7 @@ class Main(object):
 		self.initLogger()
 		self.log.debug("Initialising door")
 		# Setup GPIO
-		GPIO.setmode(GPIO.BCM)
+		GPIO.setmode(GPIO.BOARD)
 		GPIO.setup(config.getint("Pins", "fridge"), GPIO.IN, GPIO.PUD_UP)
 		# Initialise module classes
 		self.database = database.Database()

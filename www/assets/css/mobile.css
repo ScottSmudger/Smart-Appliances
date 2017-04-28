@@ -43,7 +43,7 @@ input[type=password] {
 }
 #loginSection{
 	width: 100%;
-	margin: none;
+	margin: 0;
 }
 .colour_change{
 	width: 60%;

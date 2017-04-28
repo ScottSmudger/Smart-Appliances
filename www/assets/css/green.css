@@ -2,14 +2,10 @@ html, body {
 	font-family: Verdana;
 	color: black;
 	height: 80%;
-	margin:  0px auto;
-	padding: 0px auto;
 }
 main {
 	height: auto;       
 	min-height: 100%;
-   	margin: 0px auto;
-	padding: 0px auto;
 }
 header {
 	background-color: #006600;
@@ -333,7 +329,7 @@ textarea {
 	height: 200px;
 }
 #formsubmit {
-	background-color: #white;
+	background-color: white;
 	border: none;
 	color: #006600;
 	padding: 10px 32px;

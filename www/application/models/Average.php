@@ -34,9 +34,11 @@ class Average extends CI_Model
 		if($result AND $result->num_rows() > 4)
 		{
 			// Separates times into hourly periods
+			$hour = 0;
 			foreach($result->result_array() as $row)
 			{
 				$hour = date("H", $row["date_time"]);
+				settype($hour, "int");
 				
 				$data[$hour]["times"][] = $row["date_time"];
 			}
@@ -45,6 +47,7 @@ class Average extends CI_Model
 			$averages = array();
 			foreach($data as $hour => $times)
 			{
+				settype($hour, "int");
 				// After each loop of the hour we need to reset the total,
 				// in order to calculate the new average.
 				// If the user has opened/closed the fridge only twice during the hour,

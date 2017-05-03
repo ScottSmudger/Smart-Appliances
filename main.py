@@ -48,7 +48,8 @@ class Main(object):
 		self.database = database.Database()
 		self.notify = notify.Notify()
 		# Average stuff
-		self.averages = self.getAvgs()
+		#self.averages = self.getAvgs()
+		self.averages = {17: 23}
 	
 	# Configures and initiates the Logging library
 	def initLogger(self):
@@ -94,7 +95,7 @@ class Main(object):
 		try:
 			# Just say what the current state is
 			self.log.debug("Current fridge state: %s (%s)" % (GPIO.input(self.fridge), self.getHumanState(GPIO.input(self.fridge))))
-		
+			
 			while self.running:
 				self.state = GPIO.input(self.fridge)
 				# When not in the expected time period
@@ -104,7 +105,7 @@ class Main(object):
 				
 				if self.state:
 					# Door is open
-					self.log.debug("Fridge is open!: %s (%s)" % (self.getHumanState(self.state), self.state))
+					self.log.debug("Fridge is open!: %s (%s)" % self.getHumanState(self.state), self.state)
 					# While door is open, start the timer and wait
 					open_length = 0
 					while GPIO.input(self.fridge):
@@ -116,13 +117,13 @@ class Main(object):
 							
 						open_length += 1
 						time.sleep(1)
-					self.log.debug("Fridge is now closed after %s seconds" % open_length)
+					self.log.debug("Fridge was open for %s seconds" % open_length)
 					#self.sendNotify(phone_number="+447714456013", message="Fridge door has been closed after %s seconds!" % open_length)
 					
-				#else:
-				#	# Door is closed
-				#	if prev_state:
-				#		self.log.debug("Fridge is closed!: %s (%s)" % (self.getHumanState(self.state), self.state))
+				else:
+					# Door is closed
+					if prev_state:
+						self.log.debug("Fridge is closed!: %s (%s)" % self.getHumanState(self.state), self.state)
 				
 				# We only want to insert data during the change of the door state,
 				# otherwise we will be inserting data forever (which is bad)
@@ -138,58 +139,63 @@ class Main(object):
 	def getAvgs(self):
 		# The indexes of the array are strings, making it an associate dict.
 		# Needs converting to integers
-		# The indexes of the array are strings, making it an associate dict.
-		# Needs converting to integers
-		# The indexes of the array are strings, making it an associate dict.
-		# Needs converting to integers
-		# The indexes of the array are strings, making it an associate dict.
-		# Needs converting to integers
-		# The indexes of the array are strings, making it an associate dict.
-		# Needs converting to integers
-		# The indexes of the array are strings, making it an associate dict.
-		# Needs converting to integers
-		# The indexes of the array are strings, making it an associate dict.
-		# Needs converting to integers
-		# The indexes of the array are strings, making it an associate dict.
-		# Needs converting to integers
-		# The indexes of the array are strings, making it an associate dict.
-		# Needs converting to integers
-		avgs = requests.get("http://uni.scottsmudger.website/api").json()
-		print avgs
-		return avgs
-	
-	def genState(self):
-		state = randint(0, 1)
-		return state
+		stringavgs = requests.get("http://uni.scottsmudger.website/api").json()
+		
+		# Convert all keys to an integer
+		intavg = {}
+		for hour, avg in stringavgs.iteritems():
+			intavg[int(hour)] = avg
+			
+		print intavg
+		
+		return intavg
 	
 	# If in range of 10 mins before and after the average time
 	def inRange(self):
 		# 900 = 15 mins
 		# 600 = 10 mins
-		cur_time = time.time()
-		cur_time_hr = datetime.fromtimestamp(cur_time).strftime("%H")
+		cur_time = time.time() + 3600
+		print "current time = ", cur_time
+		
+		# Current time as an object
+		cur_time_hr_date = datetime.utcfromtimestamp(cur_time)
+		
+		# Current hour (in unix time) e.g. 16:00 = 1493828460
+		cur_hr_unix = self.timestampFromDT(cur_time_hr_date) - ((cur_time_hr_date.minute * 60) + cur_time_hr_date.second)
+		
+		# Current hour
+		cur_time_hr = int(datetime.utcfromtimestamp(cur_time).strftime("%H"))
+		print "cur_time_hr =", cur_time_hr
 		
 		# If it's in range
 		if cur_time_hr in self.averages:
-		
-			# Loop through the data
-			for hour, avg in self.averages.iteritems():
 			
-				# Start and end periods
-				start_period_min = datetime.fromtimestamp(avg - 600).strftime("%M")
-				end_period_min = datetime.fromtimestamp(avg + 600).strftime("%M")
-				start_period_hr = datetime.fromtimestamp(avg - 600).strftime("%H")
-				end_period_hr = datetime.fromtimestamp(avg + 600).strftime("%H")
-				
-				# Check if the current time is between the range
-				if cur_time >= start_period_min and cur_time <= end_period_min \
-				and not self.state:
-					# The fridge has been opened during the time frame
-					return True
-				else:
-					# The fridge hasn't been opened during the time frame
-					return False
+			avg = self.averages[cur_time_hr]
+			
+			# Current 
+			time_hr = cur_hr_unix + (avg * 60)
+			
+			# Start and end periods
+			start_period = self.timestampFromDT(datetime.utcfromtimestamp(time_hr)) - 600
+			end_period = self.timestampFromDT(datetime.utcfromtimestamp(time_hr)) + 600
+			
+			print "Start =", start_period
+			print "End =", end_period
+			
+			# Check if the current time is between the range
+			if cur_time >= start_period and cur_time <= end_period \
+			and not self.state:
+				# The fridge has been opened during the time frame
+				print "it is in range and fridge is closed"
+			else:
+				# The fridge hasn't been opened during the time frame
+				print "it is not in range"
+		else:
+			print "it is not in the correct hour"
 	
+	def timestampFromDT(self, dt):
+		return time.mktime(dt.timetuple()) + 3600
+		
 	# Cleans up GPIO when the script closes down
 	# Deconstructor
 	def __del__(self):

@@ -323,9 +323,9 @@ textarea {
 	height: 200px;
 }
 #formsubmit {
-	background-color: white;
+	background-color: #005691;
 	border: none;
-	color: #005691;
+	color: white;
 	padding: 10px 32px;
 	text-decoration: none;
 	margin: 4px 2px;
@@ -337,8 +337,8 @@ textarea {
 
 }
 #formsubmit:hover {
-	background-color: #005691;
-	color: #cdcdcd;
+	background-color: #006bb3;
+	color: white;
 	padding: 10px 32px;
 	text-decoration: none;
 	margin: 4px 2px;

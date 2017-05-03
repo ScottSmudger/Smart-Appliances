@@ -34,11 +34,9 @@ class Average extends CI_Model
 		if($result AND $result->num_rows() > 4)
 		{
 			// Separates times into hourly periods
-			$hour = 0;
 			foreach($result->result_array() as $row)
 			{
 				$hour = date("H", $row["date_time"]);
-				settype($hour, "int");
 				
 				$data[$hour]["times"][] = $row["date_time"];
 			}
@@ -62,10 +60,19 @@ class Average extends CI_Model
 					}
 				}
 				
-				$averages[$hour] = $total / count($times["times"]);
+				$average = $total / count($times["times"]);
+				
+				if($average > 0)
+				{
+					$averages[$hour] = $average;
+				}
 			}
-
+			
 			return $averages;
+		}
+		else
+		{
+			return array(NULL);
 		}
 	}
 }

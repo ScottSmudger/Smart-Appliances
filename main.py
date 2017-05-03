@@ -104,7 +104,7 @@ class Main(object):
 				
 				if self.state:
 					# Door is open
-					self.log.debug("Fridge is open!: %s (%s)" % self.getHumanState(self.state), self.state)
+					self.log.debug("Fridge is open!: %s (%s)" % (self.getHumanState(self.state), self.state))
 					# While door is open, start the timer and wait
 					open_length = 0
 					while GPIO.input(self.fridge):
@@ -116,13 +116,13 @@ class Main(object):
 							
 						open_length += 1
 						time.sleep(1)
-					self.log.debug("Fridge was open for %s seconds" % open_length)
+					self.log.debug("Fridge is now closed after %s seconds" % open_length)
 					#self.sendNotify(phone_number="+447714456013", message="Fridge door has been closed after %s seconds!" % open_length)
 					
-				else:
-					# Door is closed
-					if prev_state:
-						self.log.debug("Fridge is closed!: %s (%s)" % self.getHumanState(self.state), self.state)
+				#else:
+				#	# Door is closed
+				#	if prev_state:
+				#		self.log.debug("Fridge is closed!: %s (%s)" % (self.getHumanState(self.state), self.state))
 				
 				# We only want to insert data during the change of the door state,
 				# otherwise we will be inserting data forever (which is bad)

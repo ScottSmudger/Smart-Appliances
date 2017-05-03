@@ -123,7 +123,7 @@ class Notify(object):
 	# Deconstructor
 	def __del__(self):
 		self.log.debug("Cleaning up notify")
-		if self.smtp:
+		if self.email and self.smtp:
 			self.smtp.quit()
 
 

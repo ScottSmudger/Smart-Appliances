@@ -11,6 +11,7 @@ import os
 import logging
 import ConfigParser
 import requests
+import threading
 """
 Level		Numeric value
 CRITICAL	50
@@ -31,13 +32,13 @@ class Main(object):
 		Main class that manages the state of the door and initiates any libraries/classes
 	"""
 	running = True
+	appliance = 1
 	
 	# Setup GPIO, logging and initialise any external classes/modules
 	def __init__(self):
 		# Config settings
 		self.fridge = config.getint("Pins", "fridge")
 		self.buzzer = config.getint("Pins", "buzzer")
-		self.logs_dir = os.getcwd() + "/" + config.get("Other", "logs_dir")
 		# Logging
 		self.initLogger()
 		self.log.debug("Initialising door")
@@ -48,8 +49,8 @@ class Main(object):
 		self.database = database.Database()
 		self.notify = notify.Notify()
 		# Average stuff
-		#self.averages = self.getAvgs()
-		self.averages = {17: 23}
+		self.averages = self.getAvgs()
+		#self.averages = {13: 07}
 	
 	# Configures and initiates the Logging library
 	def initLogger(self):
@@ -65,11 +66,12 @@ class Main(object):
 		screen.setFormatter(format)
 		self.log.addHandler(screen)
 		# Check if log folder exists, create it if not
-		if not os.path.exists(self.logs_dir):
-			os.makedirs(self.logs_dir)
-			self.log.debug("Creating log dir: %s" % self.logs_dir)
+		logs_dir = os.getcwd() + "/" + config.get("Other", "logs_dir")
+		if not os.path.exists(logs_dir):
+			os.makedirs(logs_dir)
+			self.log.debug("Creating log dir: %s" % logs_dir)
 		# For file logging
-		logfile = logging.FileHandler(self.logs_dir + "/door-%s.log" % date)
+		logfile = logging.FileHandler(logs_dir + "/door-%s.log" % date)
 		logfile.setLevel(logging.WARNING)
 		logfile.setFormatter(format)
 		self.log.addHandler(logfile)
@@ -80,7 +82,7 @@ class Main(object):
 	
 	# Updates the door status
 	def updateDoorState(self, state):
-		return self.database.updateState(1, state)
+		return self.database.updateState(self.appliance, state)
 	
 	# Human version of the state
 	def getHumanState(self, state):
@@ -92,20 +94,20 @@ class Main(object):
 	# Initiates the main loop that tests the GPIO pins
 	def start(self):
 		prev_state = None
+		self.prev_check = None
+		self.check = False
+		self.first_run = True
+		self.stuff = True
 		try:
 			# Just say what the current state is
 			self.log.debug("Current fridge state: %s (%s)" % (GPIO.input(self.fridge), self.getHumanState(GPIO.input(self.fridge))))
 			
 			while self.running:
 				self.state = GPIO.input(self.fridge)
-				# When not in the expected time period
-				# i.e. When the fridge is not opened in an expected period of time
-				if self.inRange():
-					self.log.debug("Fridge has not been opened when expected")
 				
 				if self.state:
 					# Door is open
-					self.log.debug("Fridge is open!: %s (%s)" % self.getHumanState(self.state), self.state)
+					self.log.debug("Fridge is open!: %s (%s)" % (self.getHumanState(self.state), self.state))
 					# While door is open, start the timer and wait
 					open_length = 0
 					while GPIO.input(self.fridge):
@@ -121,17 +123,21 @@ class Main(object):
 					#self.sendNotify(phone_number="+447714456013", message="Fridge door has been closed after %s seconds!" % open_length)
 					
 				else:
+					# When not in the expected time period
+					# i.e. When the fridge is closed during the expected period of time
+					self.inRange()
 					# Door is closed
 					if prev_state:
-						self.log.debug("Fridge is closed!: %s (%s)" % self.getHumanState(self.state), self.state)
+						self.log.debug("Fridge is closed!: %s (%s)" % (self.getHumanState(self.state), self.state))
 				
 				# We only want to insert data during the change of the door state,
 				# otherwise we will be inserting data forever (which is bad)
-				if self.state != prev_state and prev_state is not None:
+				if self.state != prev_state:
 					prev_state = self.state
 					self.updateDoorState(self.state)
 					self.log.info("Updating device state to: %s (%s)" % (self.getHumanState(prev_state), prev_state))
-					
+				self.first_run = False
+				
 		except KeyboardInterrupt:
 			self.log.info("Program interrupted")
 	
@@ -140,62 +146,67 @@ class Main(object):
 		# The indexes of the array are strings, making it an associate dict.
 		# Needs converting to integers
 		stringavgs = requests.get("http://uni.scottsmudger.website/api").json()
-		
 		# Convert all keys to an integer
 		intavg = {}
 		for hour, avg in stringavgs.iteritems():
 			intavg[int(hour)] = avg
 			
 		print intavg
-		
+			
 		return intavg
 	
 	# If in range of 10 mins before and after the average time
 	def inRange(self):
 		# 900 = 15 mins
 		# 600 = 10 mins
-		cur_time = time.time() + 3600
-		print "current time = ", cur_time
-		
+		cur_time = int(time.time() + 3600)
 		# Current time as an object
 		cur_time_hr_date = datetime.utcfromtimestamp(cur_time)
-		
 		# Current hour (in unix time) e.g. 16:00 = 1493828460
-		cur_hr_unix = self.timestampFromDT(cur_time_hr_date) - ((cur_time_hr_date.minute * 60) + cur_time_hr_date.second)
-		
+		cur_hr_unix = int(self.timestampFromDT(cur_time_hr_date) - ((cur_time_hr_date.minute * 60) + cur_time_hr_date.second))
 		# Current hour
 		cur_time_hr = int(datetime.utcfromtimestamp(cur_time).strftime("%H"))
-		print "cur_time_hr =", cur_time_hr
-		
-		# If it's in range
+		# If it's in the current hour
 		if cur_time_hr in self.averages:
-			
+			# Get the current average for this hour
 			avg = self.averages[cur_time_hr]
 			
 			# Current 
-			time_hr = cur_hr_unix + (avg * 60)
+			time_hr = int(cur_hr_unix + (avg * 60))
 			
 			# Start and end periods
-			start_period = self.timestampFromDT(datetime.utcfromtimestamp(time_hr)) - 600
-			end_period = self.timestampFromDT(datetime.utcfromtimestamp(time_hr)) + 600
-			
-			print "Start =", start_period
-			print "End =", end_period
+			start_period = int(self.timestampFromDT(datetime.utcfromtimestamp(time_hr)) - 60)
+			end_period = int(self.timestampFromDT(datetime.utcfromtimestamp(time_hr)) + 60)
 			
 			# Check if the current time is between the range
 			if cur_time >= start_period and cur_time <= end_period \
 			and not self.state:
-				# The fridge has been opened during the time frame
-				print "it is in range and fridge is closed"
+				# The fridge has been opened during the time range
+				self.check = True
 			else:
-				# The fridge hasn't been opened during the time frame
-				print "it is not in range"
-		else:
-			print "it is not in the correct hour"
+				# Send an SMS when we exit the range
+				if self.check != self.prev_check:
+					self.check = False
+					self.prev_check = self.check
+					self.log.debug("Fridge has not been opened during expected time range")
+					self.sendNotify(phone_number="+447714456013", message="Fridge has not been opened when expected")
+			
+			if self.first_run:
+				self.log.debug("cur_time: %s (%s)" % (datetime.utcfromtimestamp(cur_time), cur_time))
+				self.log.debug("cur_time_hr_date: %s" % cur_time_hr_date)
+				self.log.debug("cur_hr_unix: %s (%s)" % (datetime.utcfromtimestamp(cur_hr_unix), cur_hr_unix))
+				self.log.debug("cur_time_hr: %s" % cur_time_hr)
+				self.log.debug("start_period: %s (%s)" % (datetime.utcfromtimestamp(start_period), start_period))
+				self.log.debug("time_hr: %s (%s)" % (datetime.utcfromtimestamp(time_hr), time_hr))
+				self.log.debug("end_period: %s (%s)" % (datetime.utcfromtimestamp(end_period), end_period))
+				self.log.debug("check: %s" % self.check)
+				self.log.debug("prev_check: %s" % self.prev_check)
+				self.log.debug("stuff: %s" % self.stuff)
 	
+	# Calculates the timestamp from the DT object
 	def timestampFromDT(self, dt):
 		return time.mktime(dt.timetuple()) + 3600
-		
+	
 	# Cleans up GPIO when the script closes down
 	# Deconstructor
 	def __del__(self):

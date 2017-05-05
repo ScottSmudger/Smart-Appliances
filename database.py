@@ -9,10 +9,15 @@ class Database(object):
 	"""
 		Database class that manages the connection and "most" queries
 	"""
+	
+	OPEN = 1
+	CLOSED = 0
+	
 	# Constructor, calls connect() on initialisation
 	def __init__(self):
 		self.log = logging.getLogger(__name__)
 		self.log.debug("Initialising Database")
+		self.cur_time = int(time.time() + 3600)
 		
 		# Database settings
 		from main import config
@@ -39,7 +44,7 @@ class Database(object):
 	def updateState(self, appliance, state):
 		# Update appliances current state
 		try:
-			if self.query("UPDATE DEVICES SET state = %s, date_time = %s WHERE id = %s" % (self.getBoolState(state), int(time.time()), appliance)):
+			if self.query("UPDATE DEVICES SET state = %s, date_time = %s WHERE id = %s" % (self.getBoolState(state), self.cur_time, appliance)):
 				self.log.debug("Updating state of appliance %s to: %s" % (appliance, self.getBoolState(state)))
 			else:
 				self.log.debug("Could not update state of appliance %s to: %s" % (appliance, self.getBoolState(state)))
@@ -48,7 +53,7 @@ class Database(object):
 		
 		# Update appliances state history
 		try:
-			if self.query("INSERT INTO DEVICE_HISTORY (device_id, state, date_time) VALUES (%s, %s, %s)" % (appliance, self.getBoolState(state, True), int(time.time()))):
+			if self.query("INSERT INTO DEVICE_HISTORY (device_id, state, date_time) VALUES (%s, %s, %s)" % (appliance, self.getBoolState(state, True), self.cur_time)):
 				self.log.debug("Adding to appliance history state: %s for appliance %s" % (self.getBoolState(state, True), appliance))
 			else:
 				self.log.debug("Could not add to appliance %s history for state: %s" % (appliance, self.getBoolState(state, True)))
@@ -56,11 +61,17 @@ class Database(object):
 			self.log.critical("Failed to update appliance %s history to %s. Error: %s" % (appliance, self.getBoolState(state, True), e))
 	
 	# Get boolean version of the expression
-	def getBoolState(self, state, invert):
-		if state and invert:
-			return 1
+	def getBoolState(self, state, invert = False):
+		if state:
+			if not invert:
+				return self.OPEN
+			else:
+				return self.CLOSED
 		else:
-			return 0
+			if not invert:
+				return self.CLOSED
+			else:
+				return self.OPEN
 	
 	# Execute a SQL query
 	def query(self, query):

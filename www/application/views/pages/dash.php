@@ -2,6 +2,7 @@
 	<div class="row">
 		<div class="col-sm-4">
 			<div id="topleft">
+				<!-- Div that displays the User's Details which is queried from the database-->
 				<h3 class="title" title="User's Details are displayed below">User Details</h3>
 				<h4 class="subtitle" title="User's Name is below">Name</h4><p class="info"><?=$user->details["first_name"]." ".$user->details["last_name"]?></p>
 				<h4 class="subtitle" title="User's Age is below">Age (Date of Birth)</h4><p class="info"><?=$user->details["age"] . " (".$user->details["dob"].")"?></p>
@@ -9,16 +10,19 @@
 				<h4 class="subtitle" title="User's Telephone number is below">Telephone</h4><p class= "info"><?=$user->details["phone"]?></p>
 			</div>
 			<div id="bottomleft">
+				<!-- Div that contains the dropdowns that selects the data that needs to be displayed on the graph -->
 				<h3 class="title" title="Select what data you would like to view below">View Activity</h3><br/>
 				<h4 class="subtitle">Devices</h4>
 				<form method="GET">
 					<select class="choicedropdown" name="device_id" title="Select the device you would like to view">
+						<!-- Devices selection dropdown -->
 						<option value=0>All Devices</option><?php
 						foreach($user->devices as $device)
 						{
 							echo "<option value=".$device->id.">".$device->appliance."</option>";
 						} ?>
 					</select><br/><br/>
+					<!-- Time period selection dropdown -->
 					<h4 class="subtitle">Time Period</h4>
 					<select class="choicedropdown" name="time_period" title="Select the time you would like to view" onchange="test()">
 						<option value="everything">All Data</option> 
@@ -34,6 +38,7 @@
 			</div>
 		</div>
 		<div class="col-sm-8">
+		<!-- Div that contains device history table -->
 			<div id="table">
 				<h3 class="title" title="Selected data is viewed below">User Data</h3>
 					<div class="table-responsive">
@@ -76,7 +81,7 @@
 		</div>
 	</div>
 </div>
-
+<!-- Code for the graph -->
 <script>
 	// All of the code for the graph
 	var data = <?=json_encode($user->graph["devices"])?>;

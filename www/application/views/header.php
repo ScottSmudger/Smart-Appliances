@@ -45,12 +45,16 @@
 </head>
 <body>
 <header>
+	<!-- Logo Section of the header-->
 	<br/><br/><br/>
 	<div class="logowrap">
 		<a href="/"><img id="logo" alt="Group 11 Logo" src="/assets/images/logo.png" title="Group 11 Logo"></a>
 	</div>
+	<!-- Nafvigation bar at the top of the screen -->
 	<ul id ="uppermenu">
+		<!-- Support Modal -->
 		<li class="upperoptions" id="supButton" title="Link to support page"><a data-toggle="modal" data-target="#Contact">Support</a></li>
+		<!-- Github page link -->
 		<li class="upperoptions" title="Link to our Github page"><a href="http://github.com/ScottSmudger/Smart-Appliances" target="_blank">Github</a></li>
 		<?php
 		// If logged in display the logout button

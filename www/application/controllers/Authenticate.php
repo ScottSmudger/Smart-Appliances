@@ -46,12 +46,12 @@ class Authenticate extends CI_Controller
 		$result = $this->checkLogin($username, $password);
 
 		// Check if checkLogin() returns something
-		if($result AND password_verify($password, $result->password))
+		if(password_verify($password, $result->password))
 		{
 			// Get details
 			$user_details = array(
 				"id" => $result->id,
-				"username" => $result->username,
+				"username" => $username,
 				"logged_in_time" => time()
 			);
 
@@ -79,7 +79,7 @@ class Authenticate extends CI_Controller
 	{
 		$this->db->select("id, username, password");
 		$this->db->from("LOGIN_DETAILS");
-		$this->db->where("username", $this->encryption->decrypt($username));
+		$this->db->where("username", $username);
 		$this->db->limit(1);
 		$result = $this->db->get();
 
@@ -91,7 +91,7 @@ class Authenticate extends CI_Controller
 		}
 		else
 		{
-			return FALSE;
+			show_error($this->db->error()["message"], 500, "SQL Error: ".$this->db->error()["code"]);
 		}
 	}
 

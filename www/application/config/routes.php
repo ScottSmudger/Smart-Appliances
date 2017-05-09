@@ -62,3 +62,5 @@ $route["logout"] = "authenticate/logout";
 // For specific devices e.g. dash/2. Sa controller, View method(dash page, $1 device)
 $route["dash/(:num)"] = "sa/dash/$1";
 
+// Route the device id to the api function
+$route["api/(:num)"] = "sa/api/$1";

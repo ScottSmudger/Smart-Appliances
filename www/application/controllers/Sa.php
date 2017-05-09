@@ -65,10 +65,10 @@ class Sa extends CI_Controller
 	*
 	* @return null
 	*/
-	public function api()
+	public function api($device = 1)
 	{
 		$this->load->model("average");
-		$averages = $this->average->calculate();
+		$averages = $this->average->calculate($device);
 	
 		$this->load->view("pages/api", array("averages" => $averages));
 	}

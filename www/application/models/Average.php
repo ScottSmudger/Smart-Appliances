@@ -17,16 +17,17 @@ class Average extends CI_Model
 	*
 	* @return $averages array Array of averages
 	*/
-	public function calculate()
+	public function calculate($device)
 	{
 		// Set the min and max
 		$min = strtotime("-1 month");
 		$max = strtotime("tomorrow", time()) - 1;
-		
+
 		// Get the data
 		$this->db->select("state, date_time");
 		$this->db->from("DEVICE_HISTORY");
-		$this->db->where("state", "1");
+		$this->db->where("state", 1);
+		$this->db->where("device_id", $device);
 		$this->db->where("date_time BETWEEN ".$min." AND ".$max."");
 		$result = $this->db->get();
 		

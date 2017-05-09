@@ -46,7 +46,7 @@ class Authenticate extends CI_Controller
 		$result = $this->checkLogin($username, $password);
 
 		// Check if checkLogin() returns something
-		if(password_verify($password, $result->password))
+		if($result AND password_verify($password, $result->password))
 		{
 			// Get details
 			$user_details = array(
@@ -64,6 +64,7 @@ class Authenticate extends CI_Controller
 		else
 		{
 			$this->form_validation->set_message("check_database", "Invalid Username or Password.");
+			
 			return FALSE;
 		}
 	}
@@ -91,7 +92,7 @@ class Authenticate extends CI_Controller
 		}
 		else
 		{
-			show_error($this->db->error()["message"], 500, "SQL Error: ".$this->db->error()["code"]);
+			return FALSE;
 		}
 	}
 

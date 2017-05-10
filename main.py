@@ -11,7 +11,6 @@ import os
 import logging
 import ConfigParser
 import requests
-import threading
 """
 Level		Numeric value
 CRITICAL	50
@@ -42,6 +41,7 @@ class Main(object):
 		# Logging
 		self.initLogger()
 		self.log.debug("Initialising door")
+		self.debug = config.getboolean("Other", "debug")
 		# Setup GPIO
 		GPIO.setmode(GPIO.BCM)
 		GPIO.setup(config.getint("Pins", "fridge"), GPIO.IN, GPIO.PUD_UP)
@@ -49,8 +49,9 @@ class Main(object):
 		self.database = database.Database()
 		self.notify = notify.Notify()
 		# Average stuff
-		self.averages = self.getAvgs()
-		#self.averages = {13: 07}
+		#self.averages = self.getAvgs(self.appliance)
+		#self.averages = {9:20, 9:40, 10:20, 10:40, 11:20, 11:40, 12:20}
+		self.averages = {18: 11}
 	
 	# Configures and initiates the Logging library
 	def initLogger(self):
@@ -72,13 +73,17 @@ class Main(object):
 			self.log.debug("Creating log dir: %s" % logs_dir)
 		# For file logging
 		logfile = logging.FileHandler(logs_dir + "/door-%s.log" % date)
-		logfile.setLevel(logging.WARNING)
+		logfile.setLevel(logging.DEBUG)
 		logfile.setFormatter(format)
 		self.log.addHandler(logfile)
 	
 	# Send an SMS or email
 	def sendNotify(self, **kwargs):
-		return self.notify.sendNotification(**kwargs)
+		if self.debug:
+			self.log.debug("Not sending SMS due to debug being enabled")
+			return True
+		else:
+			return self.notify.sendNotification(**kwargs)
 	
 	# Updates the door status
 	def updateDoorState(self, state):
@@ -93,17 +98,21 @@ class Main(object):
 	
 	# Initiates the main loop that tests the GPIO pins
 	def start(self):
-		prev_state = None
+		self.prev_state = None
 		self.prev_check = None
+		self.door_opened = None
+		self.door_changed = None
 		self.check = False
-		self.first_run = True
-		self.stuff = True
 		try:
 			# Just say what the current state is
-			self.log.debug("Current fridge state: %s (%s)" % (GPIO.input(self.fridge), self.getHumanState(GPIO.input(self.fridge))))
+			self.log.debug("Current fridge state: %s (%s)" % (self.getHumanState(GPIO.input(self.fridge)), GPIO.input(self.fridge)))
 			
 			while self.running:
 				self.state = GPIO.input(self.fridge)
+				
+				# When not in the expected time period
+				# i.e. When the fridge is closed during the expected period of time
+				self.inRange()
 				
 				if self.state:
 					# Door is open
@@ -112,7 +121,7 @@ class Main(object):
 					open_length = 0
 					while GPIO.input(self.fridge):
 						if open_length == 5:
-							# Texts can now be sent to any number (I think)
+							# Texts can now be sent to any number
 							self.sendNotify(phone_number="+447714456013", message="Fridge has been open for %s seconds!" % open_length)
 						elif open_length == 15:
 							buzzer.Buzzer(self.buzzer).buzz(5)
@@ -120,39 +129,33 @@ class Main(object):
 						open_length += 1
 						time.sleep(1)
 					self.log.debug("Fridge was open for %s seconds" % open_length)
-					#self.sendNotify(phone_number="+447714456013", message="Fridge door has been closed after %s seconds!" % open_length)
 					
 				else:
-					# When not in the expected time period
-					# i.e. When the fridge is closed during the expected period of time
-					self.inRange()
 					# Door is closed
-					if prev_state:
+					if self.prev_state:
 						self.log.debug("Fridge is closed!: %s (%s)" % (self.getHumanState(self.state), self.state))
 				
 				# We only want to insert data during the change of the door state,
 				# otherwise we will be inserting data forever (which is bad)
-				if self.state != prev_state:
-					prev_state = self.state
+				if self.prev_state != self.state:
+					self.door_changed = True
+					self.prev_state = self.state
 					self.updateDoorState(self.state)
-					self.log.info("Updating device state to: %s (%s)" % (self.getHumanState(prev_state), prev_state))
-				self.first_run = False
-				
+					self.log.info("Updating device state to: %s (%s)" % (self.getHumanState(self.prev_state), self.prev_state))
+			
 		except KeyboardInterrupt:
 			self.log.info("Program interrupted")
 	
 	# Get the averages from the PHP API
-	def getAvgs(self):
+	def getAvgs(self, device):
 		# The indexes of the array are strings, making it an associate dict.
 		# Needs converting to integers
-		stringavgs = requests.get("http://uni.scottsmudger.website/api").json()
+		stringavgs = requests.get("http://uni.scottsmudger.website/api/" + str(device)).json()
 		# Convert all keys to an integer
 		intavg = {}
 		for hour, avg in stringavgs.iteritems():
 			intavg[int(hour)] = avg
-			
-		print intavg
-			
+		
 		return intavg
 	
 	# If in range of 10 mins before and after the average time
@@ -170,38 +173,29 @@ class Main(object):
 		if cur_time_hr in self.averages:
 			# Get the current average for this hour
 			avg = self.averages[cur_time_hr]
-			
 			# Current 
 			time_hr = int(cur_hr_unix + (avg * 60))
-			
 			# Start and end periods
-			start_period = int(self.timestampFromDT(datetime.utcfromtimestamp(time_hr)) - 60)
-			end_period = int(self.timestampFromDT(datetime.utcfromtimestamp(time_hr)) + 60)
-			
+			start_period = int(self.timestampFromDT(datetime.utcfromtimestamp(time_hr)) - 30)
+			end_period = int(self.timestampFromDT(datetime.utcfromtimestamp(time_hr)) + 30)
 			# Check if the current time is between the range
-			if cur_time >= start_period and cur_time <= end_period \
-			and not self.state:
+			if cur_time >= start_period and cur_time <= end_period:
 				# The fridge has been opened during the time range
+				if self.state:
+					self.door_opened = True
 				self.check = True
-			else:
-				# Send an SMS when we exit the range
-				if self.check != self.prev_check:
-					self.check = False
-					self.prev_check = self.check
-					self.log.debug("Fridge has not been opened during expected time range")
+			else: # Not in range
+				#if self.check != self.prev_check and self.check is not None and self.prev_check :
+				#	self.check = False
+				#	self.prev_check = self.check
+					
+				# Do not touch this line \/ \/ \/ \/ \/ \/ \/ \/ \/ \/ \/ \/ \/ \/ \/ \/ \/ \/ \/ \/ \/ \/ \/ \/ \/ \/ \/ \/ \/ \/ \/ \/ \/ \/ \/ \/ \/ \/ \/ \/
+				if self.door_opened is None or not self.door_opened and self.door_opened is None or not self.door_changed and not self.state and self.prev_state:
+					self.log.debug("======================================================= Fridge has not been opened during the expected time range =======================================================")
 					self.sendNotify(phone_number="+447714456013", message="Fridge has not been opened when expected")
-			
-			if self.first_run:
-				self.log.debug("cur_time: %s (%s)" % (datetime.utcfromtimestamp(cur_time), cur_time))
-				self.log.debug("cur_time_hr_date: %s" % cur_time_hr_date)
-				self.log.debug("cur_hr_unix: %s (%s)" % (datetime.utcfromtimestamp(cur_hr_unix), cur_hr_unix))
-				self.log.debug("cur_time_hr: %s" % cur_time_hr)
-				self.log.debug("start_period: %s (%s)" % (datetime.utcfromtimestamp(start_period), start_period))
-				self.log.debug("time_hr: %s (%s)" % (datetime.utcfromtimestamp(time_hr), time_hr))
-				self.log.debug("end_period: %s (%s)" % (datetime.utcfromtimestamp(end_period), end_period))
-				self.log.debug("check: %s" % self.check)
-				self.log.debug("prev_check: %s" % self.prev_check)
-				self.log.debug("stuff: %s" % self.stuff)
+					
+				self.door_opened = False
+				self.door_changed = False
 	
 	# Calculates the timestamp from the DT object
 	def timestampFromDT(self, dt):

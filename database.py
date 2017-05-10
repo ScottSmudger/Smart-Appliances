@@ -44,7 +44,7 @@ class Database(object):
 	def updateState(self, appliance, state):
 		# Update appliances current state
 		try:
-			if self.query("UPDATE DEVICES SET state = %s, date_time = %s WHERE id = %s" % (self.getBoolState(state), self.cur_time, appliance)):
+			if self.query("UPDATE DEVICES SET state = %s, date_time = %s WHERE id = %s" % (self.getBoolState(state), int(time.time() + 3600), appliance)):
 				self.log.debug("Updating state of appliance %s to: %s" % (appliance, self.getBoolState(state)))
 			else:
 				self.log.debug("Could not update state of appliance %s to: %s" % (appliance, self.getBoolState(state)))
@@ -53,7 +53,7 @@ class Database(object):
 		
 		# Update appliances state history
 		try:
-			if self.query("INSERT INTO DEVICE_HISTORY (device_id, state, date_time) VALUES (%s, %s, %s)" % (appliance, self.getBoolState(state, True), self.cur_time)):
+			if self.query("INSERT INTO DEVICE_HISTORY (device_id, state, date_time) VALUES (%s, %s, %s)" % (appliance, self.getBoolState(state, True), int(time.time() + 3600))):
 				self.log.debug("Adding to appliance history state: %s for appliance %s" % (self.getBoolState(state, True), appliance))
 			else:
 				self.log.debug("Could not add to appliance %s history for state: %s" % (appliance, self.getBoolState(state, True)))

@@ -187,12 +187,12 @@ class Main(object):
 					self.door_opened = True
 				self.check = True
 			else: # Not in range
-				#if self.check != self.prev_check and self.check is not None and self.prev_check :
+				#if self.check != self.prev_check and self.check is not None and self.prev_check:
 				#	self.check = False
 				#	self.prev_check = self.check
 				
 				# Do not touch this line \/ \/ \/ \/ \/ \/ \/ \/ \/ \/ \/ \/ \/ \/ \/ \/ \/ \/ \/ \/ \/ \/ \/ \/ \/ \/ \/ \/ \/ \/ \/ \/ \/ \/ \/ \/ \/ \/ \/ \/
-				if self.door_opened is not None and not self.door_opened and self.door_changed is not None or not self.door_changed and not self.state and self.prev_state:
+				if self.door_opened is None or not self.door_opened and self.door_changed is None or not self.door_changed and not self.state and self.prev_state:
 					self.log.debug("======================================================= Fridge has not been opened during the expected time range =======================================================")
 					self.sendNotify(phone_number="+447714456013", message="Fridge has not been opened when expected")
 					

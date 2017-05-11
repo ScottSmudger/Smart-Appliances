@@ -34,9 +34,9 @@ function changeGraphColour(colour)
 	
 	// Change the colour
 	// for all series (this may change in the future
-	for(i = 0; i < chart.series.length; i++)
+	if(typeof chart != "undefined" && chart.series.length == 1)
 	{
-		chart.series[i].update({
+		chart.series[0].update({
 			color: hex
 		});
 	}

@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-	<title>Group 11 Beta</title>
+	<title>Group 11 - Smart Appliances</title>
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	
@@ -86,18 +86,18 @@
 					<?=form_open("sa/email")?>
 						<p>Please enter your details and describe your issue. We will get back to you as soon as possible.</p>
 						<h5 class="EHeader">Subject</h5>
-						<input type="text" name="subject">
+						<input type="text" name="subject" id="modalSubject">
 						
 						<h5 class="EHeader">Name</h5>
-						<input type="text" name="from_name">
+						<input type="text" name="from_name" id="modalNAME">
 						
 						<h5 class="EHeader">Email Address</h5>
-						<input type="text" name="from_email">
+						<input type="text" name="from_email" id="modalAddress">
 						
 						<h5 class="EHeader">Issue</h5>
 						<textarea class="form-control"></textarea>
 						<br/>
-						<input id="formsubmit" type="submit" value="Submit">
+						<input id="formsubmit" type="submit" value="Submit" onSubmit = "return emailAuth()">
 					</form>
 				</div>
 			</div>

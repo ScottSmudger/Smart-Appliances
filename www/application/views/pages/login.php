@@ -12,7 +12,7 @@
 			<br/>
 			<p class="entryFields">Username: <input id="username" type="text" name="username" value="<?=set_value('username')?>" title="Enter your username"></p>
 			<br/><br/>
-			<p class="entryFields">Password: <input id="passowrd" type="password" name="password" value="" title="Enter your password"></p>
+			<p class="entryFields">Password: <input id="password" type="password" name="password" value="" title="Enter your password"></p>
 			<br/>
 			<input id="logsubmit" type="submit" value="Enter" title="Log into system"/>
 			<br/>

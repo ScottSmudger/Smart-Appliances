@@ -51,7 +51,7 @@ class Main(object):
 		# Average stuff
 		#self.averages = self.getAvgs(self.appliance)
 		#self.averages = {9:20, 9:40, 10:20, 10:40, 11:20, 11:40, 12:20}
-		self.averages = {18: 11}
+		self.averages = {10: 19}
 	
 	# Configures and initiates the Logging library
 	def initLogger(self):
@@ -72,7 +72,7 @@ class Main(object):
 			os.makedirs(logs_dir)
 			self.log.debug("Creating log dir: %s" % logs_dir)
 		# For file logging
-		logfile = logging.FileHandler(logs_dir + "/door-%s.log" % date)
+		logfile = logging.FileHandler(logs_dir + "/fridge-%s.log" % date)
 		logfile.setLevel(logging.DEBUG)
 		logfile.setFormatter(format)
 		self.log.addHandler(logfile)
@@ -142,6 +142,8 @@ class Main(object):
 					self.prev_state = self.state
 					self.updateDoorState(self.state)
 					self.log.info("Updating device state to: %s (%s)" % (self.getHumanState(self.prev_state), self.prev_state))
+				else:
+					self.door_changed = False
 			
 		except KeyboardInterrupt:
 			self.log.info("Program interrupted")
@@ -188,14 +190,14 @@ class Main(object):
 				#if self.check != self.prev_check and self.check is not None and self.prev_check :
 				#	self.check = False
 				#	self.prev_check = self.check
-					
+				
 				# Do not touch this line \/ \/ \/ \/ \/ \/ \/ \/ \/ \/ \/ \/ \/ \/ \/ \/ \/ \/ \/ \/ \/ \/ \/ \/ \/ \/ \/ \/ \/ \/ \/ \/ \/ \/ \/ \/ \/ \/ \/ \/
-				if self.door_opened is None or not self.door_opened and self.door_opened is None or not self.door_changed and not self.state and self.prev_state:
+				if self.door_opened is not None and not self.door_opened and self.door_changed is not None or not self.door_changed and not self.state and self.prev_state:
 					self.log.debug("======================================================= Fridge has not been opened during the expected time range =======================================================")
 					self.sendNotify(phone_number="+447714456013", message="Fridge has not been opened when expected")
 					
 				self.door_opened = False
-				self.door_changed = False
+				#self.door_changed = False
 	
 	# Calculates the timestamp from the DT object
 	def timestampFromDT(self, dt):

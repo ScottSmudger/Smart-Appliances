@@ -6,6 +6,7 @@
 		<li id="copyright">&copy; Copyright Group 11 </li>
 		<!-- HTML5 Logo -->
 		<li id="html" title="HTML5 Approved Badge"><img alt ="HTML5 Badge" id="badge" src="<?=base_url("assets")?>/images/htmlbadge.png"/></li>
+		<li id="html" title="W3C Compliant"><img alt="W3C Badge" id="badge" src="http://validator.w3.org/images/v15445.gif"/></li>
 		<?php
 			// If logged in display the logout button
 			if($this->session->logged_in)

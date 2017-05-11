@@ -35,11 +35,10 @@ input[type=password] {
 	color: black;
 	height: 30px;
 	width: 150px;
-	margin-left: 10px;
 }
 .entryFields {
 	color: white;
-	margin-left: 5px;
+	margin-left: 7%;
 }
 #loginSection{
 	width: 100%;
@@ -83,6 +82,7 @@ input[type=password] {
 	padding: 12px 14px;
 	text-decoration: none;
 	font-weight: bold;
+	cursor: pointer;
 }
 .upperoptions a:hover:not(.active) {
 	text-decoration: none;

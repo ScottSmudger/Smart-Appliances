@@ -1,4 +1,5 @@
 # Smart-Appliances
+_**NOTE:**_ The site is being hosted at [web-interface](http://uni.scottsmudger.website), displaying false data.
 A simple python-based program that monitors a Raspberry-Pi's General Purpose Input Output (GPIO) pins connected to a magnetic door switch (as of now). A MySQL database is updated with the new appliances state.
 Future ideas:
 
@@ -7,11 +8,11 @@ Future ideas:
 - ~~PHP report system~~
 - ~~Highcharts jQuery graphs~~
 
-A [web-interface](http://uni.scottsmudger.website) built using PHP/HTML/CSS with some elements of JavaScript and jQuery, is used to display the usage statistics of the appliances and any relevant user information.
+A web-interface built using PHP/HTML/CSS with some elements of JavaScript and jQuery, is used to display the usage statistics of the appliances and any relevant user information.
 
-This project is for the Group Project Design & Implementation modules of my Computer Networking and Security BSc Degree at [Glyndwr University](https://www.glyndwr.ac.uk/). It may also be used for my dissertation in the third year.
+This project is for the Group Project Design & Implementation modules of my Computer Networking and Security BSc Degree at [Glyndwr University](https://www.glyndwr.ac.uk/).
 
-Team includes:
+Group includes:
 
 - Jamie Davies: S14000296
 - Scott Smith: S15001442
@@ -30,8 +31,10 @@ All can be installed using the following command:
 
 It is recommended to install the GPIO, MySQLdb, twilio and optionally picamera modules using pip:
 
-    pip install RPi.GPIO MySQL-python twilio picamera
+    sudo pip install RPi.GPIO MySQL-python twilio picamera
+
 
 The program is started by running `./start.sh` in the repositories root directory, this will create a new screen session and start the program. Using the command `screen -r smart` will open the screen where the program is running, displaying the log output. `CTRL, A + D` will close the program but keep it running in the background. `CTRL + C` will close it.
+Alternatively running `./main.py` will start the program directly.
 
 This software makes use of the [MIT License](https://github.com/ScottSmudger/GPIO-Door/blob/master/LICENSE).

@@ -1,5 +1,6 @@
 # Smart-Appliances
 _**NOTE:**_ The site is being hosted at [web-interface](http://uni.scottsmudger.website), displaying false data.
+
 A simple python-based program that monitors a Raspberry-Pi's General Purpose Input Output (GPIO) pins connected to a magnetic door switch (as of now). A MySQL database is updated with the new appliances state.
 Future ideas:
 
@@ -35,6 +36,7 @@ It is recommended to install the GPIO, MySQLdb, twilio and optionally picamera m
 
 
 The program is started by running `./start.sh` in the repositories root directory, this will create a new screen session and start the program. Using the command `screen -r smart` will open the screen where the program is running, displaying the log output. `CTRL, A + D` will close the program but keep it running in the background. `CTRL + C` will close it.
+
 Alternatively running `./main.py` will start the program directly.
 
 This software makes use of the [MIT License](https://github.com/ScottSmudger/GPIO-Door/blob/master/LICENSE).

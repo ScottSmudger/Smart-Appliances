@@ -49,9 +49,8 @@ class Main(object):
 		self.database = database.Database()
 		self.notify = notify.Notify()
 		# Average stuff
-		#self.averages = self.getAvgs(self.appliance)
-		#self.averages = {9:20, 9:40, 10:20, 10:40, 11:20, 11:40, 12:20}
-		self.averages = {10: 19}
+		self.averages = self.getAvgs(self.appliance)
+		#self.averages = {9:20, 9:40, 10:20, 10:40, 11:20, 11:40, 12:20} # Used to test at these times
 	
 	# Configures and initiates the Logging library
 	def initLogger(self):

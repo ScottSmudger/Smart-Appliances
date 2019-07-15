@@ -89,15 +89,16 @@
 						<input type="text" name="subject" id="modalSubject">
 						
 						<h5 class="EHeader">Name</h5>
-						<input type="text" name="from_name" id="modalNAME">
+						<input type="text" name="from_name" id="modalName">
 						
 						<h5 class="EHeader">Email Address</h5>
 						<input type="text" name="from_email" id="modalAddress">
 						
 						<h5 class="EHeader">Issue</h5>
-						<textarea class="form-control"></textarea>
+						<textarea class="form-control" name="message" id="modalIssue"></textarea>
+
 						<br/>
-						<input id="formsubmit" type="submit" value="Submit" onSubmit = "return emailAuth()">
+						<input id="formsubmit" type="submit" value="Submit" onSubmit="return emailAuth()">
 					</form>
 				</div>
 			</div>

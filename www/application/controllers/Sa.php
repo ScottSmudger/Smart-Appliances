@@ -87,7 +87,7 @@ class Sa extends CI_Controller
 		$this->email->from("group11@scottsmudger.website", $this->input->post("from_name"));
 		$this->email->to("scottsmudger@hotmail.com");
 		$this->email->subject($this->input->post("subject"));
-		$this->email->message($this->input->post("message"));
+		$this->email->message('From: '.$this->input->post("from_email") . '\n\n' . $this->input->post("message"));
 		
 		// Send the email
 		$this->email->send();
